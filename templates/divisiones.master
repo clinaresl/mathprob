@@ -1,0 +1,93 @@
+{{/*
+
+	This template provides the basic functionality to just show
+	how different exercises can be generated
+
+*/}}
+
+\documentclass[svgnames,addpoints]{exam}
+
+{{/* ------------------------------ Preamble ----------------------------- */}}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{examen}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+\usepackage{pifont}
+
+\usepackage{cancel}
+\usepackage{array}
+
+\usepackage{tikz}
+\usepackage{pgflibraryarrows}
+\usepackage{pgflibrarysnakes}
+
+\usetikzlibrary{matrix,patterns,fadings,positioning}
+
+\usepackage{array}
+\usepackage{eurosym}
+
+\usepackage{booktabs}
+\usepackage{url}
+
+\usepackage{rotating}
+
+{{/* ------------------------------ Main body ---------------------------- */}}
+
+\begin{document}
+
+\titulacion{Grado en Informática}
+\asignatura{Heurística y Optimización}
+
+\convocatoria{\today}
+\tiempo{4 horas}
+
+\principio
+
+{{/* ------------------------------ Questions ---------------------------- */}}
+
+\begin{questions}
+
+\question Cuando te dí las hojas anteriores de ejercicios me dijiste:
+"Papá, ?`dónde están las divisiones? !`A mí me gustan las divisiones!"
+Pues aquí las tienes mi niño.
+
+\begin{parts}
+
+  \part[5] Recuerda que dividir es tan sencillo como aprender a hacer
+  grupos iguales. Pídele a Natalia que te de garbanzos si hiciera
+  falta, y cuando dividas un número entre otro intenta hacer grupos
+  del mismo número de garbanzos que en total sumen el número que
+  quieres dividir. Si lo has hecho así, ?`cuántos garbanzos hay en
+  cada grupo?
+  
+{{range .Slice 48}}{{.GetSimpleOperation11 (3)}}{{end}}
+
+  \part[5] Sinceramente, pensaba que cometerías muchos más errores en
+  los ejercicios anteriores que los que has cometido. Pero me gustaría
+  que también aprendieras hasta dónde puedes llegar, y que te des
+  cuenta que hay operaciones que son siempre más difíciles. Las
+  siguientes deberían costarte bastante más, y estoy seguro que
+  cometerás muchos errores !`es normal!
+  
+{{range .Slice 48}}{{.GetSimpleOperation21 (3)}}{{end}}
+
+\end{parts}
+
+\end{questions}
+
+Con estas divisiones se acaba el primer bloque de ejercicios que he
+hecho con ordenador para tí. Espero que te hayas divertido, que lo
+hayas pasado bien, tanto como yo he disfrutado haciendolos para
+tí. Por cierto, ?`no tienes curiosidad por saber cómo hago estas hojas
+de ejercicios?
+
+!`Te quiero!
+
+\end{document}

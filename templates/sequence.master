@@ -1,0 +1,87 @@
+{{/*
+
+	This template provides the basic functionality to just show
+	how different exercises can be generated
+
+*/}}
+
+\documentclass[svgnames,addpoints]{exam}
+
+{{/* ------------------------------ Preamble ----------------------------- */}}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{examen}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+\usepackage{pifont}
+
+\usepackage{cancel}
+\usepackage{array}
+
+\usepackage{tikz}
+\usepackage{pgflibraryarrows}
+\usepackage{pgflibrarysnakes}
+
+\usetikzlibrary{matrix,patterns,fadings,positioning}
+
+\usepackage{array}
+\usepackage{eurosym}
+
+\usepackage{booktabs}
+\usepackage{url}
+
+\usepackage{rotating}
+
+{{/* ------------------------------ Main body ---------------------------- */}}
+
+\begin{document}
+
+\titulacion{Grado en Informática}
+\asignatura{Heurística y Optimización}
+
+\convocatoria{\today}
+\tiempo{4 horas}
+
+\principio
+
+{{/* ------------------------------ Questions ---------------------------- */}}
+
+\begin{questions}
+
+  \question Adriana, como sé que te gusta jugar a calcular los números
+  anteriores y posteriores a uno que siempre te digo, he hecho estos
+  ejercicios para tí. Espero que te gusten mi niña.
+
+  \begin{parts}
+
+    \part[3] Primero, ¿serías capaz de calcular el número anterior a
+    cada uno de los siguientes? No es más difícil que cuando jugamos a
+    esto paseando por la calle:
+
+{{range .Slice 12}}{{.GetSequence10 (1)}}{{end}}
+
+    \part[3] !`Lo has hecho muy bien Adriana! Y estoy seguro que
+    también eres capaz de calcular el número posterior a cada uno de
+    los siguientes:
+
+{{range .Slice 12}}{{.GetSequence10 (2)}}{{end}}
+
+    \part[4] Y ahora mucho más difícil. ?`Serías capaz de calcular el
+    anterior y el posterior a los siguientes números que son mucho más
+    grandes? Estoy seguro que te divertirás intentándolo:
+
+{{range .Slice 12}}{{.GetSequence100 (1)}}{{end}}
+{{range .Slice 12}}{{.GetSequence100 (2)}}{{end}}
+
+\end{parts}
+
+\end{questions}
+
+
+\end{document}

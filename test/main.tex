@@ -1,0 +1,3678 @@
+
+
+\documentclass[svgnames,addpoints]{exam}
+
+
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{examen}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+\usepackage{pifont}
+
+\usepackage{cancel}
+\usepackage{array}
+
+\usepackage{tikz}
+\usepackage{pgflibraryarrows}
+\usepackage{pgflibrarysnakes}
+
+\usetikzlibrary{matrix,patterns,fadings,positioning}
+
+\usepackage{array}
+\usepackage{eurosym}
+
+\usepackage{booktabs}
+\usepackage{url}
+
+\usepackage{rotating}
+
+
+
+\begin{document}
+
+\titulacion{Grado en Informática}
+\asignatura{Heurística y Optimización}
+
+\convocatoria{\today}
+\tiempo{4 horas}
+
+\principio
+
+
+
+\begin{questions}
+
+\question Adriana, espero que disfrutes haciendo estas
+operaciones. Irene y Jorge dicen que eres capaz de hacerlas, pero no
+te desanimes si alguna te cuesta, o si te equivocas.
+
+\begin{parts}
+
+  \part[3] ?`Serías capaz de resolver las siguientes sumas?
+  
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 4};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 9};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 2};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 7};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 3};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 9};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 2};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 4};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 2};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 1};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 8};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 5};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 8};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 5};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 1};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 4};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 7};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 1};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 2};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 4};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 2};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 8};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 6};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 8};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 5};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 8};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 3};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 9};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 1};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 7};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 5};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 3};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 9};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 4};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 1};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 3};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 1};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 1};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 3};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 6};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 8};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 4};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 2};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 5};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 3};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 9};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 2};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 8};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 9};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 1};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 5};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 6};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 8};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 3};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 5};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 9};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 1};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 2};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 2};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 4};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 4};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 6};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 4};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 4};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 3};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 4};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 2};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 6};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 8};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 2};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 5};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 6};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 1};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 8};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 3};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 5};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 9};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 6};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+
+
+  \part[3] Hey, ya has acabado las del primer apartado. Un poquito más
+  difíciles, a ver qué tal se te dan. Si lo consigues, se las
+  enseñamos a Darío, a ver si el también quiere intentar hacerlas.
+  
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 27};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 71};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 27};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 78};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 28};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 40};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 19};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 18};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 88};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 12};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 54};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 33};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 61};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 13};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 89};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 32};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 1};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 53};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 4};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 15};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 28};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 10};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 66};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 77};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 70};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 77};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 41};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 67};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 73};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 83};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 42};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 30};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 55};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 74};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 85};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 39};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 90};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 74};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 23};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 37};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 74};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 51};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 40};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 81};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 30};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 17};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 3};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 44};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 96};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 13};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 8};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 23};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 67};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 44};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 24};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 37};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 94};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 49};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 15};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 6};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 58};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 21};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 38};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 13};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 83};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 72};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 37};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 10};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 47};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 1};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 34};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 38};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 53};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 1};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 67};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 37};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 23};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 59};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 27};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 16};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 9};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 37};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 43};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 27};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 37};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 55};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 81};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 65};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 16};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 30};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 98};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 73};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 29};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 47};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 70};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+
+
+  \part[4] Si has llegado hasta aquí, !`eres increíble! Ahora sí que
+  son difíciles de verdad. ¡Que tengas mucha suerte!
+  
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 96};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 4};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 22};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 90};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 74};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 36};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 49};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 49};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 18};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 54};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 37};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 44};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 81};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 16};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 84};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 15};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 77};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 92};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 70};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 28};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 34};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 79};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 65};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 89};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 65};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 15};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 69};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 64};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 76};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 12};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 85};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 73};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 10};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 98};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 96};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 34};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 87};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 4};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 55};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 18};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 68};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 81};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 10};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 21};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 78};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 93};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 71};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 95};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 66};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 59};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 58};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 23};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 64};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 36};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 1};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 46};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 44};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 60};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 27};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 50};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 79};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 42};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 75};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 24};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 94};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 78};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 48};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 79};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 53};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 14};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 99};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 38};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 23};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 94};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 89};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 6};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 77};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 40};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 76};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 7};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 62};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 77};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 21};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 42};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 79};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 71};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 68};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 83};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 45};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 68};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 76};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 62};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % show the operands
+      \node (label1) at (0, 0) {};
+      \node [left = 0.0 cm of label1] (num1) {\huge 86};
+      \node (label2) at (0, -1.05) {};
+      \node [left = 0.0 cm of label2] (num2) {\huge 53};
+
+      % show a straight line
+      \node [below right=0.35 cm and 0.25 cm of label2] (right) {};
+      \node [below left=0.35 cm and 2.05 cm of label2] (left) {};
+      \draw [thick] (left) -- (right);
+
+      % show the operator
+      \node [left = 0.0 cm of num2] (op) {\huge$+$};
+
+      % show the result
+      \node (label3) at (0.15, -2.35) {};
+      \node [rectangle, minimum width=1.2 cm, minimum height = 1 cm, draw, left = 0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+
+
+\end{parts}
+
+\end{questions}
+
+
+\end{document}
