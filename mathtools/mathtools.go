@@ -28,6 +28,8 @@ import (
 	"time"
 
 	"text/template" // go facility for processing templates
+
+	"bitbucket.org/mathprob/fstools"
 )
 
 // types
@@ -447,9 +449,21 @@ func (masterFile MasterFile) MasterToFileFromTemplate(dst string) {
 		log.Fatal(err)
 	}
 
-	// check if the file exists
-	if _, err = os.Stat(dst); err == nil {
-		log.Fatalf("The file '%v' already exists", dst)
+	// if the given filename already exists, then number it and so
+	// on until the resulting filename does not exist. If
+	// re-numbering is required, start with index 2
+	index := 2
+	current := dst
+	for _, err := os.Stat(dst); err == nil; {
+		log.Printf("The file '%v' already exists", dst)
+
+		// renumber this filename
+		dst = fstools.NumberFilename(current, index)
+
+		// move forward to the next index and perform the test
+		// again
+		index += 1
+		_, err = os.Stat(dst)
 	}
 
 	// now, open the file in read/write mode

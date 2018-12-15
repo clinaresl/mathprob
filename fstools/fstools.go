@@ -26,6 +26,7 @@ import (
 	"log"    // logging services
 	"os"     // access to env variables
 	"path"   // path manipulation
+	"strconv"
 )
 
 // global variables
@@ -37,6 +38,42 @@ var MAXLEN int32 = 1024
 
 // functions
 // ----------------------------------------------------------------------------
+
+// Add the specified suffix to the given filename only in case it does
+// not end with precisely the same prefix.
+func AddSuffix(dirname, suffix string) string {
+
+	// This function simply compares the suffix of the given
+	// filename with the specified suffix. Since Go Ext function
+	// returns the suffix with a heading dot make sure that
+	// comparisons are made under the same conditions
+	trueSuffix := suffix
+	if suffix[0] != '.' {
+		trueSuffix = "." + suffix
+	}
+
+	// now, if the suffix of this file is different than the given
+	// suffix, then add it!
+	if path.Ext(dirname) != trueSuffix {
+		return dirname + trueSuffix
+	}
+
+	// otherwise, return the current name as it already ends with
+	// the specified suffix
+	return dirname
+}
+
+// Return a new filename that consists of the prefix with the given
+// number preceded by a dash and its current suffix (if any).
+func NumberFilename(dirname string, index int) string {
+
+	// Copy the suffix and compute the base name
+	suffix := path.Ext(dirname)
+	preffix := dirname[0 : len(dirname)-len(suffix)]
+
+	// and return the new filename
+	return preffix + "-" + strconv.Itoa(index) + suffix
+}
 
 // it returns an absolute path of the path given in dirin. It deals with strings
 // starting with the symbol '~' and cleans the result (see path.Clean)

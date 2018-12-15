@@ -39,8 +39,10 @@ var EXIT_SUCCESS int = 0     // exit with success
 // Options
 var masterFilename string // master file
 var texFilename string    // output tex filename
+var jsonFilename string   // JSON filename with info of all records to process
 var studentName string    // student's name
 var helpMaster bool       // is help on master files requested?
+var helpJSON bool         // is help about JSON files requested?
 var verbose bool          // has verbose output been requested?
 var version bool          // has version info been requested?
 
@@ -51,10 +53,13 @@ var version bool          // has version info been requested?
 func init() {
 
 	// Flag to store the master file to process
-	flag.StringVar(&masterFilename, "master", "", "master file to use for generating the sheets of exercises")
-	flag.StringVar(&texFilename, "tex-file", "main.tex", "output filename with the TeX code of the exercises generated from the template file")
+	flag.StringVar(&masterFilename, "master-file", "", "master file to use for generating the sheets of exercises. Use '-help-master' to obtain additional information")
+	flag.StringVar(&texFilename, "tex-file", "", "output filename with the TeX code of the exercises generated from the template file. If not given, then the student's name provided with -student-name is used instead. If none is provided, then 'main.tex' is used by default. In case the resulting TeX file already exists, then it is re-numbered to avoid overwritting existing contents")
+	flag.StringVar(&jsonFilename, "json-file", "", "file with information of all records to process in JSON format. Use 'help-json' to obtain additional information")
 	flag.StringVar(&studentName, "name", "", "Student's name")
+
 	flag.BoolVar(&helpMaster, "help-master", false, "provides information about the format and usage of master files")
+	flag.BoolVar(&helpMaster, "help-json", false, "provides information about the JSON format used to specify multiple records")
 
 	// other optional parameters are verbose and version
 	flag.BoolVar(&verbose, "verbose", false, "provides verbose output")
@@ -71,6 +76,15 @@ func showVersion(signal int) {
 
 // shows informmation on master files
 func showHelpMaster(signal int) {
+
+	fmt.Println(` 
+ TBW
+`)
+	os.Exit(signal)
+}
+
+// shows informmation on master files
+func showHelpJSON(signal int) {
 
 	fmt.Println(` 
  TBW
@@ -96,6 +110,9 @@ func verify() {
 	if helpMaster {
 		showHelpMaster(EXIT_SUCCESS)
 	}
+	if helpJSON {
+		showHelpJSON(EXIT_SUCCESS)
+	}
 
 	// verify that a master file has been given
 	if masterFilename == "" {
@@ -116,6 +133,30 @@ func verify() {
 	}
 }
 
+// the following function applies the following rules to derive the TeX filename:
+//
+//    1. If -tex-file has been used, then return immediately the user's choice
+//    2. Otherwise, if a student's name was given, then use it instead
+//    3. If none has been provided, then use 'main.tex' by default
+func getTexName() string {
+
+	//    1. If -tex-file has been used, then return immediately the user's choice
+	if texFilename != "" {
+		return fstools.AddSuffix(texFilename, ".tex")
+	} else {
+		//    2. Otherwise, if a student's name was given,
+		//    then use it instead
+		if studentName != "" {
+			return fstools.AddSuffix(studentName, ".tex")
+		} else {
+			//    3. If none has been provided, then use
+			//    'main.tex' by default
+			return "main.tex"
+		}
+	}
+
+}
+
 // Main body
 func main() {
 
@@ -133,6 +174,10 @@ func main() {
 
 	// verify the values parsed
 	verify()
+
+	// get the tex filename and show it on the standard output
+	texFilename = getTexName()
+	log.Printf("TeX filename: %s\n", texFilename)
 
 	// now, instantiate the master file with the data generated
 	masterFile := mathtools.NewMasterFile(masterFilename, studentName)
