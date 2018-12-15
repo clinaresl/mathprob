@@ -357,9 +357,9 @@ func (masterFile MasterFile) GetSequence10(seqtype int) (latexCode string) {
 	var xIndex, xAnswer float64
 	switch seqtype {
 	case PREVIOUS:
-		xIndex, xAnswer = 1.20, 0.00
+		xIndex, xAnswer = 2.00, 0.50
 	case SUBSEQUENT:
-		xIndex, xAnswer = 0.00, 1.20
+		xIndex, xAnswer = 0.50, 2.00
 	case FULL: // not implemented yet!
 		xIndex, xAnswer = 0.00, 0.00
 	}
@@ -368,16 +368,16 @@ func (masterFile MasterFile) GetSequence10(seqtype int) (latexCode string) {
 	latexIndex := latexIndex{
 		label: "label1",
 		id:    "num1",
-		pos:   position{x: xIndex, y: 0.00},
+		pos:   position{x: xIndex, y: 0.75},
 		value: 1 + rand.Intn(9),
 	}
 
 	// create the box to write the answer
 	latexAnswer := latexSequenceAnswer{
 		label:         "label2",
-		pos:           position{x: xAnswer, y: 0.00},
-		minimumWidth:  1.2,
-		minimumHeight: 1.0,
+		pos:           position{x: xAnswer, y: 0.75},
+		minimumWidth:  1.5,
+		minimumHeight: 1.25,
 	}
 
 	// and use all of these to create the sequence problem
@@ -403,9 +403,9 @@ func (masterFile MasterFile) GetSequence100(seqtype int) (latexCode string) {
 	var xIndex, xAnswer float64
 	switch seqtype {
 	case PREVIOUS:
-		xIndex, xAnswer = 1.20, 0.00
+		xIndex, xAnswer = 2.00, 0.50
 	case SUBSEQUENT:
-		xIndex, xAnswer = 0.00, 1.20
+		xIndex, xAnswer = 0.50, 2.00
 	case FULL: // not implemented yet!
 		xIndex, xAnswer = 0.00, 0.00
 	}
@@ -414,16 +414,16 @@ func (masterFile MasterFile) GetSequence100(seqtype int) (latexCode string) {
 	latexIndex := latexIndex{
 		label: "label1",
 		id:    "num1",
-		pos:   position{x: xIndex, y: 0.00},
+		pos:   position{x: xIndex, y: 0.75},
 		value: 1 + rand.Intn(99),
 	}
 
 	// create the box to write the answer
 	latexAnswer := latexSequenceAnswer{
 		label:         "label2",
-		pos:           position{x: xAnswer, y: 0.00},
-		minimumWidth:  1.2,
-		minimumHeight: 1.0,
+		pos:           position{x: xAnswer, y: 0.75},
+		minimumWidth:  1.5,
+		minimumHeight: 1.25,
 	}
 
 	// and use all of these to create the sequence problem

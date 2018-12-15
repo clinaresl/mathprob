@@ -41,6 +41,9 @@ const latexPreviousSequenceCode = `\begin{minipage}{0.25\linewidth}
   \begin{center}
     \begin{tikzpicture}
 
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3,1.5);
+
       % show the area to draw the answer
       {{.GetSequenceAnswer}}
 
@@ -57,6 +60,9 @@ const latexSubsequentSequenceCode = `\begin{minipage}{0.25\linewidth}
   \begin{center}
     \begin{tikzpicture}
 
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3,1.5);
+
       % show the index
       {{.GetIndex}}
 
@@ -69,12 +75,10 @@ const latexSubsequentSequenceCode = `\begin{minipage}{0.25\linewidth}
 `
 
 // the TikZ code for generating the indices is the following
-const latexIndexCode = `\node ({{.GetLabel}}) at {{.GetPosition}} {};
-      \node [left = 0.0 cm of {{.GetLabel}}] ({{.GetId}}) {\huge {{.GetValue}}};`
+const latexIndexCode = `\node at {{.GetPosition}} {\huge {{.GetValue}}};`
 
 // the TikZ code for generating the result is the following
-const latexSequenceAnswerCode = `\node ({{.GetLabel}}) at {{.GetPosition}} {};
-      \node [rectangle, minimum width={{.GetMinimumWidth}} cm, minimum height = {{.GetMinimumHeight}} cm, draw, left = 0.0 cm of {{.GetLabel}}] {};`
+const latexSequenceAnswerCode = `\node [rounded corners, rectangle, minimum width={{.GetMinimumWidth}} cm, minimum height = {{.GetMinimumHeight}} cm, draw] at {{.GetPosition}} {};`
 
 // An Index is the number shown whose precendent and/or subsequent has
 // to be obtained. It consists of a label, an identifier, a position
