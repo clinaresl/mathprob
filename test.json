@@ -1,0 +1,19 @@
+[
+	{
+		"infile":"templates/sequence.master",
+		"name":"Adriana",
+		"outfile":"adriana.tex"
+	},
+	
+	{
+		"infile":"templates/sequence.master",
+		"name":"Dario",
+		"outfile":"dario.tex"
+	},
+	
+	{
+		"infile":"templates/sequence.master",
+		"name":"Roberto",
+		"outfile":"roberto.tex"
+	}
+]

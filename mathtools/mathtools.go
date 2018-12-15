@@ -443,6 +443,13 @@ func (masterFile MasterFile) GetSequence100(seqtype int) (latexCode string) {
 // given master file. For a full description, see the manual.
 func (masterFile MasterFile) MasterToFileFromTemplate(dst string) {
 
+	// verify that the given master file exists and is accessible
+	masterisregular, _ := fstools.IsRegular(masterFile.Infile)
+	if !masterisregular {
+		log.Fatalf("the master file '%s' does not exist or is not accessible",
+			masterFile.Infile)
+	}
+
 	// access a template and parse its contents
 	master, err := template.ParseFiles(masterFile.Infile)
 	if err != nil {

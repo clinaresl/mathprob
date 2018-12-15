@@ -24,7 +24,7 @@ Finally, install the binary with:
 
 And you are ready to execute:
 
-    $ mathprob --help
+    $ mathprob -help
 
 anywhere from your filesystem provided that the environment variable
 `$PATH` contains the path to your `$GOPATH/bin/` directory

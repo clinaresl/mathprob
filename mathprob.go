@@ -19,8 +19,10 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -53,9 +55,9 @@ var version bool          // has version info been requested?
 func init() {
 
 	// Flag to store the master file to process
-	flag.StringVar(&masterFilename, "master-file", "", "master file to use for generating the sheets of exercises. Use '-help-master' to obtain additional information")
-	flag.StringVar(&texFilename, "tex-file", "", "output filename with the TeX code of the exercises generated from the template file. If not given, then the student's name provided with -student-name is used instead. If none is provided, then 'main.tex' is used by default. In case the resulting TeX file already exists, then it is re-numbered to avoid overwritting existing contents")
-	flag.StringVar(&jsonFilename, "json-file", "", "file with information of all records to process in JSON format. Use 'help-json' to obtain additional information")
+	flag.StringVar(&masterFilename, "infile", "", "master file to use for generating the sheets of exercises. If a JSON file is given also, this parameter is automatically discarded. Use '-help-master' to obtain additional information")
+	flag.StringVar(&texFilename, "outfile", "", "output filename with the TeX code of the exercises generated from the template file. If not given, then the student's name provided with -student-name is used instead. If none is provided, then 'main.tex' is used by default. In case the resulting TeX file already exists, then it is re-numbered to avoid overwritting existing contents")
+	flag.StringVar(&jsonFilename, "json-file", "", "file with information of all records to process in JSON format. If a JSON file is given, the input file given with -infile is automatically discarded. It is not allowed to provide more than 1024 records in the JSON file. Use 'help-json' to obtain additional information")
 	flag.StringVar(&studentName, "name", "", "Student's name")
 
 	flag.BoolVar(&helpMaster, "help-master", false, "provides information about the format and usage of master files")
@@ -96,10 +98,6 @@ func showHelpJSON(signal int) {
 // error is raised
 func verify() {
 
-	// first, parse the flags ---in case help was given, it is automatically
-	// handled by the flags package
-	flag.Parse()
-
 	// if version information was requested show it now and exit
 	if version {
 		showVersion(EXIT_SUCCESS)
@@ -115,21 +113,14 @@ func verify() {
 	}
 
 	// verify that a master file has been given
-	if masterFilename == "" {
-		log.Fatalf("Use --master to provide a master file. See --help for more details")
+	if masterFilename == "" && jsonFilename == "" {
+		log.Fatalf("Use either -master-file or -json-file to provide a master file. See -help for more details")
 	}
 
 	// if a student's name has not been provided, issue a warning
 	// as it might be used in the master file
-	if studentName == "" {
+	if studentName == "" && jsonFilename == "" {
 		log.Println("No student's name has been provided!")
-	}
-
-	// verify that the given master file exists and is accessible
-	masterisregular, _ := fstools.IsRegular(masterFilename)
-	if !masterisregular {
-		log.Fatalf("the master file '%s' does not exist or is not accessible",
-			masterFilename)
 	}
 }
 
@@ -160,28 +151,48 @@ func getTexName() string {
 // Main body
 func main() {
 
-	// jsonData, _ := ioutil.ReadFile("./test.data")
-	// var testData []mathtools.MasterFile
-	// testData = make([]mathtools.MasterFile, 1024)
-	// _ = json.Unmarshal([]byte(jsonData), &testData)
-
-	// for _, field := range testData {
-
-	// 	fmt.Printf(" Master file    : %s\n", field.GetInfile())
-	// 	fmt.Printf(" Student's name : %v\n", field.GetName())
-	// 	fmt.Printf(" Test file      : %v\n\n", field.GetOutfile())
-	// }
+	// first, parse the flags
+	flag.Parse()
 
 	// verify the values parsed
 	verify()
 
-	// get the tex filename and show it on the standard output
-	texFilename = getTexName()
-	log.Printf("TeX filename: %s\n", texFilename)
+	// in case a JSON file was provided
+	if jsonFilename != "" {
 
-	// now, instantiate the master file with the data generated
-	masterFile := mathtools.NewMasterFile(masterFilename, studentName)
-	masterFile.MasterToFileFromTemplate(texFilename)
+		// Unmarshal the JSON file to get all records to process
+		jsonData, _ := ioutil.ReadFile(jsonFilename)
+		var records []mathtools.MasterFile
+		records = make([]mathtools.MasterFile, 5)
+		_ = json.Unmarshal([]byte(jsonData), &records)
+
+		fmt.Println()
+		for _, field := range records {
+
+			// show info
+			fmt.Println(" * Processing ...")
+			fmt.Printf("\t Master file    : %s\n", field.GetInfile())
+			fmt.Printf("\t Student's name : %v\n", field.GetName())
+			fmt.Printf("\t TeX file       : %v\n\n", field.GetOutfile())
+
+			// process this specific record
+			masterFile := mathtools.NewMasterFile(field.GetInfile(), field.GetName())
+			masterFile.MasterToFileFromTemplate(fstools.AddSuffix(field.GetOutfile(),
+				".tex"))
+		}
+	} else {
+
+		// Otherwise, use the parameters given by the user to
+		// generate a unique TeX file
+
+		// get the tex filename and show it on the standard output
+		texFilename = getTexName()
+		log.Printf("TeX filename: %s\n", texFilename)
+
+		// now, instantiate the master file with the data generated
+		masterFile := mathtools.NewMasterFile(masterFilename, studentName)
+		masterFile.MasterToFileFromTemplate(texFilename)
+	}
 }
 
 /* Local Variables: */
