@@ -38,7 +38,7 @@ const (
 )
 
 // the TikZ code for generating algebraic operations is shown below
-const latexOperationCode string = `\begin{minipage}{0.25\linewidth}  
+const latexOperationCode = `\begin{minipage}{0.25\linewidth}  
   \begin{center}
     \begin{tikzpicture}
 
@@ -63,14 +63,14 @@ const latexOperationCode string = `\begin{minipage}{0.25\linewidth}
 `
 
 // the TikZ code for generating the operands is the following
-const latexOperandCode string = `\node ({{.GetLabel}}) at {{.GetPosition}} {};
+const latexOperandCode = `\node ({{.GetLabel}}) at {{.GetPosition}} {};
       \node [left = 0.0 cm of {{.GetLabel}}] ({{.GetId}}) {\huge {{.GetValue}}};`
 
 // the TikZ code for generating operators is shown below
-const latexOperatorCode string = `\node [left = 0.0 cm of num2] ({{.GetLabel}}) {\huge{{.GetSymbol}}};`
+const latexOperatorCode = `\node [left = 0.0 cm of num2] ({{.GetLabel}}) {\huge{{.GetSymbol}}};`
 
 // the TikZ code for generating the result is the following
-const latexResultCode string = `\node ({{.GetLabel}}) at {{.GetPosition}} {};
+const latexResultCode = `\node ({{.GetLabel}}) at {{.GetPosition}} {};
       \node [rectangle, minimum width={{.GetMinimumWidth}}, minimum height = {{.GetMinimumHeight}}, draw, left = 0.0 cm of {{.GetLabel}}] {};`
 
 // types

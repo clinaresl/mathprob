@@ -40,19 +40,23 @@ type position struct {
 	x, y float64
 }
 
-// A master file consists of a filename that stores the tempalte to
-// fill in to generate the final sheet of exercises
+// A master file consists of an input filename that stores the
+// tempalte to fill in to generate the final sheet of exercises, and
+// an output tex filename. It also comes with other fields that can be
+// used for customizing the resulting file such as the student's name
 type MasterFile struct {
-	title string
+	Infile  string
+	Name    string
+	Outfile string
 }
 
 // functions
 // ----------------------------------------------------------------------------
 
 // Create a new instance of a master file with the given name
-func NewMasterFile(filename string) MasterFile {
+func NewMasterFile(filename, name string) MasterFile {
 
-	return MasterFile{title: filename}
+	return MasterFile{Infile: filename, Name: name}
 }
 
 func min(a, b int) int {
@@ -76,6 +80,22 @@ func (pos position) String() string {
 
 // -- MasterFile
 // ----------------------------------------------------------------------------
+
+// Return the input filename that shall store the template file to
+// generate the exercises
+func (masterFile MasterFile) GetInfile() string {
+	return masterFile.Infile
+}
+
+// Return the student's name of this master file
+func (masterFile MasterFile) GetName() string {
+	return masterFile.Name
+}
+
+// Return the output tex filename that shall contain the exercises in tex
+func (masterFile MasterFile) GetOutfile() string {
+	return masterFile.Outfile
+}
 
 // the following function is provided just to allow the text/template to repeat
 // the same statement an arbitrary number of times. It just return a slice of
@@ -422,7 +442,7 @@ func (masterFile MasterFile) GetSequence100(seqtype int) (latexCode string) {
 func (masterFile MasterFile) MasterToFileFromTemplate(dst string) {
 
 	// access a template and parse its contents
-	master, err := template.ParseFiles(masterFile.title)
+	master, err := template.ParseFiles(masterFile.Infile)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -38,6 +38,8 @@ var EXIT_SUCCESS int = 0     // exit with success
 
 // Options
 var masterFilename string // master file
+var texFilename string    // output tex filename
+var studentName string    // student's name
 var helpMaster bool       // is help on master files requested?
 var verbose bool          // has verbose output been requested?
 var version bool          // has version info been requested?
@@ -50,6 +52,8 @@ func init() {
 
 	// Flag to store the master file to process
 	flag.StringVar(&masterFilename, "master", "", "master file to use for generating the sheets of exercises")
+	flag.StringVar(&texFilename, "tex-file", "main.tex", "output filename with the TeX code of the exercises generated from the template file")
+	flag.StringVar(&studentName, "name", "", "Student's name")
 	flag.BoolVar(&helpMaster, "help-master", false, "provides information about the format and usage of master files")
 
 	// other optional parameters are verbose and version
@@ -98,6 +102,12 @@ func verify() {
 		log.Fatalf("Use --master to provide a master file. See --help for more details")
 	}
 
+	// if a student's name has not been provided, issue a warning
+	// as it might be used in the master file
+	if studentName == "" {
+		log.Println("No student's name has been provided!")
+	}
+
 	// verify that the given master file exists and is accessible
 	masterisregular, _ := fstools.IsRegular(masterFilename)
 	if !masterisregular {
@@ -109,12 +119,24 @@ func verify() {
 // Main body
 func main() {
 
+	// jsonData, _ := ioutil.ReadFile("./test.data")
+	// var testData []mathtools.MasterFile
+	// testData = make([]mathtools.MasterFile, 1024)
+	// _ = json.Unmarshal([]byte(jsonData), &testData)
+
+	// for _, field := range testData {
+
+	// 	fmt.Printf(" Master file    : %s\n", field.GetInfile())
+	// 	fmt.Printf(" Student's name : %v\n", field.GetName())
+	// 	fmt.Printf(" Test file      : %v\n\n", field.GetOutfile())
+	// }
+
 	// verify the values parsed
 	verify()
 
 	// now, instantiate the master file with the data generated
-	masterFile := mathtools.NewMasterFile(masterFilename)
-	masterFile.MasterToFileFromTemplate("main.tex")
+	masterFile := mathtools.NewMasterFile(masterFilename, studentName)
+	masterFile.MasterToFileFromTemplate(texFilename)
 }
 
 /* Local Variables: */

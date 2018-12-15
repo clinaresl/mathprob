@@ -37,7 +37,7 @@ const (
 )
 
 // the TikZ code for generating sequences type "previous" is shown below
-const latexPreviousSequenceCode string = `\begin{minipage}{0.25\linewidth}  
+const latexPreviousSequenceCode = `\begin{minipage}{0.25\linewidth}  
   \begin{center}
     \begin{tikzpicture}
 
@@ -53,7 +53,7 @@ const latexPreviousSequenceCode string = `\begin{minipage}{0.25\linewidth}
 `
 
 // the TikZ code for generating sequences type "subsequent" is shown below
-const latexSubsequentSequenceCode string = `\begin{minipage}{0.25\linewidth}  
+const latexSubsequentSequenceCode = `\begin{minipage}{0.25\linewidth}  
   \begin{center}
     \begin{tikzpicture}
 
@@ -69,11 +69,11 @@ const latexSubsequentSequenceCode string = `\begin{minipage}{0.25\linewidth}
 `
 
 // the TikZ code for generating the indices is the following
-const latexIndexCode string = `\node ({{.GetLabel}}) at {{.GetPosition}} {};
+const latexIndexCode = `\node ({{.GetLabel}}) at {{.GetPosition}} {};
       \node [left = 0.0 cm of {{.GetLabel}}] ({{.GetId}}) {\huge {{.GetValue}}};`
 
 // the TikZ code for generating the result is the following
-const latexSequenceAnswerCode string = `\node ({{.GetLabel}}) at {{.GetPosition}} {};
+const latexSequenceAnswerCode = `\node ({{.GetLabel}}) at {{.GetPosition}} {};
       \node [rectangle, minimum width={{.GetMinimumWidth}} cm, minimum height = {{.GetMinimumHeight}} cm, draw, left = 0.0 cm of {{.GetLabel}}] {};`
 
 // An Index is the number shown whose precendent and/or subsequent has
