@@ -1,0 +1,173 @@
+{{/*
+
+	This template provides the basic functionality to just show
+	how different exercises can be generated
+
+*/}}
+
+\documentclass[svgnames,addpoints]{exam}
+
+{{/* ------------------------------ Preamble ----------------------------- */}}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{tb}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+\usepackage{pifont}
+
+\usepackage{cancel}
+\usepackage{array}
+
+\usepackage{tikz}
+\usepackage{pgflibraryarrows}
+\usepackage{pgflibrarysnakes}
+
+\usetikzlibrary{matrix,patterns,fadings,positioning}
+
+\usepackage{array}
+\usepackage{eurosym}
+
+\usepackage{booktabs}
+\usepackage{url}
+
+\usepackage{rotating}
+
+{{/* ------------------------------ Main body ---------------------------- */}}
+
+\begin{document}
+
+\titulacion{Colegio Tomás Bretón}
+\asignatura{ {{.GetClass}} }
+
+\convocatoria{\today}
+\tiempo{4 horas}
+
+\begin{tabular}{cc}
+
+  \begin{minipage}{7.5cm}
+
+    \begin{tabular}{c}
+
+      \includegraphics[scale=0.4]{tomas-breton}\\
+
+    \end{tabular}
+
+  \end{minipage}
+  &
+  \begin{minipage}{8.5cm}
+
+    \begin{center}
+
+      {\huge \bf \titu}\\
+      {\Large \bf \asig}\\ \ \\
+      
+      \convo
+
+    \end{center}
+
+  \end{minipage}\\ & \\ & \\  & \\
+
+\end{tabular}
+
+\vspace*{-1cm}
+\begin{center}
+  
+  \fbox{
+    
+    \begin{minipage}{13cm}
+      
+      Carta del Ministerio de la Maravilla y la Inteligencia para {{.GetName}}\\
+      
+      Querida alumna del Tomás Bretón:\\
+	
+      \vspace*{-0.25cm}
+      \begin{tabular}{c}
+        
+        \begin{minipage}{12cm}
+
+        Probablemente no habrás oído hablar de nuestro ministerio, eso es porque es un ministerio secreto. Solo nos ponemos en contacto con la gente que es tan lista y maravillosa que tiene que formar parte de él. \\
+	
+        Vuestros profesores Jorge y Paloma nos han dicho las buenas notas que has sacado en esta evaluación. Las notas han sido las mejores de todo el país, pero necesitamos saber si son verdad o no. Por eso hemos hecho estas actividades para que las hagas si quieres demostrar que eres de las alumnas más listas y maravillosas de toda España. ?`Te atreves a realizarlas? Si tienes alguna duda puedes preguntarle a papá o a mamá.\\
+
+        !`Mucha suerte!\\
+	
+        \end{minipage}
+        
+      \end{tabular}
+      
+    \end{minipage}
+  }
+  
+\end{center}
+
+\vspace*{0.2cm}
+
+{{/* ------------------------------ Questions ---------------------------- */}}
+
+{\Large\bf Sumas}
+
+El primer paso para demostrar que eres de las más listas
+será hacer estas sumas. Como ves son muy facilitas, sólo es el
+calentamiento:
+
+\noindent{{range .Slice 20}}{{.GetSimpleOperation11 (0)}}{{end}}
+
+Demasiado fácil, ¿verdad? Vamos a complicar un poco más las
+sumas, ahora aparecen ya números con una y dos decenas, ¿te acuerdas
+de lo que eran?
+
+\noindent{{range .Slice 16}}{{.GetSimpleOperation21Bounded20 (0)}}{{end}}
+
+{\Large\bf Restas}
+
+Tranquila, no cantes victoria, que ahora llega lo más
+interesante. ¿Eres capaz de hacer estas restas? Según vuestros profes
+las harás con los ojos cerrados \ldots
+
+\noindent{{range .Slice 20}}{{.GetSimpleOperation11 (1)}}{{end}}
+
+{\Large\bf Secuencias}
+
+¡Vaya! Va a ser verdad que eres de las chicas más listas
+de España. Sigamos a ver si eres capaz de calcular el número posterior
+a un número.
+
+\noindent{{range .Slice 8}}{{.GetSequence10 (2)}}{{end}}
+
+¡Estoy alucinando contigo! ¿Tendrán razón vuestros profes?
+Vamos a ver si eres capaz de hacer este último ejercicio: calcula el
+número anterior, ¿sabes hacerlo?
+
+\noindent{{range .Slice 8}}{{.GetSequence10 (1)}}{{end}}
+
+\vspace*{1.2cm}
+
+\begin{center}
+  
+  \fbox{
+    
+    \begin{minipage}{13cm}
+
+    ¡Era verdad, vuestros profes tenían razón! Has demostrado que eres una de las chicas con más futuro de este país, ¡enhorabuena! Pero recuerda que tienes que seguir esforzándote para seguir siendo tan buena y maravillosa.\\ 
+
+    Un cordial saludo
+
+    \vspace*{1.5cm}
+
+    El Ministro de la  Maravilla y la Inteligencia\\
+    Noterb Samot
+
+    \end{minipage}
+  }
+  
+\end{center}
+
+
+
+\end{document}
