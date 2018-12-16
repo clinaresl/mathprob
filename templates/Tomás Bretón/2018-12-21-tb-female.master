@@ -81,10 +81,11 @@
   \fbox{
     
     \begin{minipage}{13cm}
+      \vspace*{0.3cm}
       
       Carta del Ministerio de la Maravilla y la Inteligencia para {{.GetName}}\\
       
-      Querida alumna del Tomás Bretón:\\
+      Querida alumna del Tomás Bretón:\\[0.2cm]
 	
       \vspace*{-0.25cm}
       \begin{tabular}{c}
@@ -154,7 +155,7 @@ número anterior, ¿sabes hacerlo?
     
     \begin{minipage}{13cm}
 
-    ¡Era verdad, vuestros profes tenían razón! Has demostrado que eres una de las chicas con más futuro de este país, ¡enhorabuena! Pero recuerda que tienes que seguir esforzándote para seguir siendo tan buena y maravillosa.\\ 
+    ¡Era verdad, tus profes tenían razón! Has demostrado que eres una de las chicas con más futuro de este país, ¡enhorabuena! Pero recuerda que tienes que seguir esforzándote para seguir siendo tan buena y maravillosa.\\ 
 
     Un cordial saludo
 
