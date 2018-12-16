@@ -188,6 +188,87 @@ func (masterFile MasterFile) GetSimpleOperation11(operator int) (latexCode strin
 }
 
 // Get the LaTeX code for a simple operation where the first operand
+// has to be less than 20 and the second one has to be less than 10,
+// and the sum of both operands strictly less or equal than 20
+func (masterFile MasterFile) GetSimpleOperation21Bounded20(operator int) (latexCode string) {
+
+	// seed the random generator
+	rand.Seed(time.Now().UTC().UnixNano())
+
+	// create the two operands
+	latexOperandB := latexOperand{
+		label: "label2",
+		id:    "num2",
+		pos:   position{x: 2.50, y: 2.50},
+		value: 1 + rand.Intn(9),
+	}
+	latexOperandA := latexOperand{
+		label: "label1",
+		id:    "num1",
+		pos:   position{x: 2.50, y: 3.50},
+		value: 10 + rand.Intn(10-latexOperandB.value),
+	}
+
+	// create the operator and, in passing, verify specific conditions for
+	// the operands to make sense with the requested operator
+	latexOperator := latexOperator{
+		label: "op",
+		pos:   position{x: 1.00, y: 2.50},
+	}
+	switch operator {
+	case ADD:
+		latexOperator.symbol = `$+$`
+	case SUB:
+		latexOperator.symbol = `$-$`
+
+		// make sure that operandB is strictly less or equal than
+		// operandA
+		if latexOperandA.value < latexOperandB.value {
+			latexOperandA.value, latexOperandB.value = latexOperandB.value, latexOperandA.value
+		}
+
+	case PROD:
+		latexOperator.symbol = `$\times$`
+	case DIV:
+		latexOperator.symbol = `$\div$`
+
+		// ensure the second operand is not 0
+		if latexOperandB.value == 0 {
+			latexOperandB.value = 1
+		}
+
+		// ensure the result is an integer value
+		if latexOperandA.value%latexOperandB.value != 0 {
+
+			// just divide by the minimum of both operands and
+			// randomly select the larger number to be below 10
+			latexOperandB.value = min(latexOperandA.value, latexOperandB.value)
+			latexOperandA.value = int(float64(latexOperandB.value) * math.Floor((math.Log(float64(10)))/(math.Log(float64(latexOperandB.value)))))
+		}
+	default:
+		log.Fatalf("Unknown operator '%v'", operator)
+	}
+
+	// create the result
+	latexResult := latexResult{
+		label:         "label3",
+		pos:           position{x: 2.75, y: 1.00},
+		minimumWidth:  1.5,
+		minimumHeight: 1.25,
+	}
+
+	// and use all of these to create the operation
+	latexOperation := singleOperation{
+		operandA: latexOperandA,
+		operandB: latexOperandB,
+		operator: latexOperator,
+		result:   latexResult,
+	}
+
+	return latexOperation.Execute()
+}
+
+// Get the LaTeX code for a simple operation where the first operand
 // has to be less than 100 and the second one has to be less than 10
 func (masterFile MasterFile) GetSimpleOperation21(operator int) (latexCode string) {
 
@@ -205,7 +286,7 @@ func (masterFile MasterFile) GetSimpleOperation21(operator int) (latexCode strin
 		label: "label2",
 		id:    "num2",
 		pos:   position{x: 2.50, y: 2.50},
-		value: 1 + rand.Intn(99),
+		value: 1 + rand.Intn(9),
 	}
 
 	// create the operator and, in passing, verify specific conditions for
