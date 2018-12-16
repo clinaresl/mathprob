@@ -49,16 +49,17 @@ type position struct {
 type MasterFile struct {
 	Infile  string
 	Name    string
+	Class   string
 	Outfile string
 }
 
 // functions
 // ----------------------------------------------------------------------------
 
-// Create a new instance of a master file with the given name
-func NewMasterFile(filename, name string) MasterFile {
+// Create a new instance of a master file with the given name and clas
+func NewMasterFile(filename, name, class string) MasterFile {
 
-	return MasterFile{Infile: filename, Name: name}
+	return MasterFile{Infile: filename, Name: name, Class: class}
 }
 
 func min(a, b int) int {
@@ -92,6 +93,11 @@ func (masterFile MasterFile) GetInfile() string {
 // Return the student's name of this master file
 func (masterFile MasterFile) GetName() string {
 	return masterFile.Name
+}
+
+// Return the student's class of this master file
+func (masterFile MasterFile) GetClass() string {
+	return masterFile.Class
 }
 
 // Return the output tex filename that shall contain the exercises in tex

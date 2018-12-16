@@ -43,6 +43,7 @@ var masterFilename string // master file
 var texFilename string    // output tex filename
 var jsonFilename string   // JSON filename with info of all records to process
 var studentName string    // student's name
+var className string      // student's class name
 var helpMaster bool       // is help on master files requested?
 var helpJSON bool         // is help about JSON files requested?
 var verbose bool          // has verbose output been requested?
@@ -59,6 +60,7 @@ func init() {
 	flag.StringVar(&texFilename, "outfile", "", "output filename with the TeX code of the exercises generated from the template file. If not given, then the student's name provided with -student-name is used instead. If none is provided, then 'main.tex' is used by default. In case the resulting TeX file already exists, then it is re-numbered to avoid overwritting existing contents")
 	flag.StringVar(&jsonFilename, "json-file", "", "file with information of all records to process in JSON format. If a JSON file is given, the input file given with -infile is automatically discarded. It is not allowed to provide more than 1024 records in the JSON file. Use 'help-json' to obtain additional information")
 	flag.StringVar(&studentName, "name", "", "Student's name")
+	flag.StringVar(&className, "class", "", "Student's class")
 
 	flag.BoolVar(&helpMaster, "help-master", false, "provides information about the format and usage of master files")
 	flag.BoolVar(&helpMaster, "help-json", false, "provides information about the JSON format used to specify multiple records")
@@ -117,10 +119,14 @@ func verify() {
 		log.Fatalf("Use either -master-file or -json-file to provide a master file. See -help for more details")
 	}
 
-	// if a student's name has not been provided, issue a warning
-	// as it might be used in the master file
+	// if optional parameters have not been provided, issue a
+	// warning as it might be used in the master file
 	if studentName == "" && jsonFilename == "" {
 		log.Println("No student's name has been provided!")
+	}
+
+	if className == "" && jsonFilename == "" {
+		log.Println("No student's class has been provided!")
 	}
 }
 
@@ -176,7 +182,9 @@ func main() {
 			fmt.Printf("\t TeX file       : %v\n\n", field.GetOutfile())
 
 			// process this specific record
-			masterFile := mathtools.NewMasterFile(field.GetInfile(), field.GetName())
+			masterFile := mathtools.NewMasterFile(field.GetInfile(),
+				field.GetName(),
+				field.GetClass())
 			masterFile.MasterToFileFromTemplate(fstools.AddSuffix(field.GetOutfile(),
 				".tex"))
 		}
@@ -190,7 +198,9 @@ func main() {
 		log.Printf("TeX filename: %s\n", texFilename)
 
 		// now, instantiate the master file with the data generated
-		masterFile := mathtools.NewMasterFile(masterFilename, studentName)
+		masterFile := mathtools.NewMasterFile(masterFilename,
+			studentName,
+			className)
 		masterFile.MasterToFileFromTemplate(texFilename)
 	}
 }

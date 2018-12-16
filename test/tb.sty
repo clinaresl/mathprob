@@ -1,0 +1,117 @@
+\usepackage{pifont}
+
+% Heading first page
+% -----------------------------------------------------------------------------
+\def\ucarletterhead{
+  \hfuzz=5pt
+  \setlength{\unitlength}{1.1truemm}
+
+  \begin{tabular}{cc}
+
+    \begin{minipage}{7.5cm}
+
+      \begin{tabular}{c}
+
+        \includegraphics[scale=0.4]{tomas-breton}\\
+
+      \end{tabular}
+
+    \end{minipage}
+    &
+    \begin{minipage}{8.5cm}
+
+      \begin{center}
+
+        {\huge \bf \titu}\\
+        {\Large \bf \asig}\\ \ \\
+        
+        \convo
+
+      \end{center}
+
+    \end{minipage}\\ & \\ & \\  & \\
+
+  \end{tabular}
+}
+
+% Normativa
+% -----------------------------------------------------------------------------
+\def\principio{
+  \ucarletterhead
+  
+  \vspace*{-1cm}
+  \begin{center}
+    
+    \fbox{
+      
+      \begin{minipage}{13cm}
+        
+        {\large \bf Normas generales del examen}\\
+        
+        \notagen
+        \ifx\@empty\notagen
+        \vspace*{-0.25cm}
+        \begin{tabular}{c}
+          
+          \begin{minipage}{12cm}
+
+            \begin{dingautolist}{192}
+            \item El tiempo para realizar el examen es de {\bf \tiem}
+            \item No se responder\'a a ninguna pregunta sobre el
+              examen transcurridos los primeros \textbf{30 minutos}
+            \item \textbf{Justifica debidamente todas tus respuestas}
+            \item Cada pregunta debe responderse en p\'aginas
+              separadas en el mismo orden de sus apartados. Si no se
+              responde, se debe entregar una p\'agina en blanco
+            \item Numera todas las páginas de cada ejercicio
+              separadamente
+            \item Escribe con claridad y en limpio, de forma ordenada
+              y concisa
+            \item Si se sale del aula, no se podr\'a volver a entrar
+              durante el examen
+            \item No se puede presentar el examen escrito a l\'apiz
+            \end{dingautolist}
+
+          \end{minipage}
+          
+        \end{tabular}
+        
+      \end{minipage}
+    }
+    
+  \end{center}
+  
+  \vspace*{0.2cm}
+  
+  \else \notagen \fi
+}
+
+% Definitions
+% -----------------------------------------------------------------------------
+\def\titulacion#1{\def\titu{#1}}
+\def\titu{}
+\def\asignatura#1{\def\asig{#1}}
+\def\asig{}
+\def\tiempo#1{\def\tiem{#1}}
+\def\tiem{}
+\def\convocatoria#1{\def\convo{#1}}
+\def\convo{}
+\def\tituloejercicio#1{\def\tituloejer{#1}}
+\def\tituloejer{}
+
+\newcommand{\notageneral}[1]{\def\notagen{#1}}
+\def\notagen{}
+
+% examdoc customization
+% -----------------------------------------------------------------------------
+\pointpoints{punto}{puntos}
+\qformat{\Large\bfseries Pregunta \thequestion\hspace*{0.1cm} (\totalpoints\ puntos)\hfill}
+\pointformat{\bfseries (\thepoints)}
+
+\pagestyle{head}
+\runningheadrule
+\runningheader{\convo}
+              {\asig}
+              {P\'agina \thepage\ de \numpages}
+
+
