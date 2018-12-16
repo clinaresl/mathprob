@@ -118,13 +118,13 @@ func (masterFile MasterFile) GetSimpleOperation11(operator int) (latexCode strin
 	latexOperandA := latexOperand{
 		label: "label1",
 		id:    "num1",
-		pos:   position{x: 0.00, y: 0.00},
+		pos:   position{x: 2.50, y: 3.50},
 		value: 1 + rand.Intn(9),
 	}
 	latexOperandB := latexOperand{
 		label: "label2",
 		id:    "num2",
-		pos:   position{x: 0.00, y: -1.05},
+		pos:   position{x: 2.50, y: 2.50},
 		value: 1 + rand.Intn(9),
 	}
 
@@ -132,6 +132,7 @@ func (masterFile MasterFile) GetSimpleOperation11(operator int) (latexCode strin
 	// the operands to make sense with the requested operator
 	latexOperator := latexOperator{
 		label: "op",
+		pos:   position{x: 1.00, y: 2.50},
 	}
 	switch operator {
 	case ADD:
@@ -170,9 +171,9 @@ func (masterFile MasterFile) GetSimpleOperation11(operator int) (latexCode strin
 	// create the result
 	latexResult := latexResult{
 		label:         "label3",
-		pos:           position{x: 0.15, y: -2.35},
-		minimumWidth:  1.2,
-		minimumHeight: 1.0,
+		pos:           position{x: 2.75, y: 1.00},
+		minimumWidth:  1.5,
+		minimumHeight: 1.25,
 	}
 
 	// and use all of these to create the operation
@@ -197,13 +198,13 @@ func (masterFile MasterFile) GetSimpleOperation21(operator int) (latexCode strin
 	latexOperandA := latexOperand{
 		label: "label1",
 		id:    "num1",
-		pos:   position{x: 0.00, y: 0.00},
+		pos:   position{x: 2.50, y: 3.50},
 		value: 1 + rand.Intn(99),
 	}
 	latexOperandB := latexOperand{
 		label: "label2",
 		id:    "num2",
-		pos:   position{x: 0.00, y: -1.05},
+		pos:   position{x: 2.50, y: 2.50},
 		value: 1 + rand.Intn(99),
 	}
 
@@ -211,6 +212,7 @@ func (masterFile MasterFile) GetSimpleOperation21(operator int) (latexCode strin
 	// the operands to make sense with the requested operator
 	latexOperator := latexOperator{
 		label: "op",
+		pos:   position{x: 1.00, y: 2.50},
 	}
 	switch operator {
 	case ADD:
@@ -249,9 +251,9 @@ func (masterFile MasterFile) GetSimpleOperation21(operator int) (latexCode strin
 	// create the result
 	latexResult := latexResult{
 		label:         "label3",
-		pos:           position{x: 0.15, y: -2.35},
-		minimumWidth:  1.2,
-		minimumHeight: 1.0,
+		pos:           position{x: 2.75, y: 1.00},
+		minimumWidth:  1.5,
+		minimumHeight: 1.25,
 	}
 
 	// and use all of these to create the operation
@@ -276,13 +278,13 @@ func (masterFile MasterFile) GetSimpleOperation22(operator int) (latexCode strin
 	latexOperandA := latexOperand{
 		label: "label1",
 		id:    "num1",
-		pos:   position{x: 0.00, y: 0.00},
+		pos:   position{x: 2.50, y: 3.50},
 		value: 1 + rand.Intn(99),
 	}
 	latexOperandB := latexOperand{
 		label: "label2",
 		id:    "num2",
-		pos:   position{x: 0.00, y: -1.05},
+		pos:   position{x: 2.50, y: 2.50},
 		value: 1 + rand.Intn(99),
 	}
 
@@ -290,6 +292,7 @@ func (masterFile MasterFile) GetSimpleOperation22(operator int) (latexCode strin
 	// the operands to make sense with the requested operator
 	latexOperator := latexOperator{
 		label: "op",
+		pos:   position{x: 1.00, y: 2.50},
 	}
 	switch operator {
 	case ADD:
@@ -328,9 +331,9 @@ func (masterFile MasterFile) GetSimpleOperation22(operator int) (latexCode strin
 	// create the result
 	latexResult := latexResult{
 		label:         "label3",
-		pos:           position{x: 0.15, y: -2.35},
-		minimumWidth:  1.2,
-		minimumHeight: 1.0,
+		pos:           position{x: 2.75, y: 1.00},
+		minimumWidth:  1.5,
+		minimumHeight: 1.25,
 	}
 
 	// and use all of these to create the operation

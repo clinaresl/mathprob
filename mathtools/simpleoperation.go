@@ -42,14 +42,15 @@ const latexOperationCode = `\begin{minipage}{0.25\linewidth}
   \begin{center}
     \begin{tikzpicture}
 
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
       % show the operands
       {{.GetOperandA}}
       {{.GetOperandB}}
 
       % show a straight line
-      \node [below right=0.35 cm and 0.25 cm of {{.GetLabelB}}] (right) {};
-      \node [below left=0.35 cm and 2.05 cm of {{.GetLabelB}}] (left) {};
-      \draw [thick] (left) -- (right);
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
       % show the operator
       {{.GetOperator}}
@@ -64,14 +65,14 @@ const latexOperationCode = `\begin{minipage}{0.25\linewidth}
 
 // the TikZ code for generating the operands is the following
 const latexOperandCode = `\node ({{.GetLabel}}) at {{.GetPosition}} {};
-      \node [left = 0.0 cm of {{.GetLabel}}] ({{.GetId}}) {\huge {{.GetValue}}};`
+      \node [left=0.0 cm of {{.GetLabel}}] ({{.GetId}}) {\huge {{.GetValue}}};`
 
 // the TikZ code for generating operators is shown below
-const latexOperatorCode = `\node [left = 0.0 cm of num2] ({{.GetLabel}}) {\huge{{.GetSymbol}}};`
+const latexOperatorCode = `\node ({{.GetLabel}}) at {{.GetPosition}} {\huge{{.GetSymbol}}};`
 
 // the TikZ code for generating the result is the following
 const latexResultCode = `\node ({{.GetLabel}}) at {{.GetPosition}} {};
-      \node [rectangle, minimum width={{.GetMinimumWidth}}, minimum height = {{.GetMinimumHeight}}, draw, left = 0.0 cm of {{.GetLabel}}] {};`
+      \node [rounded corners, rectangle, minimum width={{.GetMinimumWidth}}, minimum height = {{.GetMinimumHeight}}, draw, left=0.0 cm of {{.GetLabel}}] {};`
 
 // types
 // ----------------------------------------------------------------------------
@@ -84,8 +85,10 @@ type latexOperand struct {
 }
 
 // A LaTeX operator consists of a label and a mathematical symbol
+// positioned at a specific pair (x, y)
 type latexOperator struct {
 	label, symbol string
+	pos           position
 }
 
 // A LaTeX result consists of a label, a position, and a minimum width
@@ -178,6 +181,11 @@ func (operator latexOperator) GetLabel() string {
 // Return the symbol of an operator
 func (operator latexOperator) GetSymbol() string {
 	return fmt.Sprintf("%v", operator.symbol)
+}
+
+// Return the position of an operator
+func (operator latexOperator) GetPosition() string {
+	return fmt.Sprintf("%v", operator.pos)
 }
 
 // -- latexResult

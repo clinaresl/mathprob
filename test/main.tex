@@ -49,28 +49,38 @@
 
 \begin{questions}
 
-  \question {\bf Adriana}, como sé que te gusta jugar a calcular los números
-  anteriores y posteriores a uno que siempre te digo, he hecho estos
-  ejercicios para tí. Espero que te gusten mi niña.
+\question Roberto, sé que las restas parecen más difíciles que las
+sumas, pero te lo aseguro \textit{sólo lo parece}. Espero que las
+siguientes operaciones te diviertan tanto como otras.
 
-  \begin{parts}
+\begin{parts}
 
-    \part[3] Primero, ¿serías capaz de calcular el número anterior a
-    cada uno de los siguientes? No es más difícil que cuando jugamos a
-    esto paseando por la calle:
-
+  \part[3] Vamos poco a poco, primero unas un poquito fáciles. Usa los
+  dedos para contar si quieres, no tienes por qué hacerlo de cabeza
+  (aunque ya sé que eso te encanta)
+  
 \begin{minipage}{0.25\linewidth}  
   \begin{center}
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 4};
 
-      % show the index
-      \node at (2, 0.75) {\huge 3};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -80,29 +90,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 2};
 
-      % show the index
-      \node at (2, 0.75) {\huge 5};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
-
-      % show the index
-      \node at (2, 0.75) {\huge 5};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -112,29 +116,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 5};
 
-      % show the index
-      \node at (2, 0.75) {\huge 9};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
-
-      % show the index
-      \node at (2, 0.75) {\huge 1};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -144,29 +142,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 9};
 
-      % show the index
-      \node at (2, 0.75) {\huge 5};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
-
-      % show the index
-      \node at (2, 0.75) {\huge 5};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -176,29 +168,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 3};
 
-      % show the index
-      \node at (2, 0.75) {\huge 6};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
-
-      % show the index
-      \node at (2, 0.75) {\huge 6};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -208,29 +194,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 6};
 
-      % show the index
-      \node at (2, 0.75) {\huge 8};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
-
-      % show the index
-      \node at (2, 0.75) {\huge 5};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -240,35 +220,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 6};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 6};
 
-      % show the index
-      \node at (2, 0.75) {\huge 9};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-
-    \part[3] !`Lo has hecho muy bien {\it Adriana}! Y estoy seguro que
-    también eres capaz de calcular el número posterior a cada uno de
-    los siguientes:
-
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
-
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the index
-      \node at (0.5, 0.75) {\huge 4};
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -278,29 +246,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the index
-      \node at (0.5, 0.75) {\huge 2};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 3};
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the index
-      \node at (0.5, 0.75) {\huge 8};
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -310,29 +272,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the index
-      \node at (0.5, 0.75) {\huge 4};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 5};
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the index
-      \node at (0.5, 0.75) {\huge 7};
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -342,29 +298,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the index
-      \node at (0.5, 0.75) {\huge 6};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 1};
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the index
-      \node at (0.5, 0.75) {\huge 8};
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -374,29 +324,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the index
-      \node at (0.5, 0.75) {\huge 4};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 5};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 5};
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the index
-      \node at (0.5, 0.75) {\huge 4};
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -406,29 +350,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the index
-      \node at (0.5, 0.75) {\huge 7};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 2};
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the index
-      \node at (0.5, 0.75) {\huge 7};
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -438,35 +376,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the index
-      \node at (0.5, 0.75) {\huge 7};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 6};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 1};
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-
-    \part[4] Y ahora mucho más difícil. ?`Serías capaz de calcular el
-    anterior y el posterior a los siguientes números que son mucho más
-    grandes? Estoy seguro que te divertirás intentándolo:
-
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
-
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
-
-      % show the index
-      \node at (2, 0.75) {\huge 71};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -476,29 +402,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 1};
 
-      % show the index
-      \node at (2, 0.75) {\huge 33};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
-
-      % show the index
-      \node at (2, 0.75) {\huge 73};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -508,29 +428,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 7};
 
-      % show the index
-      \node at (2, 0.75) {\huge 87};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
-
-      % show the index
-      \node at (2, 0.75) {\huge 94};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -540,29 +454,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 6};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 5};
 
-      % show the index
-      \node at (2, 0.75) {\huge 36};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
-
-      % show the index
-      \node at (2, 0.75) {\huge 19};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -572,29 +480,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 3};
 
-      % show the index
-      \node at (2, 0.75) {\huge 19};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
-
-      % show the index
-      \node at (2, 0.75) {\huge 15};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -604,29 +506,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 3};
 
-      % show the index
-      \node at (2, 0.75) {\huge 74};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
-
-      % show the index
-      \node at (2, 0.75) {\huge 42};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -636,30 +532,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (0.5, 0.75) {};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 8};
 
-      % show the index
-      \node at (2, 0.75) {\huge 33};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
-
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the index
-      \node at (0.5, 0.75) {\huge 20};
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -669,29 +558,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the index
-      \node at (0.5, 0.75) {\huge 21};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 6};
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the index
-      \node at (0.5, 0.75) {\huge 85};
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -701,29 +584,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the index
-      \node at (0.5, 0.75) {\huge 61};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 4};
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the index
-      \node at (0.5, 0.75) {\huge 58};
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -733,29 +610,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the index
-      \node at (0.5, 0.75) {\huge 74};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 3};
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the index
-      \node at (0.5, 0.75) {\huge 56};
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -765,29 +636,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the index
-      \node at (0.5, 0.75) {\huge 71};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 6};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 1};
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the index
-      \node at (0.5, 0.75) {\huge 26};
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -797,29 +662,23 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the index
-      \node at (0.5, 0.75) {\huge 99};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 5};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 4};
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
 
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the index
-      \node at (0.5, 0.75) {\huge 1};
-
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
@@ -829,13 +688,3129 @@
     \begin{tikzpicture}
 
       % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+      \draw [white] (0,0) rectangle (3.5,4.0);
 
-      % show the index
-      \node at (0.5, 0.75) {\huge 99};
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 3};
 
-      % show the area to draw the answer
-      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw] at (2, 0.75) {};
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 2};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 7};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 4};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 3};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 5};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 4};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 5};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 1};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 4};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 2};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 5};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 2};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 4};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 2};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 1};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 5};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 3};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 6};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 1};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 4};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 4};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 2};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 3};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 4};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 9};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 5};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 6};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 2};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 7};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 6};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 8};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 3};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+
+
+  \part[3] Me encanta que hayas hecho las anteriores. ¡Eran
+  muchísimas! ¿Te atreverías a intentar las siguientes?
+  
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 57};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 50};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 97};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 37};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 11};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 8};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 68};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 27};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 72};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 59};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 38};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 13};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 45};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 21};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 95};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 12};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 79};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 20};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 49};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 8};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 49};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 11};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 40};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 38};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 18};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 11};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 96};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 23};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 89};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 54};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 83};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 45};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 80};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 76};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 44};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 36};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 17};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 4};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 45};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 43};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 74};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 58};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 95};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 56};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 87};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 15};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 88};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 36};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 90};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 76};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 66};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 33};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 30};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 5};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 72};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 33};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 72};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 46};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 80};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 14};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 59};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 17};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 67};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 38};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 79};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 44};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 97};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 78};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 87};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 52};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 49};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 3};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 35};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 28};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 91};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 48};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 83};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 51};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 89};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 53};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 88};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 3};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 33};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 11};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 54};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 36};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 96};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 42};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 29};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 11};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 58};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 38};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 91};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 51};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 85};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 18};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+
+
+  \part[4] Roberto, eres increíble. Las siguientes son muy difíciles,
+  de veras, y seguramente harás unas cuantas mal. Pero recuerda que se
+  trata de pasárlo bien, ¡disfruta con estas \textsc{super-restas}
+  para niños de verdad mayores!
+  
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 86};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 74};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 79};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 14};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 28};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 13};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 78};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 7};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 37};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 36};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 33};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 30};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 93};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 53};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 65};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 29};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 1};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 1};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 22};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 18};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 78};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 60};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 29};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 22};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 57};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 7};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 83};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 7};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 94};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 25};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 36};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 7};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 48};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 13};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 80};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 7};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 71};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 67};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 77};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 75};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 89};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 65};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 36};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 13};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 63};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 52};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 13};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 10};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 34};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 25};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 64};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 31};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 71};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 36};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 47};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 30};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 82};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 16};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 63};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 40};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 51};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 21};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 78};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 77};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 75};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 34};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 41};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 33};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 28};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 19};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 75};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 57};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 47};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 42};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 72};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 24};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 48};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 45};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 33};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 23};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 90};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 43};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 73};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 55};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 48};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 7};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 84};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 71};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 98};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 52};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 56};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 35};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 93};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 24};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+\begin{minipage}{0.25\linewidth}  
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (3.5,4.0);
+
+      % show the operands
+      \node (label1) at (2.5, 3.5) {};
+      \node [left=0.0 cm of label1] (num1) {\huge 62};
+      \node (label2) at (2.5, 2.5) {};
+      \node [left=0.0 cm of label2] (num2) {\huge 12};
+
+      % show a straight line
+      \draw [thick] (0.5, 2.0) -- (3.0, 2.0);
+
+      % show the operator
+      \node (op) at (1, 2.5) {\huge$-$};
+
+      % show the result
+      \node (label3) at (2.75, 1) {};
+      \node [rounded corners, rectangle, minimum width=1.5 cm, minimum height = 1.25 cm, draw, left=0.0 cm of label3] {};
 
     \end{tikzpicture}
   \end{center}
