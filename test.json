@@ -1,22 +1,22 @@
 [
 	{
-		"infile":"templates/sequence.master",
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-female.master",
 	        "name":"Adriana",
 	        "class":"1º A",
 		"outfile":"adriana.tex"
 	},
 	
 	{
-		"infile":"templates/sequence.master",
-		"name":"Dario",
-	        "class":"1º A",
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-male.master",
+		"name":"Darío",
+	        "class":"1º B",
 		"outfile":"dario.tex"
 	},
 	
 	{
-		"infile":"templates/sequence.master",
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-male.master",
 		"name":"Roberto",
-	        "class":"1º A",
+	        "class":"3º A",
 		"outfile":"roberto.tex"
 	}
 ]
