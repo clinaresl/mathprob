@@ -1,0 +1,177 @@
+[
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-female.master",
+	        "name":"Aitana",
+	        "class":"1º B",
+		"outfile":"Aitana"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-female.master",
+	        "name":"Manuela",
+	        "class":"1º B",
+		"outfile":"Manuela"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-female.master",
+	        "name":"Matilde",
+	        "class":"1º B",
+		"outfile":"Matilde"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-female.master",
+	        "name":"Claudia",
+	        "class":"1º B",
+		"outfile":"Claudia"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-female.master",
+	        "name":"Nadia",
+	        "class":"1º B",
+		"outfile":"Nadia"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-female.master",
+	        "name":"Carla",
+	        "class":"1º B",
+		"outfile":"Carla"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-female.master",
+	        "name":"Claudia",
+	        "class":"1º B",
+		"outfile":"Claudia"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-female.master",
+	        "name":"Marina",
+	        "class":"1º B",
+		"outfile":"Marina"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-female.master",
+	        "name":"María",
+	        "class":"1º B",
+		"outfile":"María"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-female.master",
+	        "name":"María Victoria",
+	        "class":"1º B",
+		"outfile":"MaríaVictoria"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-female.master",
+	        "name":"África",
+	        "class":"1º B",
+		"outfile":"África"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-female.master",
+	        "name":"Emma",
+	        "class":"1º B",
+		"outfile":"Emma"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-male.master",
+		"name":"Ángel Nicolás",
+	        "class":"1º B",
+		"outfile":"ÁngelNicolás"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-male.master",
+		"name":"Miguel",
+	        "class":"1º B",
+		"outfile":"Miguel"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-male.master",
+		"name":"Paúl",
+	        "class":"1º B",
+		"outfile":"Paúl"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-male.master",
+		"name":"Miguel",
+	        "class":"1º B",
+		"outfile":"Miguel"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-male.master",
+		"name":"Eneko",
+	        "class":"1º B",
+		"outfile":"Eneko"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-male.master",
+		"name":"Dylan Gabriel",
+	        "class":"1º B",
+		"outfile":"DylanGabriel"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-male.master",
+		"name":"Darío",
+	        "class":"1º B",
+		"outfile":"Darío"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-male.master",
+		"name":"Marco",
+	        "class":"1º B",
+		"outfile":"Marco"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-male.master",
+		"name":"Pablo",
+	        "class":"1º B",
+		"outfile":"Pablo"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-male.master",
+		"name":"José",
+	        "class":"1º B",
+		"outfile":"José"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-male.master",
+		"name":"Akane",
+	        "class":"1º B",
+		"outfile":"Akane"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-male.master",
+		"name":"Álvaro",
+	        "class":"1º B",
+		"outfile":"Álvaro"
+	},
+	
+	{
+		"infile":"templates/Tomás Bretón/2018-12-21-tb-male.master",
+		"name":"Juan",
+	        "class":"1º B",
+		"outfile":"Juan"
+	}
+	
+]
