@@ -1,0 +1,1987 @@
+%%
+%% main.tex
+%% 
+%% Made by 
+%% Login   <clinares@atlas>
+%% 
+%% Started on  Sat May  4 14:24:58 2019 
+%% Last update Sat May  4 14:24:58 2019 
+%%
+
+\documentclass[svgnames,addpoints]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{tb}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+\usepackage{pifont}
+
+\usepackage{cancel}
+\usepackage{array}
+
+\usepackage{tikz}
+\usepackage{pgflibraryarrows}
+\usepackage{pgflibrarysnakes}
+
+\usetikzlibrary{calc,matrix,patterns,fadings,positioning}
+
+\usepackage{xcolor}
+
+\usepackage{array}
+\usepackage{eurosym}
+
+\usepackage{booktabs}
+\usepackage{url}
+
+\usepackage{rotating}
+
+\newlength{\zerowidth}
+\settowidth{\zerowidth}{\huge 0}
+\newlength{\zeroheight}
+\settoheight{\zeroheight}{\huge 0}
+
+\makeatletter
+\def\convertto#1#2{\strip@pt\dimexpr #2*65536/\number\dimexpr 1#1}
+\makeatother
+
+
+\begin{document}
+
+\titulacion{Esquemas}
+\asignatura{Divisiones}
+
+\convocatoria{\today}
+\tiempo{4 horas}
+
+\begin{tabular}{cc}
+
+  \begin{minipage}{7.5cm}
+
+    \begin{tabular}{c}
+
+      \includegraphics[scale=0.4]{tomas-breton}\\
+
+    \end{tabular}
+
+  \end{minipage}
+  &
+  \begin{minipage}{8.5cm}
+
+    \begin{center}
+
+      {\huge \bf \titu}\\
+      {\Large \bf \asig}\\ \ \\
+      
+      \convo
+
+    \end{center}
+
+  \end{minipage}\\ & \\ & \\  & \\
+
+\end{tabular}
+
+{\Large\bf Divisiones}
+
+Todas las representaciones que se muestran a continuación se hacen
+empleando las siguientes medidas:
+
+\begin{center}
+  \begin{tabular}{ll}
+    \texttt{zeroheight}   & \convertto{cm}{\the\zeroheight}\ cm \\
+    \texttt{zerowidth}    & \convertto{cm}{\the\zerowidth}\ cm \\
+  \end{tabular}
+\end{center}
+
+\noindent
+y el \texttt{baselineskip} (\convertto{cm}{\the\baselineskip}\
+cm). Las dos mostradas arriba deben definirse en el preámbulo del
+documento \LaTeX\ (por ejemplo, con un fichero \texttt{.sty} que se
+incluya automáticamente en el fichero). Además, cada operación se
+muestra en una \textit{minipage} con un ancho igual a un cuarto el
+ancho de la página.
+
+\begin{questions}
+
+  \question
+  Primero, se muestran varias divisiones con las siguientes características:
+
+  \begin{itemize}
+    
+  \item Número de dígitos del dividendo: 1
+    
+  \item Número de dígitos del divisor: 1
+    
+  \item Número de dígitos necesarios para representar el cociente: 1
+    
+  \end{itemize}
+
+  El esquema general se muestra a continuación:
+
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % in the following, let:
+        %
+        % nbdvdigits: number of digits required for displaying the
+        % dividend
+        %
+        % nbdrdigits: number of digits required for displaying the
+        % divisor
+        %
+        % nbqdigits: number of digits necessary for writing the
+        % quotient
+        % 
+        % nbrows: number of rows required for making the
+        % calculations. This number is exactly equal to twice the
+        % number of digits of the quotient, as each digit in the
+        % quotient requires two lines for making calculations.
+
+        % parameters:
+        %
+        % \zerowidth: width of a digit
+        % \zeroheight: height of a digit
+        %
+        % Also, \baselineskip is used to take into account the natural
+        % space between lines
+        
+        % --- Coordinates -------------------------------------------------------
+        
+        % The first label gets at x=0 and it marks where the dividend
+        % should be written.
+        %
+        % Let Y denote the maximum vertical space required to draw the
+        % whole picture. Y is computed as the total number of rows of
+        % the figure plus 0.5 to give some slack. The total number of
+        % rows required is nbrows + 1 (+1 for displaying the dividend)
+        \coordinate (label1) at (0, 3.5);
+        \fill [red] (label1) circle (1pt);
+
+        % the location of the divisor is computed by adding the space
+        % of *two* digits to nbdvdigits to leave some space between
+        % the dividend and the divisor
+        \coordinate (label2) at ($(label1) + 3.0*(\zerowidth, 0.0)$);
+        \fill [red] (label2) circle (1pt);
+
+        % The third coordinate defines the location which splits the
+        % divisor and the quotient. Let W denote the width of the box
+        % that encloses the divisor, W = 2 + max (nbdrdigts, nbqdigits)
+        %
+        % W is computed taking into account the number of digits
+        % required for writing both the dividend and the quotient,
+        % which is max (nbdrdigits, nbqdigits), plus 2 digits to leave
+        % some space around. Then the third label is computed as the
+        % midpoint.
+        %
+        % Also, this label is lowered the height of a digit. 
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        \fill [red] (label3) circle (1pt);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+
+        % the first line below the dividend is shown next. It is
+        % aligned with the left margin of the whole bounding box, so
+        % that the number 3 substracts the same horizontal distance
+        % added when computing label2. Twice the height of a digit
+        % plus 0.15 cm is substracted *always* so that the first line
+        % gets properly aligned with the quotient
+        \coordinate (line1) at ($(label2) + (-3.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        \fill [blue] (line1) circle (1pt);
+
+        % the second line below the dividend is shown next. All these
+        % lines are computed just by simply leaving a vertical space
+        % equal to the sum of the height of a digit and the
+        % baselineskip
+        \coordinate (line2) at ($(line1) + 1*(0.0, -\zeroheight-\baselineskip)$);
+        \fill [blue] (line2) circle (1pt);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+
+        % the bottom of the whole bounding box can be computed from
+        % the first line just by decrementing the height as many lines
+        % as required for making all the calculations (minus one,
+        % because we start in the first line) minus half the
+        % height of a digit for the last row.
+        %
+        % The number of rows required for making all the calculations
+        % is twice the number of digits in the quotient, but one has
+        % to be substracted because we start from the first line, so
+        % that the factor used next is 2*nbdvdigits - 1. Note that the
+        % same factor is used to divide the last part of the
+        % computation of the y-shift so that it is always equal to
+        % half the height of a digit
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \fill [green] (bottom) circle (1pt);
+
+        % the left border is computed just by adding to the second
+        % label as many digits as required to draw both the quotient
+        % and the divisor plus two ---+2 to leave some space
+        % around. This number was also used above to compute the
+        % location of label3 and it is equal to:
+        % 2 + max (nbdrdigits, nbqdigits)
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \fill [green] (right) circle (1pt);
+        
+        % draw an invisible box used to properly align all sequences
+        % \draw [lightgray] (0,0) rectangle (3.5,5.0);
+        \draw [lightgray] (bottom) rectangle (right);
+        
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+
+        % the width of the box has a width equal to 2 + max
+        % (nbdrdigits, nbqdigits), and it has a height equal to twice
+        % the height of a digit. Note that label2 falls in the middle
+        % of the vertical bar and label3 falls in the middle of the
+        % horizontal bar
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+
+        % the width of the box equals 2 + max (nbdrdigits, nbqdigits),
+        % and its height equals the sum of the height of a digit plus
+        % the baselineskip. It is drawn 0.15 cms from the line
+        % separating the divisor from the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {\textcolor{lightgray}{\huge 4}};
+
+        
+        % --- Text
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 9};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 2};
+
+        % calculations
+        \node [lightgray,right=0.0cm of line1] (result1) {\huge 8};
+        \node [lightgray,right=0.0cm of line2] (result2) {\huge 1};
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+
+  A continuación se muestra una vista de la composición de diferentes
+  divisiones de este tipo:
+  
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 3.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-3.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 9};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 2};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 3.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-3.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 8};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 3};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 3.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-3.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 7};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 4};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 3.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-3.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 5};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 1};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 3.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-3.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 3};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 2};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 3.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-3.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 8};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 4};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 3.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-3.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 9};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 3};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 3.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-3.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 7};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 1};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  
+
+  \question
+  En segundo lugar, se muestran varias divisiones con las siguientes características:
+
+  \begin{itemize}
+    
+  \item Número de dígitos del dividendo: 2
+    
+  \item Número de dígitos del divisor: 1
+    
+  \item Número de dígitos necesarios para representar el cociente: 1
+    
+  \end{itemize}
+
+  El esquema general se muestra a continuación:
+
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % in the following, let:
+        %
+        % nbdvdigits: number of digits required for displaying the
+        % dividend
+        %
+        % nbdrdigits: number of digits required for displaying the
+        % divisor
+        %
+        % nbqdigits: number of digits necessary for writing the
+        % quotient
+        % 
+        % nbrows: number of rows required for making the
+        % calculations. This number is exactly equal to twice the
+        % number of digits of the quotient, as each digit in the
+        % quotient requires two lines for making calculations.
+
+        % parameters:
+        %
+        % \zerowidth: width of a digit
+        % \zeroheight: height of a digit
+        %
+        % Also, \baselineskip is used to take into account the natural
+        % space between lines
+        
+        % --- Coordinates -------------------------------------------------------
+        
+        % The first label gets at x=0 and it marks where the dividend
+        % should be written.
+        %
+        % Let Y denote the maximum vertical space required to draw the
+        % whole picture. Y is computed as the total number of rows of
+        % the figure plus 0.5 to give some slack. The total number of
+        % rows required is nbrows + 1 (+1 for displaying the dividend)
+        \coordinate (label1) at (0, 3.5);
+        \fill [red] (label1) circle (1pt);
+
+        % the location of the divisor is computed by adding the space
+        % of *two* digits to nbdvdigits to leave some space between
+        % the dividend and the divisor
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \fill [red] (label2) circle (1pt);
+
+        % The third coordinate defines the location which splits the
+        % divisor and the quotient. Let W denote the width of the box
+        % that encloses the divisor, W = 2 + max (nbdrdigts, nbqdigits)
+        %
+        % W is computed taking into account the number of digits
+        % required for writing both the dividend and the quotient,
+        % which is max (nbdrdigits, nbqdigits), plus 2 digits to leave
+        % some space around. Then the third label is computed as the
+        % midpoint.
+        %
+        % Also, this label is lowered the height of a digit. 
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        \fill [red] (label3) circle (1pt);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+
+        % the first line below the dividend is shown next. It is
+        % aligned with the left margin of the whole bounding box, so
+        % that the number 3 substracts the same horizontal distance
+        % added when computing label2. Twice the height of a digit
+        % plus 0.15 cm is substracted *always* so that the first line
+        % gets properly aligned with the quotient
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        \fill [blue] (line1) circle (1pt);
+
+        % the second line below the dividend is shown next. All these
+        % lines are computed just by simply leaving a vertical space
+        % equal to the sum of the height of a digit and the
+        % baselineskip
+        \coordinate (line2) at ($(line1) + 1*(0.0, -\zeroheight-\baselineskip)$);
+        \fill [blue] (line2) circle (1pt);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+
+        % the bottom of the whole bounding box can be computed from
+        % the first line just by decrementing the height as many lines
+        % as required for making all the calculations (minus one,
+        % because we start in the first line) minus half the
+        % height of a digit for the last row.
+        %
+        % The number of rows required for making all the calculations
+        % is twice the number of digits in the quotient, but one has
+        % to be substracted because we start from the first line, so
+        % that the factor used next is 2*nbdvdigits - 1. Note that the
+        % same factor is used to divide the last part of the
+        % computation of the y-shift so that it is always equal to
+        % half the height of a digit
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \fill [green] (bottom) circle (1pt);
+
+        % the left border is computed just by adding to the second
+        % label as many digits as required to draw both the quotient
+        % and the divisor plus two ---+2 to leave some space
+        % around. This number was also used above to compute the
+        % location of label3 and it is equal to:
+        % 2 + max (nbdrdigits, nbqdigits)
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \fill [green] (right) circle (1pt);
+        
+        % draw an invisible box used to properly align all sequences
+        % \draw [lightgray] (0,0) rectangle (3.5,5.0);
+        \draw [lightgray] (bottom) rectangle (right);
+        
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+
+        % the width of the box has a width equal to 2 + max
+        % (nbdrdigits, nbqdigits), and it has a height equal to twice
+        % the height of a digit. Note that label2 falls in the middle
+        % of the vertical bar and label3 falls in the middle of the
+        % horizontal bar
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+
+        % the width of the box equals 2 + max (nbdrdigits, nbqdigits),
+        % and its height equals the sum of the height of a digit plus
+        % the baselineskip. It is drawn 0.15 cms from the line
+        % separating the divisor from the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {\textcolor{lightgray}{\huge 5}};
+
+        
+        % --- Text
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 37};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 7};
+
+        % calculations
+        \node [lightgray,right=0.0cm of line1] (result1) {\huge 35};
+        \node [lightgray,right=\zerowidth of line2] (result2) {\huge 2};
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+
+  A continuación se muestra una vista de la composición de diferentes
+  divisiones de este tipo:
+  
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 37};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 7};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 43};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 9};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 16};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 2};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 13};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 3};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 26};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 5};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 52};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 6};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 33};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 4};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 3.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (1.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 1.0*(0.0, -\zeroheight-\baselineskip-0.5/1.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (3*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 3.0*(\zerowidth, -\zeroheight/3.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 71};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 8};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  
+  
+  \question
+  A continuación se muestran otras divisiones con las siguientes características:
+
+  \begin{itemize}
+    
+  \item Número de dígitos del dividendo: 2
+    
+  \item Número de dígitos del divisor: 1
+    
+  \item Número de dígitos necesarios para representar el cociente: 2
+    
+  \end{itemize}  
+  
+  El esquema general se muestra a continuación:
+
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % in the following, let:
+        %
+        % nbdvdigits: number of digits required for displaying the
+        % dividend
+        %
+        % nbdrdigits: number of digits required for displaying the
+        % divisor
+        %
+        % nbqdigits: number of digits necessary for writing the
+        % quotient
+        % 
+        % nbrows: number of rows required for making the
+        % calculations. This number is exactly equal to twice the
+        % number of digits of the quotient, as each digit in the
+        % quotient requires two lines for making calculations.
+
+        % parameters:
+        %
+        % \zerowidth: width of a digit
+        % \zeroheight: height of a digit
+        %
+        % Also, \baselineskip is used to take into account the natural
+        % space between lines
+        
+        % --- Coordinates -------------------------------------------------------
+        
+        % The first label gets at x=0 and it marks where the dividend
+        % should be written.
+        %
+        % Let Y denote the maximum vertical space required to draw the
+        % whole picture. Y is computed as the total number of rows of
+        % the figure plus 0.5 to give some slack. The total number of
+        % rows required is nbrows + 1 (+1 for displaying the dividend)
+        \coordinate (label1) at (0, 5.5);
+        \fill [red] (label1) circle (1pt);
+
+        % the location of the divisor is computed by adding the space
+        % of *two* digits to nbdvdigits to leave some space between
+        % the dividend and the divisor
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \fill [red] (label2) circle (1pt);
+
+        % The third coordinate defines the location which splits the
+        % divisor and the quotient. Let W denote the width of the box
+        % that encloses the divisor, W = 2 + max (nbdrdigts, nbqdigits)
+        %
+        % W is computed taking into account the number of digits
+        % required for writing both the dividend and the quotient,
+        % which is max (nbdrdigits, nbqdigits), plus 2 digits to leave
+        % some space around. Then the third label is computed as the
+        % midpoint.
+        %
+        % Also, this label is lowered the height of a digit. 
+        \coordinate (label3) at ($(label2) + (2*\zerowidth, -\zeroheight)$);
+        \fill [red] (label3) circle (1pt);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+
+        % the first line below the dividend is shown next. It is
+        % aligned with the left margin of the whole bounding box, so
+        % that the number 3 substracts the same horizontal distance
+        % added when computing label2. Twice the height of a digit
+        % plus 0.15 cm is substracted *always* so that the first line
+        % gets properly aligned with the quotient
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        \fill [blue] (line1) circle (1pt);
+
+        % the second line below the dividend is shown next. All these
+        % lines are computed just by simply leaving a vertical space
+        % equal to the sum of the height of a digit and the
+        % baselineskip
+        \coordinate (line2) at ($(line1) + 1*(0.0, -\zeroheight-\baselineskip)$);
+        \fill [blue] (line2) circle (1pt);
+        \coordinate (line3) at ($(line1) + 2*(0.0, -\zeroheight-\baselineskip)$);
+        \fill [blue] (line3) circle (1pt);
+        \coordinate (line4) at ($(line1) + 3*(0.0, -\zeroheight-\baselineskip)$);
+        \fill [blue] (line4) circle (1pt);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+
+        % the bottom of the whole bounding box can be computed from
+        % the first line just by decrementing the height as many lines
+        % as required for making all the calculations (minus one,
+        % because we start in the first line) minus half the
+        % height of a digit for the last row.
+        %
+        % The number of rows required for making all the calculations
+        % is twice the number of digits in the quotient, but one has
+        % to be substracted because we start from the first line, so
+        % that the factor used next is 2*nbdvdigits - 1. Note that the
+        % same factor is used to divide the last part of the
+        % computation of the y-shift so that it is always equal to
+        % half the height of a digit
+        \coordinate (bottom) at ($(line1) + 3.0*(0.0, -\zeroheight-\baselineskip-0.5/3.0*\zeroheight)$);
+        \fill [green] (bottom) circle (1pt);
+
+        % the left border is computed just by adding to the second
+        % label as many digits as required to draw both the quotient
+        % and the divisor plus two ---+2 to leave some space
+        % around. This number was also used above to compute the
+        % location of label3 and it is equal to:
+        % 2 + max (nbdrdigits, nbqdigits)
+        \coordinate (right) at ($(label2) + (4*\zerowidth, \zeroheight)$);
+        \fill [green] (right) circle (1pt);
+        
+        % draw an invisible box used to properly align all sequences
+        % \draw [lightgray] (0,0) rectangle (3.5,5.0);
+        \draw [lightgray] (bottom) rectangle (right);
+        
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+
+        % the width of the box has a width equal to 2 + max
+        % (nbdrdigits, nbqdigits), and it has a height equal to twice
+        % the height of a digit. Note that label2 falls in the middle
+        % of the vertical bar and label3 falls in the middle of the
+        % horizontal bar
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 4.0*(\zerowidth, -\zeroheight/4.0)$);
+
+        % show the box for writing the quotient
+
+        % the width of the box equals 2 + max (nbdrdigits, nbqdigits),
+        % and its height equals the sum of the height of a digit plus
+        % the baselineskip. It is drawn 0.15 cms from the line
+        % separating the divisor from the quotient
+        \node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {\textcolor{lightgray}{\huge 11}};
+
+        
+        % --- Text
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 23};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 2};
+
+        % calculations
+        \node [lightgray,right=0.0cm of line1] (result1) {\huge 2};
+        \node [lightgray,right=0.0cm of line2] (result2) {\huge 03};
+        \node [lightgray,right=\zerowidth of line3] (result2) {\huge 2};
+        \node [lightgray,right=\zerowidth of line4] (result2) {\huge 1};
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+
+  A continuación se muestra una vista de la composición de diferentes
+  divisiones de este tipo:
+  
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 5.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (2*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 3.0*(0.0, -\zeroheight-\baselineskip-0.5/3.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (4*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 4.0*(\zerowidth, -\zeroheight/4.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 23};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 2};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 5.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (2*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 3.0*(0.0, -\zeroheight-\baselineskip-0.5/3.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (4*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 4.0*(\zerowidth, -\zeroheight/4.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 93};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 6};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 5.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (2*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 3.0*(0.0, -\zeroheight-\baselineskip-0.5/3.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (4*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 4.0*(\zerowidth, -\zeroheight/4.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 96};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 5};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 5.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (2*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 3.0*(0.0, -\zeroheight-\baselineskip-0.5/3.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (4*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 4.0*(\zerowidth, -\zeroheight/4.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 89};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 7};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 5.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (2*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 3.0*(0.0, -\zeroheight-\baselineskip-0.5/3.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (4*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 4.0*(\zerowidth, -\zeroheight/4.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 57};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 3};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 5.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (2*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 3.0*(0.0, -\zeroheight-\baselineskip-0.5/3.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (4*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 4.0*(\zerowidth, -\zeroheight/4.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 71};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 2};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 5.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (2*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 3.0*(0.0, -\zeroheight-\baselineskip-0.5/3.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (4*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 4.0*(\zerowidth, -\zeroheight/4.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 82};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 8};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 5.5);
+        \coordinate (label2) at ($(label1) + 4.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (2*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-4.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 3.0*(0.0, -\zeroheight-\baselineskip-0.5/3.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (4*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 4.0*(\zerowidth, -\zeroheight/4.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 91};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 9};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  
+  \question
+  Por último, se muestran divisiones más complicadas:
+
+  \begin{itemize}
+    
+  \item Número de dígitos del dividendo: 5
+    
+  \item Número de dígitos del divisor: 1
+    
+  \item Número de dígitos necesarios para representar el cociente: 4
+    
+  \end{itemize}  
+  
+  El esquema general se muestra a continuación:
+
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % in the following, let:
+        %
+        % nbdvdigits: number of digits required for displaying the
+        % dividend
+        %
+        % nbdrdigits: number of digits required for displaying the
+        % divisor
+        %
+        % nbqdigits: number of digits necessary for writing the
+        % quotient
+        % 
+        % nbrows: number of rows required for making the
+        % calculations. This number is exactly equal to twice the
+        % number of digits of the quotient, as each digit in the
+        % quotient requires two lines for making calculations.
+
+        % parameters:
+        %
+        % \zerowidth: width of a digit
+        % \zeroheight: height of a digit
+        %
+        % Also, \baselineskip is used to take into account the natural
+        % space between lines
+        
+        % --- Coordinates -------------------------------------------------------
+        
+        % The first label gets at x=0 and it marks where the dividend
+        % should be written.
+        %
+        % Let Y denote the maximum vertical space required to draw the
+        % whole picture. Y is computed as the total number of rows of
+        % the figure plus 0.5 to give some slack. The total number of
+        % rows required is nbrows + 1 (+1 for displaying the dividend)
+        \coordinate (label1) at (0, 11.5);
+        \fill [red] (label1) circle (1pt);
+
+        % the location of the divisor is computed by adding the space
+        % of *two* digits to nbdvdigits to leave some space between
+        % the dividend and the divisor
+        \coordinate (label2) at ($(label1) + 7.0*(\zerowidth, 0.0)$);
+        \fill [red] (label2) circle (1pt);
+
+        % The third coordinate defines the location which splits the
+        % divisor and the quotient. Let W denote the width of the box
+        % that encloses the divisor, W = 2 + max (nbdrdigts, nbqdigits)
+        %
+        % W is computed taking into account the number of digits
+        % required for writing both the dividend and the quotient,
+        % which is max (nbdrdigits, nbqdigits), plus 2 digits to leave
+        % some space around. Then the third label is computed as the
+        % midpoint.
+        %
+        % Also, this label is lowered the height of a digit. 
+        \coordinate (label3) at ($(label2) + (3.5*\zerowidth, -\zeroheight)$);
+        \fill [red] (label3) circle (1pt);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+
+        % the first line below the dividend is shown next. It is
+        % aligned with the left margin of the whole bounding box, so
+        % that the number 3 substracts the same horizontal distance
+        % added when computing label2. Twice the height of a digit
+        % plus 0.15 cm is substracted *always* so that the first line
+        % gets properly aligned with the quotient
+        \coordinate (line1) at ($(label2) + (-7.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        \fill [blue] (line1) circle (1pt);
+
+        % the second line below the dividend is shown next. All these
+        % lines are computed just by simply leaving a vertical space
+        % equal to the sum of the height of a digit and the
+        % baselineskip
+        \coordinate (line2) at ($(line1) + 1*(0.0, -\zeroheight-\baselineskip)$);
+        \fill [blue] (line2) circle (1pt);
+        \coordinate (line3) at ($(line1) + 2*(0.0, -\zeroheight-\baselineskip)$);
+        \fill [blue] (line3) circle (1pt);
+        \coordinate (line4) at ($(line1) + 3*(0.0, -\zeroheight-\baselineskip)$);
+        \fill [blue] (line4) circle (1pt);
+        \coordinate (line5) at ($(line1) + 4*(0.0, -\zeroheight-\baselineskip)$);
+        \fill [blue] (line5) circle (1pt);
+        \coordinate (line6) at ($(line1) + 5*(0.0, -\zeroheight-\baselineskip)$);
+        \fill [blue] (line6) circle (1pt);
+        \coordinate (line7) at ($(line1) + 6*(0.0, -\zeroheight-\baselineskip)$);
+        \fill [blue] (line7) circle (1pt);
+        \coordinate (line8) at ($(line1) + 7*(0.0, -\zeroheight-\baselineskip)$);
+        \fill [blue] (line8) circle (1pt);
+        \coordinate (line9) at ($(line1) + 8*(0.0, -\zeroheight-\baselineskip)$);
+        \fill [blue] (line9) circle (1pt);
+        \coordinate (line10) at ($(line1) + 9*(0.0, -\zeroheight-\baselineskip)$);
+        \fill [blue] (line10) circle (1pt);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+
+        % the bottom of the whole bounding box can be computed from
+        % the first line just by decrementing the height as many lines
+        % as required for making all the calculations (minus one,
+        % because we start in the first line) minus half the
+        % height of a digit for the last row.
+        %
+        % The number of rows required for making all the calculations
+        % is twice the number of digits in the quotient, but one has
+        % to be substracted because we start from the first line, so
+        % that the factor used next is 2*nbdvdigits - 1. Note that the
+        % same factor is used to divide the last part of the
+        % computation of the y-shift so that it is always equal to
+        % half the height of a digit
+        \coordinate (bottom) at ($(line1) + 9.0*(0.0, -\zeroheight-\baselineskip-0.5/9.0*\zeroheight)$);
+        \fill [green] (bottom) circle (1pt);
+
+        % the left border is computed just by adding to the second
+        % label as many digits as required to draw both the quotient
+        % and the divisor plus two ---+2 to leave some space
+        % around. This number was also used above to compute the
+        % location of label3 and it is equal to:
+        % 2 + max (nbdrdigits, nbqdigits)
+        \coordinate (right) at ($(label2) + (7*\zerowidth, \zeroheight)$);
+        \fill [green] (right) circle (1pt);
+        
+        % draw an invisible box used to properly align all sequences
+        % \draw [lightgray] (0,0) rectangle (3.5,5.0);
+        \draw [lightgray] (bottom) rectangle (right);
+        
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+
+        % the width of the box has a width equal to 2 + max
+        % (nbdrdigits, nbqdigits), and it has a height equal to twice
+        % the height of a digit. Note that label2 falls in the middle
+        % of the vertical bar and label3 falls in the middle of the
+        % horizontal bar
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 7.0*(\zerowidth, -\zeroheight/7.0)$);
+
+        % show the box for writing the quotient
+
+        % the width of the box equals 2 + max (nbdrdigits, nbqdigits),
+        % and its height equals the sum of the height of a digit plus
+        % the baselineskip. It is drawn 0.15 cms from the line
+        % separating the divisor from the quotient
+        \node [rounded corners, rectangle, minimum width=7.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {\textcolor{lightgray}{\huge 12801}};
+
+        
+        % --- Text
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 76810};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 6};
+
+        % calculations
+        \node [lightgray,right=0.0cm of line1] (result1) {\huge 6};
+        \node [lightgray,right=0.0cm of line2] (result2) {\huge 16};
+        \node [lightgray,right=0.0cm of line3] (result3) {\huge 12};
+        \node [lightgray,right=\zerowidth of line4] (result4) {\huge 48};
+        \node [lightgray,right=\zerowidth of line5] (result5) {\huge 48};
+        \node [lightgray,right=2*\zerowidth of line6] (result6) {\huge 01};
+        \node [lightgray,right=3*\zerowidth of line7] (result7) {\huge 0};
+        \node [lightgray,right=3*\zerowidth of line8] (result8) {\huge 10};
+        \node [lightgray,right=4*\zerowidth of line9] (result9) {\huge 6};
+        \node [lightgray,right=4*\zerowidth of line10] (result10) {\huge 4};
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+
+  A continuación se muestra una vista de la composición de diferentes
+  divisiones de este tipo. Nótese que, en este caso, cada
+  \textit{minipage} ocupa sólo el 0.33 del ancho de una línea.
+
+  \clearpage
+  
+  \noindent\begin{minipage}{0.33\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 11.5);
+        \coordinate (label2) at ($(label1) + 7.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (3.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-7.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 9.0*(0.0, -\zeroheight-\baselineskip-0.5/9.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (7*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 7.0*(\zerowidth, -\zeroheight/7.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=7.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 76810};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 6};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.33\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 11.5);
+        \coordinate (label2) at ($(label1) + 7.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (3.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-7.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 9.0*(0.0, -\zeroheight-\baselineskip-0.5/9.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (7*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 7.0*(\zerowidth, -\zeroheight/7.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=7.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 49365};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 5};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.33\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 11.5);
+        \coordinate (label2) at ($(label1) + 7.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (3.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-7.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 9.0*(0.0, -\zeroheight-\baselineskip-0.5/9.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (7*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 7.0*(\zerowidth, -\zeroheight/7.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=7.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 29367};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 7};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.33\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 11.5);
+        \coordinate (label2) at ($(label1) + 7.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (3.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-7.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 9.0*(0.0, -\zeroheight-\baselineskip-0.5/9.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (7*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 7.0*(\zerowidth, -\zeroheight/7.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=7.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 24384};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 3};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.33\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 11.5);
+        \coordinate (label2) at ($(label1) + 7.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (3.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-7.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 9.0*(0.0, -\zeroheight-\baselineskip-0.5/9.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (7*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 7.0*(\zerowidth, -\zeroheight/7.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=7.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 17057};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 3};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \noindent\begin{minipage}{0.33\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+        \coordinate (label1) at (0, 11.5);
+        \coordinate (label2) at ($(label1) + 7.0*(\zerowidth, 0.0)$);
+        \coordinate (label3) at ($(label2) + (3.5*\zerowidth, -\zeroheight)$);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+        \coordinate (line1) at ($(label2) + (-7.0\zerowidth, -2*\zeroheight-0.15 cm)$);
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+        \coordinate (bottom) at ($(line1) + 9.0*(0.0, -\zeroheight-\baselineskip-0.5/9.0*\zeroheight)$);
+        \coordinate (right) at ($(label2) + (7*\zerowidth, \zeroheight)$);
+        \draw [white] (bottom) rectangle (right);
+        % -----------------------------------------------------------------------
+
+        % show the box enclosing the divisor
+        \draw [thick, rounded corners] ($(label2) + (0.0, \zeroheight)$) -- ($(label2) + (0.0, -\zeroheight)$) -- ($(label2) + 7.0*(\zerowidth, -\zeroheight/7.0)$);
+
+        % show the box for writing the quotient
+        \node [rounded corners, rectangle, minimum width=7.0*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
+        % -----------------------------------------------------------------------
+        
+        % --- Text ------------------------------------------------------------
+
+        % Dividend
+        \node [right=0.0 cm of label1] (dividend) {\huge 64981};
+
+        % Divisor
+        \node [right=0.0 cm of label2] (divisor) {\huge 8};
+        % -----------------------------------------------------------------------
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+
+\end{questions}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

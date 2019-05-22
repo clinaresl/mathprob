@@ -62,6 +62,7 @@ func NewMasterFile(filename, name, class string) MasterFile {
 	return MasterFile{Infile: filename, Name: name, Class: class}
 }
 
+// helper
 func min(a, b int) int {
 	if a < b {
 		return a
