@@ -1,0 +1,192 @@
+%%
+%% main.tex
+%% 
+%% Made by 
+%% Login   <clinares@atlas>
+%% 
+%% Started on  Sat May  4 14:24:58 2019 
+%% Last update Sat May  4 14:24:58 2019 
+%%
+
+\documentclass[svgnames,addpoints]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{tb}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+\usepackage{pifont}
+
+\usepackage{cancel}
+\usepackage{array}
+
+\usepackage{tikz}
+\usepackage{pgflibraryarrows}
+\usepackage{pgflibrarysnakes}
+
+\usetikzlibrary{calc,matrix,patterns,fadings,positioning}
+
+\usepackage{xcolor}
+
+\usepackage{array}
+\usepackage{eurosym}
+
+\usepackage{booktabs}
+\usepackage{url}
+
+\usepackage{rotating}
+
+\newlength{\zerowidth}
+\settowidth{\zerowidth}{\huge 0}
+\newlength{\zeroheight}
+\settoheight{\zeroheight}{\huge 0}
+
+\makeatletter
+\def\convertto#1#2{\strip@pt\dimexpr #2*65536/\number\dimexpr 1#1}
+\makeatother
+
+
+\begin{document}
+
+\titulacion{Esquemas}
+\asignatura{Multiplicaciones}
+
+\convocatoria{\today}
+\tiempo{4 horas}
+
+\begin{tabular}{cc}
+
+  \begin{minipage}{7.5cm}
+
+    \begin{tabular}{c}
+
+      \includegraphics[scale=0.6]{maths-1}\\
+
+    \end{tabular}
+
+  \end{minipage}
+  &
+  \begin{minipage}{8.5cm}
+
+    \begin{center}
+
+      {\huge \bf \titu}\\
+      {\Large \bf \asig}\\ \ \\
+      
+      \convo
+
+    \end{center}
+
+  \end{minipage}\\ & \\ & \\  & \\
+
+\end{tabular}
+
+{\Large\bf Multiplicaciones}
+
+Todas las representaciones que se muestran a continuación se hacen
+empleando las siguientes medidas:
+
+\begin{center}
+  \begin{tabular}{ll}
+    \texttt{zeroheight}   & \convertto{cm}{\the\zeroheight}\ cm \\
+    \texttt{zerowidth}    & \convertto{cm}{\the\zerowidth}\ cm \\
+  \end{tabular}
+\end{center}
+
+\noindent
+y el \texttt{baselineskip} (\convertto{cm}{\the\baselineskip}\
+cm). Las dos mostradas arriba deben definirse en el preámbulo del
+documento \LaTeX\ (por ejemplo, con un fichero \texttt{.sty} que se
+incluya automáticamente en el fichero). Además, cada operación se
+muestra en una \textit{minipage} con un ancho igual a un cuarto el
+ancho de la página, salvo el último (con dividendos más largos) que
+requieren que cada una se haga en un tercio de la longitud de la
+línea.
+
+\begin{questions}
+
+  \question Primero, se muestran varias multiplicaciones con las
+  siguientes características:
+
+  \begin{itemize}
+    
+  \item Número de dígitos del primer multiplicando: 1
+    
+  \item Número de dígitos del segundo multiplicando: 1
+    
+  \item Número de dígitos necesarios para representar el resultado: 2
+    
+  \end{itemize}
+
+  El esquema general se muestra a continuación:
+
+  \noindent\begin{minipage}{0.25\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -------------------------------------------------------
+
+        \coordinate (origin) at (0,0);
+        \coordinate (label1) at ($(origin) + (3.5*\zerowidth, \zeroheight+2*(\zeroheight+\baselineskip)$);
+        \fill [red] (label1) circle (1pt);
+
+        \coordinate (label2) at ($(label1) + (0.0, -\zeroheight-\baselineskip)$);
+        \fill [red] (label2) circle (1pt);
+
+        \coordinate (label3) at ($(label2) + (-1.5*\zerowidth, 0.0)$);
+        \fill [red] (label3) circle (1pt);
+        % -----------------------------------------------------------------------
+
+        % --- Ancilliary reference points
+
+        \coordinate (line1) at ($(label2) + (0, -2*\zeroheight-0.15 cm)$);
+        \fill [blue] (line1) circle (1pt);        
+        
+        % -----------------------------------------------------------------------
+
+        % --- Bounding Box ------------------------------------------------------
+
+        % \coordinate (bottom) at (0,0);
+        \coordinate (bottom) at ($(label3) + (-2.0*\zerowidth, -2.5*\zeroheight-0.15 cm)$);
+        \fill [green] (bottom) circle (1pt);
+
+        \coordinate (right) at ($(label1) + (0, 0.5*\zeroheight)$);
+        \fill [green] (right) circle (1pt);
+        
+        % draw an invisible box used to properly align all sequences
+        % \draw [lightgray] (0,0) rectangle (3.5,5.0);
+        \draw [lightgray] (bottom) rectangle (right);
+        
+        % -----------------------------------------------------------------------
+
+        % show the horizontal rule
+        \draw [thick] ($(label3) + (-2.0*\zerowidth, -\zeroheight)$) -- ($(label2) + (0, -\zeroheight)$);
+        
+        % --- Text
+        \node [left=0.0 cm of label1] (multiplierA) {\huge 9};
+        \node [left=0.0 cm of label2] (multiplierB) {\huge 7};
+        \node [left=0.0 cm of label3] (operand) {\huge $\times$};
+        
+        \node [left=0.0 cm of line1] (result1) {\huge 63};
+        
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+
+  A continuación se muestra una vista de la composición de diferentes
+  divisiones de este tipo:
+  
+
+\end{questions}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

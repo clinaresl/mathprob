@@ -1,0 +1,2 @@
+Pruebas con diccionarios
+{{.GetDivision (dict "nbdvdigits" 5.0 "nbdrdigits" 3.0 "nbqdigits" 4.0)}}

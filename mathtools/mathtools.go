@@ -20,14 +20,17 @@
 package mathtools
 
 import (
+	"errors"
 	"fmt"
 	"log" // logging services
 	"math"
 	"math/rand"
 	"os" // access to file mgmt functions
+	"path"
+	"text/template"
 	"time"
 
-	"text/template" // go facility for processing templates
+	// go facility for processing templates
 
 	"bitbucket.org/mathprob/fstools"
 )
@@ -62,12 +65,81 @@ func NewMasterFile(filename, name, class string) MasterFile {
 	return MasterFile{Infile: filename, Name: name, Class: class}
 }
 
-// helper
+// helpers
+
+// compute the minimum of two ints
 func min(a, b int) int {
 	if a < b {
 		return a
 	}
 	return b
+}
+
+// compute the maximum of two floats
+func max(a, b float64) float64 {
+	if a < b {
+		return b
+	}
+	return a
+}
+
+// return the number of digits of number n
+func nbdigits(n int) int {
+	return 1 + int(math.Ceil(math.Log10(float64(n))))
+}
+
+// return a random number with exactly n digits
+func randN(n int) int {
+	lower := int(math.Pow(float64(10), float64(n)-1))
+	upper := int(math.Pow(float64(10), float64(n)))
+	return lower + rand.Int()%(upper-lower)
+}
+
+// return true if and only if the given value has been found in the
+// specified slice
+func find(item string, container []string) bool {
+
+	// for all items in the container
+	for _, value := range container {
+
+		// in case it has been found, then exit immediately
+		if value == item {
+			return true
+		}
+	}
+
+	// if it has not been found after traversing the container,
+	// then return false
+	return false
+}
+
+// verify that the keys given in dict are correct for defining
+// divisions. A dictionary is correct if and only if all the mandatory
+// arguments have been given. If not, an error is raised and execution
+// is aborted. Unnecessary keys are reported
+func verifyDivisionDict(dict map[string]interface{}) {
+
+	// the mandatory keys are given next
+	mandatory := []string{"nbdvdigits", "nbdrdigits", "nbqdigits"}
+
+	// now, verify that all mandatory parameters are present in the dict
+	for _, key := range mandatory {
+
+		// if a mandatory parameter has not been given, then
+		// raise an error and exit
+		if _, ok := dict[key]; !ok {
+			log.Fatalf(" Fatal Error: The key '%v' is not present in the dictionary given to create a division", key)
+		}
+	}
+
+	// next, verify if there are some parameters
+	for key := range dict {
+
+		// if this key was not requested then report a message
+		if !find(key, mandatory) {
+			log.Printf(" Warning: The key '%v' is not necessary for creating a division and it will be ignored", key)
+		}
+	}
 }
 
 // methods
@@ -113,6 +185,9 @@ func (masterFile MasterFile) GetOutfile() string {
 func (masterFile MasterFile) Slice(n int) []MasterFile {
 	return make([]MasterFile, n)
 }
+
+// Simple Operations
+// ----------------------------------------------------------------------------
 
 // Get the LaTeX code for a simple operation where both operands must
 // be lower than 10
@@ -435,6 +510,9 @@ func (masterFile MasterFile) GetSimpleOperation22(operator int) (latexCode strin
 	return latexOperation.Execute()
 }
 
+// Sequences
+// ----------------------------------------------------------------------------
+
 // Get the LaTeX code for generating a problem on sequences of the
 // given type: to either guess the previous (seqtype 1), subsequent
 // (2), or both (3). Indices are strictly less than 10
@@ -527,6 +605,139 @@ func (masterFile MasterFile) GetSequence100(seqtype int) (latexCode string) {
 	return latexSequenceProblem.Execute(seqtype)
 }
 
+func (masterFile MasterFile) GetDivision(dict map[string]interface{}) string {
+
+	// seed the random generator
+	rand.Seed(time.Now().UTC().UnixNano())
+
+	// Verify the given keys in the dictionary are correct. Note
+	// that the types are not verified, only the presence of the
+	// keys
+	verifyDivisionDict(dict)
+
+	// Now, build the components of the division according to the given parameters
+
+	// --coordinates
+	label1 := coordinateExplicit{
+		x: 0.0,
+		y: 1 + 2.0*dict["nbqdigits"].(float64) + 0.5,
+	}
+	label1.label = "label1"
+
+	label2 := coordinateFormula{
+		formula: fmt.Sprintf(`$(label1) + %v*(\zerowidth, 0.0)$`,
+			2.0+dict["nbdvdigits"].(float64)),
+	}
+	label2.label = "label2"
+
+	label3 := coordinateFormula{
+		formula: fmt.Sprintf(`$(label2) + (%v*\zerowidth, -\zeroheight)$`,
+			0.5*(2+max(dict["nbdrdigits"].(float64), dict["nbqdigits"].(float64)))),
+	}
+	label3.label = "label3"
+
+	line1 := coordinateFormula{
+		formula: fmt.Sprintf(`$(label2) + (%v\zerowidth, -2*\zeroheight-0.15 cm)$`,
+			2.0+dict["nbdvdigits"].(float64)),
+	}
+	line1.label = "line1"
+
+	// --bounding box
+	bottom := coordinateFormula{
+		formula: fmt.Sprintf(`$(line1) + %v*(0.0, -\zeroheight-\baselineskip-0.5/%v*\zeroheight)$`,
+			2.0*dict["nbqdigits"].(float64)-1.0,
+			2.0*dict["nbqdigits"].(float64)-1.0),
+	}
+	bottom.label = "bottom"
+	right := coordinateFormula{
+		formula: fmt.Sprintf(`$(label2) + (%v*\zerowidth, \zeroheight)$`,
+			2.0+max(dict["nbdrdigits"].(float64), dict["nbqdigits"].(float64))),
+	}
+	right.label = "right"
+	bBox := boundingBox{
+		bottom: bottom,
+		right:  right,
+	}
+
+	// --split box
+	coord1 := coordinateFormula{
+		formula: `$(label2) + (0.0, \zeroheight)$`,
+	}
+	coord2 := coordinateFormula{
+		formula: `$(label2) + (0.0, -\zeroheight)$`,
+	}
+	coord3 := coordinateFormula{
+		formula: fmt.Sprintf(`$(label2) + %v*(\zerowidth, -\zeroheight/%v)$`,
+			2.0+max(dict["nbdrdigits"].(float64), dict["nbqdigits"].(float64)),
+			2.0+max(dict["nbdrdigits"].(float64), dict["nbqdigits"].(float64))),
+	}
+	sBox := splitBox{
+		coord1: coord1,
+		coord2: coord2,
+		coord3: coord3,
+	}
+
+	// --answer
+	answer := latexAnswer{
+		width: 2.0 + max(dict["nbdrdigits"].(float64), dict["nbqdigits"].(float64)),
+	}
+
+	// --operands
+	dividend := latexDivOperand{
+		ref:   "label1",
+		label: "dividend",
+	}
+	divisor := latexDivOperand{
+		ref:   "label2",
+		label: "divisor",
+	}
+
+	// randomly determine the values of the operands
+
+	// First, verify that parameters are correct. If they are not,
+	// take the best action
+	if dict["nbqdigits"].(float64) < dict["nbdvdigits"].(float64)-dict["nbdrdigits"].(float64) {
+		log.Printf(" It is not possible to generate quotients with %v digits if the dividend has %v digits and the divisor has %v digits. Thus, %v digits in the quotient are generated instead", dict["nbqdigits"], dict["nbdvdigits"], dict["nbdrdigits"], dict["nbdvdigits"].(float64)-dict["nbdrdigits"].(float64))
+		dict["nbqdigits"] = dict["nbdvdigits"].(float64) - dict["nbdrdigits"].(float64)
+	}
+
+	if dict["nbqdigits"].(float64) > dict["nbdvdigits"].(float64)-dict["nbdrdigits"].(float64)+1 {
+		log.Printf(" It is not possible to generate quotients with %v digits if the dividend has %v digits and the divisor has %v digits. Thus, %v digits in the quotient are generated instead", dict["nbqdigits"], dict["nbdvdigits"], dict["nbdrdigits"], dict["nbdvdigits"].(float64)-dict["nbdrdigits"].(float64)+1)
+		dict["nbqdigits"] = dict["nbdvdigits"].(float64) - dict["nbdrdigits"].(float64) + 1
+	}
+
+	// now, generate numbers in their corresponding range
+	log.Print(dict)
+	var qvalue int
+	nbdivdigits := int(dict["nbdivdigits"].(float64))
+	nbdrdigits := int(dict["nbdrdigits"].(float64))
+	for nbdigits(qvalue) < nbdivdigits || qvalue == 0 {
+		dividend.value = randN(nbdivdigits)
+		divisor.value = randN(nbdrdigits)
+		qvalue = dividend.value / divisor.value
+	}
+
+	// And put all this elements together to bring up the defintion of a division
+	divProblem := divisionProblem{
+		label1:   label1,
+		label2:   label2,
+		label3:   label3,
+		line1:    line1,
+		bBox:     bBox,
+		sBox:     sBox,
+		answer:   answer,
+		dividend: dividend,
+		divisor:  divisor,
+	}
+
+	// and return the TikZ code necessary for drawing this operation
+	return divProblem.Execute()
+
+}
+
+// divisions
+// ----------------------------------------------------------------------------
+
 // templates
 // ----------------------------------------------------------------------------
 
@@ -541,11 +752,35 @@ func (masterFile MasterFile) MasterToFileFromTemplate(dst string) {
 			masterFile.Infile)
 	}
 
-	// access a template and parse its contents
-	master, err := template.ParseFiles(masterFile.Infile)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// access a template and parse its contents. In addition it
+	// registers a function "dict" which allows the user to
+	// introduce in the text template any arguments
+	master := template.Must(template.New(path.Base(masterFile.Infile)).Funcs(template.FuncMap{
+		"dict": func(values ...interface{}) (map[string]interface{}, error) {
+
+			// if the number of items is not even (as many
+			// pairs of the form "Key" "Value" should be
+			// given) then an error is raised
+			if len(values)%2 != 0 {
+				return nil, errors.New("Invalid dict call. There should be an even number of arguments of the form 'Key' 'Value'")
+			}
+
+			// Create a map with as many elements as keys
+			// have been specified
+			dict := make(map[string]interface{}, len(values)/2)
+
+			// and process them
+			for i := 0; i < len(values); i += 2 {
+				key, ok := values[i].(string)
+				if !ok {
+					return nil, errors.New("Dict keys must be strings")
+				}
+				dict[key] = values[i+1]
+			}
+
+			// at this point no error has been reported, move therefore back
+			return dict, nil
+		}}).ParseFiles(masterFile.Infile))
 
 	// if the given filename already exists, then number it and so
 	// on until the resulting filename does not exist. If

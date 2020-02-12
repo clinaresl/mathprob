@@ -1,6 +1,7 @@
 /*
   sequence.go
-  Description: Provides services for automatically creating a sequence or a part of it
+  Description: Provides services for automatically creating a sequence
+  or a part of it
   -----------------------------------------------------------------------------
 
   Started on  <Wed Dec 12 20:44:45 2018 >
@@ -79,6 +80,9 @@ const latexIndexCode = `\node at {{.GetPosition}} {\huge {{.GetValue}}};`
 
 // the TikZ code for generating the result is the following
 const latexSequenceAnswerCode = `\node [rounded corners, rectangle, minimum width={{.GetMinimumWidth}} cm, minimum height = {{.GetMinimumHeight}} cm, draw] at {{.GetPosition}} {};`
+
+// types
+// ----------------------------------------------------------------------------
 
 // An Index is the number shown whose precendent and/or subsequent has
 // to be obtained. It consists of a label, an identifier, a position
