@@ -12,7 +12,7 @@ which is then completed by this program
 
 First, clone the repository with:
 
-    hg clone ssh://hg@bitbucket.org/clinares/mathprob
+    git clone https://github.com/clinaresl/mathprob.git
 
 from within your `$GOPATH/src/` directory. To compile `mathprob`:
 
