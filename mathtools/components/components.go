@@ -179,30 +179,17 @@ func VerifyCoordinateDict(dict map[string]interface{}) (bool, error) {
 // -- Point
 
 // Points are of course positionable and, as such, they return a string that
-// represents their location
+// represents their location as a valid TikZ representation
 func (p Point) Position() string {
-	return p.String()
-}
-
-// return a TikZ representation of a point which is given, indeed, by the
-// definition of its location
-func (p Point) String() string {
-	return p.Position()
+	return fmt.Sprintf("(%v, %v)", p.X, p.Y)
 }
 
 // -- Formula
 
 // Formulas are also positionable as their resolution results in a unique point
 // and, as such, they return a string that can be used to compute their location
+// as a valid TikZ representation
 func (f Formula) Position() string {
-	return f.String()
-}
-
-// return a TikZ representation of a formula
-func (f Formula) String() string {
-
-	// Notice the explicit conversion to a string of the argument. Otherwise,
-	// this would enter into an endless recursive invocation
 	return fmt.Sprintf("($%v$)", string(f))
 }
 
