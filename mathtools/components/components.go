@@ -70,7 +70,7 @@ func verifyPointDict(dict map[string]interface{}) (bool, Point) {
 	// they are present
 	var ok bool
 	var fvalue float64
-	var coords map[string]float64
+	coords := make(map[string]float64)
 	for key, value := range dict {
 		if key == "x" {
 

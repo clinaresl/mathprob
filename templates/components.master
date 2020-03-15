@@ -52,6 +52,7 @@
   automáticamente para tí. Lo que ves a continuación son diferentes componentes
   que se pueden emplear para componer ejercicios que ojalá te diviertan mucho
 
+  {{.GetCoordinate (dict "label" "test" "x" 1.506 "y" 3.14159)}}
   {{.GetCoordinate (dict "label" "test-1" "formula" "blah, blah, blah")}}
 
 \end{questions}

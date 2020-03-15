@@ -816,9 +816,9 @@ func (masterFile MasterFile) MasterToFileFromTemplate(dst string) {
 			return dict, nil
 		}}).ParseFiles(masterFile.Infile))
 
-	// if the given filename already exists, then number it and so
-	// on until the resulting filename does not exist. If
-	// re-numbering is required, start with index 2
+	// if the given filename already exists, then number it and so on until the
+	// resulting filename does not exist. If re-numbering is required, start
+	// with index 2
 	index := 2
 	current := dst
 	for _, err := os.Stat(dst); err == nil; {
