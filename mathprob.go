@@ -26,8 +26,8 @@ import (
 	"log"
 	"os"
 
-	"bitbucket.org/mathprob/fstools"
-	"bitbucket.org/mathprob/mathtools"
+	"github.com/clinaresl/mathprob/fstools"
+	"github.com/clinaresl/mathprob/mathtools"
 )
 
 // imports

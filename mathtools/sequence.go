@@ -75,6 +75,27 @@ const latexSubsequentSequenceCode = `\begin{minipage}{0.25\linewidth}
 \end{minipage}
 `
 
+// the TikZ code for generating sequences type "full" (both previous and
+// subsequent) is shown below
+const latexFullSequenceCode = `\begin{minipage}{0.40\linewidth}
+  \begin{center}
+    \begin{tikzpicture}
+
+      % draw an invisible box used to properly align all sequences
+      \draw [white] (0,0) rectangle (4.5,1.5);
+
+      % show the index
+      {{.GetIndex}}
+
+      % show the areas to draw the answers
+      {{.GetPreviousSequenceAnswer}}
+      {{.GetSubsequentSequenceAnswer}}
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+`
+
 // the TikZ code for generating the indices is the following
 const latexIndexCode = `\node at {{.GetPosition}} {\huge {{.GetValue}}};`
 
@@ -111,6 +132,13 @@ type sequenceProblem struct {
 	index   latexIndex
 	answer  latexSequenceAnswer
 	seqtype int
+}
+
+// A full sequence problem consists of the same struct but with space for two
+// answers
+type fullSequenceProblem struct {
+	index                    latexIndex
+	prevAnswer, subseqAnswer latexSequenceAnswer
 }
 
 // methods

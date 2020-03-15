@@ -129,7 +129,7 @@ línea.
     \begin{center}
       \begin{tikzpicture}
 
-        % --- Coordinates -------------------------------------------------------
+        % --- Coordinates -----------------------------------------------------
 
         \coordinate (origin) at (0,0);
         \coordinate (label1) at ($(origin) + (3.5*\zerowidth, \zeroheight+2*(\zeroheight+\baselineskip)$);
@@ -140,16 +140,16 @@ línea.
 
         \coordinate (label3) at ($(label2) + (-1.5*\zerowidth, 0.0)$);
         \fill [red] (label3) circle (1pt);
-        % -----------------------------------------------------------------------
+        % ---------------------------------------------------------------------
 
-        % --- Ancilliary reference points
+        % --- Ancilliary reference points -------------------------------------
 
         \coordinate (line1) at ($(label2) + (0, -2*\zeroheight-0.15 cm)$);
         \fill [blue] (line1) circle (1pt);        
         
-        % -----------------------------------------------------------------------
+        % ---------------------------------------------------------------------
 
-        % --- Bounding Box ------------------------------------------------------
+        % --- Bounding Box ----------------------------------------------------
 
         % \coordinate (bottom) at (0,0);
         \coordinate (bottom) at ($(label3) + (-2.0*\zerowidth, -2.5*\zeroheight-0.15 cm)$);
@@ -162,12 +162,12 @@ línea.
         % \draw [lightgray] (0,0) rectangle (3.5,5.0);
         \draw [lightgray] (bottom) rectangle (right);
         
-        % -----------------------------------------------------------------------
+        % ---------------------------------------------------------------------
 
         % show the horizontal rule
         \draw [thick] ($(label3) + (-2.0*\zerowidth, -\zeroheight)$) -- ($(label2) + (0, -\zeroheight)$);
         
-        % --- Text
+        % --- Text ------------------------------------------------------------
         \node [left=0.0 cm of label1] (multiplierA) {\huge 9};
         \node [left=0.0 cm of label2] (multiplierB) {\huge 7};
         \node [left=0.0 cm of label3] (operand) {\huge $\times$};

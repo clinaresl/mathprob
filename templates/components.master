@@ -1,0 +1,60 @@
+{{/*
+
+	This template provides the basic functionality to just show
+	how different components can be generated
+
+*/}}
+
+\documentclass[svgnames,addpoints]{exam}
+{{/* ------------------------------ Preamble ----------------------------- */}}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{examen}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+\usepackage{pifont}
+
+\usepackage{cancel}
+\usepackage{array}
+
+\usepackage{tikz}
+\usepackage{pgflibraryarrows}
+\usepackage{pgflibrarysnakes}
+
+\usetikzlibrary{matrix,patterns,fadings,positioning}
+
+\usepackage{array}
+\usepackage{eurosym}
+
+\usepackage{booktabs}
+\usepackage{url}
+
+\usepackage{rotating}
+{{/* ------------------------------ Main body ---------------------------- */}}
+\begin{document}
+
+\titulacion{Grado en Informática}
+\asignatura{Heurística y Optimización}
+
+\convocatoria{\today}
+\tiempo{4 horas}
+
+\principio
+{{/* ------------------------------ Questions ---------------------------- */}}
+\begin{questions}
+
+  \question {\bf {{.GetName}}}, esto es un fichero que ha sido generado
+  automáticamente para tí. Lo que ves a continuación son diferentes componentes
+  que se pueden emplear para componer ejercicios que ojalá te diviertan mucho
+
+  {{.GetCoordinate (dict "label" "test-1" "formula" "blah, blah, blah")}}
+
+\end{questions}
+
+
+\end{document}

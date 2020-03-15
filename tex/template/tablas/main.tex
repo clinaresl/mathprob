@@ -1,0 +1,938 @@
+%%
+%% main.tex
+%% 
+%% Made by 
+%% Login   <clinares@atlas>
+%% 
+%% Started on  Sat May  4 14:24:58 2019 
+%% Last update Sat May  4 14:24:58 2019 
+%%
+
+\documentclass[svgnames,addpoints]{exam}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{tb}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+\usepackage{pifont}
+
+\usepackage{cancel}
+\usepackage{array}
+
+\usepackage{tikz}
+\usepackage{pgflibraryarrows}
+\usepackage{pgflibrarysnakes}
+
+\usetikzlibrary{calc,matrix,patterns,fadings,positioning}
+
+\usepackage{xcolor}
+
+\usepackage{array}
+\usepackage{eurosym}
+
+\usepackage{booktabs}
+\usepackage{url}
+
+\usepackage{rotating}
+
+\newlength{\zerowidth}
+\settowidth{\zerowidth}{\huge 0}
+\newlength{\zeroheight}
+\settoheight{\zeroheight}{\huge 0}
+
+\makeatletter
+\def\convertto#1#2{\strip@pt\dimexpr #2*65536/\number\dimexpr 1#1}
+\makeatother
+
+
+\begin{document}
+
+\titulacion{Esquemas}
+\asignatura{Tablas de multiplicar}
+
+\convocatoria{\today}
+\tiempo{4 horas}
+
+\begin{tabular}{cc}
+
+  \begin{minipage}{7.5cm}
+
+    \begin{tabular}{c}
+
+      \includegraphics[scale=0.15]{tablas-multiplicar}\\
+
+    \end{tabular}
+
+  \end{minipage}
+  &
+  \begin{minipage}{8.5cm}
+
+    \begin{center}
+
+      {\huge \bf \titu}\\
+      {\Large \bf \asig}\\ \ \\
+      
+      \convo
+
+    \end{center}
+
+  \end{minipage}\\ & \\ & \\  & \\
+
+\end{tabular}
+
+{\Large\bf Tablas de multiplicar}
+
+Todas las representaciones que se muestran a continuación se hacen
+empleando las siguientes medidas:
+
+\begin{center}
+  \begin{tabular}{ll}
+    \texttt{zeroheight}   & \convertto{cm}{\the\zeroheight}\ cm \\
+    \texttt{zerowidth}    & \convertto{cm}{\the\zerowidth}\ cm \\
+  \end{tabular}
+\end{center}
+
+\noindent
+y el \texttt{baselineskip} (\convertto{cm}{\the\baselineskip}\
+cm). Las dos mostradas arriba deben definirse en el preámbulo del
+documento \LaTeX\ (por ejemplo, con un fichero \texttt{.sty} que se
+incluya automáticamente en el fichero). Además, cada operación se
+muestra en una \textit{minipage} con un ancho igual a un cuarto el
+ancho de la página, salvo el último (con dividendos más largos) que
+requieren que cada una se haga en un tercio de la longitud de la
+línea.
+
+\begin{questions}
+
+  \question Primero, se muestran varias multiplicaciones con las siguientes
+  características:
+
+  \begin{itemize}
+    
+    \item Número maximo de dígitos de la primera columna: 1
+    
+    \item Número maximo de dígitos de la segunda columna: 1
+    
+    \item Número maximo de dígitos necesarios para representar cada resultado: 1
+
+    \item Número de multiplicaciones a presentar en la tabla: 4
+    
+  \end{itemize}
+
+  El esquema general se muestra a continuación:
+
+  \noindent\begin{minipage}{0.33\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -----------------------------------------------------
+
+        \coordinate (bottom) at (0,0);
+        \fill [blue] (bottom) circle (1pt);
+
+        % el desplazamiento vertical desde el punto inferior izquierdo hasta
+        % donde se escribe el primer numero de la última serie incluye una
+        % distancia adicional de \baselineskip para facilitar que unas tablas se
+        % puedan apilar sobre otras
+        \coordinate (label11) at ($(bottom) + (1.5\zerowidth, 0.5\zeroheight+1.5\baselineskip)$);
+        \fill [red] (label11) circle (1pt);
+        \coordinate (operator1) at ($(label11) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (operator1) circle (1pt);
+        \coordinate (label12) at ($(operator1) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (label12) circle (1pt);
+        \coordinate (equal1) at ($(label12) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (equal1) circle (1pt);
+
+        % el punto de referencia que marca el punto central de la caja en la que
+        % se escribe el resultado se desplaza multiplicando \zerowidth por la
+        % mitad del ancho que tendrá la caja más 1. Puesto que en este caso se
+        % puede dibujar un sólo digito en la caja de resultado su ancho es 3.0
+        % y, por lo tanto, el desplazamiento es 3/2+1=2.5
+        \coordinate (answer1) at ($(equal1) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (answer1) circle (1pt);
+
+        \coordinate (label21) at ($(label11) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \fill [red] (label21) circle (1pt);
+        \coordinate (operator2) at ($(label21) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (operator2) circle (1pt);
+        \coordinate (label22) at ($(operator2) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (label22) circle (1pt);
+        \coordinate (equal2) at ($(label22) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (equal2) circle (1pt);
+        \coordinate (answer2) at ($(equal2) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (answer2) circle (1pt);
+
+        \coordinate (label31) at ($(label21) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \fill [red] (label31) circle (1pt);
+        \coordinate (operator3) at ($(label31) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (operator3) circle (1pt);
+        \coordinate (label32) at ($(operator3) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (label32) circle (1pt);
+        \coordinate (equal3) at ($(label32) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (equal3) circle (1pt);
+        \coordinate (answer3) at ($(equal3) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (answer3) circle (1pt);
+
+        \coordinate (label41) at ($(label31) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \fill [red] (label41) circle (1pt);
+        \coordinate (operator4) at ($(label41) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (operator4) circle (1pt);
+        \coordinate (label42) at ($(operator4) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (label42) circle (1pt);
+        \coordinate (equal4) at ($(label42) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (equal4) circle (1pt);
+        \coordinate (answer4) at ($(equal4) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (answer4) circle (1pt);
+
+        % ---------------------------------------------------------------------
+
+        % --- Bounding Box ----------------------------------------------------
+
+        % the distance between the top right corner and the box created for
+        % writing the answer in the first row is the same than the distance
+        % between the bottom and and the first operand of the last row
+        \coordinate (right) at ($(answer4) + (1.5\zerowidth, 0.5\zeroheight + 0.5\baselineskip)$);
+        \fill [green] (right) circle (1pt);
+
+        % draw an invisible box used to properly align all sequences
+        \draw [lightgray] (bottom) rectangle (right);
+       
+        % ---------------------------------------------------------------------
+
+        % --- Table -----------------------------------------------------------
+
+        % numbers in the first column
+        \draw (label11) node {\huge 4};
+        \draw (operator1) node {\huge$\times$};
+        \draw (label12) node {\huge 1};
+        \draw (equal1) node {\huge$=$};
+
+        % el ancho de una caja en la que se debe escribir un número es 2 más el
+        % número de digítos que se escriben por el zerowidth. Como en este caso
+        % solo se dibuja un
+        % dígito, el ancho es 3 veces el zerowidth
+        \draw(answer1) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 4}};
+
+        \draw(label21) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 3}};
+        \draw (operator2) node {\huge$\times$};
+        \draw (label22) node {\huge 1};
+        \draw (equal2) node {\huge$=$};
+        \draw(answer2) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 3}};
+
+        \draw (label31) node {\huge 2};
+        \draw (operator3) node {\huge$\times$};
+        \draw(label32) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 1}};
+        \draw (equal3) node {\huge$=$};
+        \draw(answer3) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 2}};
+
+        \draw(label41) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 1}};
+        \draw (operator4) node {\huge$\times$};
+        \draw(label42) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 1}};
+        \draw (equal4) node {\huge$=$};
+        \draw(answer4) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 1}};
+
+        % ---------------------------------------------------------------------
+
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+
+  A continuación se muestra el único ejemplo que puede generarse con los
+  parámetros anteriores:
+
+  \noindent\begin{minipage}{0.33\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -----------------------------------------------------
+
+        \coordinate (bottom) at (0,0);
+
+        \coordinate (label11) at ($(bottom) + (1.5\zerowidth, 0.5\zeroheight+1.5\baselineskip)$);
+        \coordinate (operator1) at ($(label11) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label12) at ($(operator1) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal1) at ($(label12) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer1) at ($(equal1) + (2.5*\zerowidth, 0.0)$);
+
+        \coordinate (label21) at ($(label11) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator2) at ($(label21) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label22) at ($(operator2) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal2) at ($(label22) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer2) at ($(equal2) + (2.5*\zerowidth, 0.0)$);
+
+        \coordinate (label31) at ($(label21) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator3) at ($(label31) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label32) at ($(operator3) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal3) at ($(label32) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer3) at ($(equal3) + (2.5*\zerowidth, 0.0)$);
+
+        \coordinate (label41) at ($(label31) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator4) at ($(label41) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label42) at ($(operator4) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal4) at ($(label42) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer4) at ($(equal4) + (2.5*\zerowidth, 0.0)$);
+
+        % ---------------------------------------------------------------------
+
+        % --- Bounding Box ----------------------------------------------------
+
+        % the distance between the top right corner and the box created for
+        % writing the answer in the first row is the same than the distance
+        % between the bottom and and the first operand of the last row
+        \coordinate (right) at ($(answer4) + (1.5\zerowidth, 0.5\zeroheight + 0.5\baselineskip)$);
+
+        % draw an invisible box used to properly align all sequences
+        \draw [white] (bottom) rectangle (right);
+
+        % ---------------------------------------------------------------------
+
+        % --- Table -----------------------------------------------------------
+
+        % numbers in the first column
+        \draw (label11) node {\huge 4};
+        \draw (operator1) node {\huge$\times$};
+        \draw (label12) node {\huge 1};
+        \draw (equal1) node {\huge$=$};
+        \draw(answer1) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw(label21) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (operator2) node {\huge$\times$};
+        \draw (label22) node {\huge 1};
+        \draw (equal2) node {\huge$=$};
+        \draw(answer2) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw (label31) node {\huge 2};
+        \draw (operator3) node {\huge$\times$};
+        \draw(label32) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (equal3) node {\huge$=$};
+        \draw(answer3) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw(label41) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (operator4) node {\huge$\times$};
+        \draw(label42) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (equal4) node {\huge$=$};
+        \draw(answer4) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        % ---------------------------------------------------------------------
+
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+
+  \question Primero, se muestran varias multiplicaciones con las siguientes
+  características:
+
+  \begin{itemize}
+
+    \item Número maximo de dígitos de la primera columna: 1
+
+    \item Número maximo de dígitos de la segunda columna: 1
+
+    \item Número maximo de dígitos necesarios para representar cada resultado: 2
+
+    \item Número de multiplicaciones a presentar en la tabla: 4
+
+  \end{itemize}
+
+  El esquema general se muestra a continuación:
+
+  \noindent\begin{minipage}{0.33\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -----------------------------------------------------
+
+        \coordinate (bottom) at (0,0);
+        \fill [blue] (bottom) circle (1pt);
+
+        % el desplazamiento vertical desde el punto inferior izquierdo hasta
+        % donde se escribe el primer numero de la última serie incluye una
+        % distancia adicional de \baselineskip para facilitar que unas tablas se
+        % puedan apilar sobre otras
+        \coordinate (label11) at ($(bottom) + (1.5\zerowidth, 0.5\zeroheight+1.5\baselineskip)$);
+        \fill [red] (label11) circle (1pt);
+        \coordinate (operator1) at ($(label11) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (operator1) circle (1pt);
+        \coordinate (label12) at ($(operator1) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (label12) circle (1pt);
+        \coordinate (equal1) at ($(label12) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (equal1) circle (1pt);
+
+        % el punto de referencia que marca el punto central de la caja en la que
+        % se escribe el resultado se desplaza multiplicando \zerowidth por la
+        % mitad del ancho que tendrá la caja más 1. Puesto que en este caso se
+        % pueden dibujar hasta dos dígitos en la caja de resultado su ancho es 4
+        % y, por lo tanto, el desplazamiento es 4/2+1=3
+        \coordinate (answer1) at ($(equal1) + (3.0*\zerowidth, 0.0)$);
+        \fill [red] (answer1) circle (1pt);
+
+        \coordinate (label21) at ($(label11) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \fill [red] (label21) circle (1pt);
+        \coordinate (operator2) at ($(label21) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (operator2) circle (1pt);
+        \coordinate (label22) at ($(operator2) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (label22) circle (1pt);
+        \coordinate (equal2) at ($(label22) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (equal2) circle (1pt);
+        \coordinate (answer2) at ($(equal2) + (3.0*\zerowidth, 0.0)$);
+        \fill [red] (answer2) circle (1pt);
+
+        \coordinate (label31) at ($(label21) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \fill [red] (label31) circle (1pt);
+        \coordinate (operator3) at ($(label31) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (operator3) circle (1pt);
+        \coordinate (label32) at ($(operator3) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (label32) circle (1pt);
+        \coordinate (equal3) at ($(label32) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (equal3) circle (1pt);
+        \coordinate (answer3) at ($(equal3) + (3.0*\zerowidth, 0.0)$);
+        \fill [red] (answer3) circle (1pt);
+
+        \coordinate (label41) at ($(label31) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \fill [red] (label41) circle (1pt);
+        \coordinate (operator4) at ($(label41) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (operator4) circle (1pt);
+        \coordinate (label42) at ($(operator4) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (label42) circle (1pt);
+        \coordinate (equal4) at ($(label42) + (2.5*\zerowidth, 0.0)$);
+        \fill [red] (equal4) circle (1pt);
+        \coordinate (answer4) at ($(equal4) + (3.0*\zerowidth, 0.0)$);
+        \fill [red] (answer4) circle (1pt);
+
+        % ---------------------------------------------------------------------
+
+        % --- Bounding Box ----------------------------------------------------
+
+        % the distance between the top right corner and the box created for
+        % writing the answer in the first row is the same than the distance
+        % between the bottom and and the first operand of the last row
+        \coordinate (right) at ($(answer4) + (2.0\zerowidth, 0.5\zeroheight + 0.5\baselineskip)$);
+        \fill [green] (right) circle (1pt);
+
+        % draw an invisible box used to properly align all sequences
+        \draw [lightgray] (bottom) rectangle (right);
+
+        % ---------------------------------------------------------------------
+
+        % --- Table -----------------------------------------------------------
+
+        % numbers in the first column
+        \draw (label11) node {\huge 7};
+        \draw (operator1) node {\huge$\times$};
+        \draw (label12) node {\huge 4};
+        \draw (equal1) node {\huge$=$};
+        \draw(answer1) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 28}};
+
+        \draw(label21) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 7}};
+        \draw (operator2) node {\huge$\times$};
+        \draw (label22) node {\huge 3};
+        \draw (equal2) node {\huge$=$};
+        \draw(answer2) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 21}};
+
+        \draw (label31) node {\huge 7};
+        \draw (operator3) node {\huge$\times$};
+        \draw(label32) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 2}};
+        \draw (equal3) node {\huge$=$};
+        \draw(answer3) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 14}};
+
+        \draw(label41) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 7}};
+        \draw (operator4) node {\huge$\times$};
+        \draw(label42) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 1}};
+        \draw (equal4) node {\huge$=$};
+        \draw(answer4) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 7}};
+
+        % ---------------------------------------------------------------------
+
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+
+  A continuación se muestran algunos ejemplos:
+
+  El esquema general se muestra a continuación:
+
+  \noindent\begin{minipage}{0.33\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -----------------------------------------------------
+
+        \coordinate (bottom) at (0,0);
+
+        \coordinate (label11) at ($(bottom) + (1.5\zerowidth, 0.5\zeroheight+1.5\baselineskip)$);
+        \coordinate (operator1) at ($(label11) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label12) at ($(operator1) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal1) at ($(label12) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer1) at ($(equal1) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label21) at ($(label11) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator2) at ($(label21) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label22) at ($(operator2) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal2) at ($(label22) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer2) at ($(equal2) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label31) at ($(label21) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator3) at ($(label31) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label32) at ($(operator3) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal3) at ($(label32) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer3) at ($(equal3) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label41) at ($(label31) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator4) at ($(label41) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label42) at ($(operator4) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal4) at ($(label42) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer4) at ($(equal4) + (3.0*\zerowidth, 0.0)$);
+
+        % ---------------------------------------------------------------------
+
+        % --- Bounding Box ----------------------------------------------------
+
+        % the distance between the top right corner and the box created for
+        % writing the answer in the first row is the same than the distance
+        % between the bottom and and the first operand of the last row
+        \coordinate (right) at ($(answer4) + (2.0\zerowidth, 0.5\zeroheight + 0.5\baselineskip)$);
+
+        % draw an invisible box used to properly align all sequences
+        \draw [white] (bottom) rectangle (right);
+
+        % ---------------------------------------------------------------------
+
+        % --- Table -----------------------------------------------------------
+
+        % numbers in the first column
+        \draw (label11) node {\huge 7};
+        \draw (operator1) node {\huge$\times$};
+        \draw (label12) node {\huge 4};
+        \draw (equal1) node {\huge$=$};
+        \draw(answer1) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw(label21) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (operator2) node {\huge$\times$};
+        \draw (label22) node {\huge 3};
+        \draw (equal2) node {\huge$=$};
+        \draw(answer2) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw (label31) node {\huge 7};
+        \draw (operator3) node {\huge$\times$};
+        \draw(label32) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (equal3) node {\huge$=$};
+        \draw(answer3) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw(label41) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (operator4) node {\huge$\times$};
+        \draw(label42) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (equal4) node {\huge$=$};
+        \draw(answer4) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        % ---------------------------------------------------------------------
+
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.33\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -----------------------------------------------------
+
+        \coordinate (bottom) at (0,0);
+
+        \coordinate (label11) at ($(bottom) + (1.5\zerowidth, 0.5\zeroheight+1.5\baselineskip)$);
+        \coordinate (operator1) at ($(label11) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label12) at ($(operator1) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal1) at ($(label12) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer1) at ($(equal1) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label21) at ($(label11) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator2) at ($(label21) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label22) at ($(operator2) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal2) at ($(label22) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer2) at ($(equal2) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label31) at ($(label21) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator3) at ($(label31) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label32) at ($(operator3) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal3) at ($(label32) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer3) at ($(equal3) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label41) at ($(label31) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator4) at ($(label41) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label42) at ($(operator4) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal4) at ($(label42) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer4) at ($(equal4) + (3.0*\zerowidth, 0.0)$);
+
+        % ---------------------------------------------------------------------
+
+        % --- Bounding Box ----------------------------------------------------
+
+        % the distance between the top right corner and the box created for
+        % writing the answer in the first row is the same than the distance
+        % between the bottom and and the first operand of the last row
+        \coordinate (right) at ($(answer4) + (2.0\zerowidth, 0.5\zeroheight + 0.5\baselineskip)$);
+
+        % draw an invisible box used to properly align all sequences
+        \draw [white] (bottom) rectangle (right);
+
+        % ---------------------------------------------------------------------
+
+        % --- Table -----------------------------------------------------------
+
+        % numbers in the first column
+        \draw (label11) node {\huge 5};
+        \draw (operator1) node {\huge$\times$};
+        \draw (label12) node {\huge 4};
+        \draw (equal1) node {\huge$=$};
+        \draw(answer1) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw(label21) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (operator2) node {\huge$\times$};
+        \draw (label22) node {\huge 3};
+        \draw (equal2) node {\huge$=$};
+        \draw(answer2) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw (label31) node {\huge 5};
+        \draw (operator3) node {\huge$\times$};
+        \draw(label32) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (equal3) node {\huge$=$};
+        \draw(answer3) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw(label41) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (operator4) node {\huge$\times$};
+        \draw(label42) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (equal4) node {\huge$=$};
+        \draw(answer4) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        % ---------------------------------------------------------------------
+
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.33\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -----------------------------------------------------
+
+        \coordinate (bottom) at (0,0);
+
+        \coordinate (label11) at ($(bottom) + (1.5\zerowidth, 0.5\zeroheight+1.5\baselineskip)$);
+        \coordinate (operator1) at ($(label11) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label12) at ($(operator1) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal1) at ($(label12) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer1) at ($(equal1) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label21) at ($(label11) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator2) at ($(label21) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label22) at ($(operator2) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal2) at ($(label22) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer2) at ($(equal2) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label31) at ($(label21) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator3) at ($(label31) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label32) at ($(operator3) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal3) at ($(label32) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer3) at ($(equal3) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label41) at ($(label31) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator4) at ($(label41) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label42) at ($(operator4) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal4) at ($(label42) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer4) at ($(equal4) + (3.0*\zerowidth, 0.0)$);
+
+        % ---------------------------------------------------------------------
+
+        % --- Bounding Box ----------------------------------------------------
+
+        % the distance between the top right corner and the box created for
+        % writing the answer in the first row is the same than the distance
+        % between the bottom and and the first operand of the last row
+        \coordinate (right) at ($(answer4) + (2.0\zerowidth, 0.5\zeroheight + 0.5\baselineskip)$);
+
+        % draw an invisible box used to properly align all sequences
+        \draw [white] (bottom) rectangle (right);
+
+        % ---------------------------------------------------------------------
+
+        % --- Table -----------------------------------------------------------
+
+        % numbers in the first column
+        \draw (label11) node {\huge 9};
+        \draw (operator1) node {\huge$\times$};
+        \draw (label12) node {\huge 4};
+        \draw (equal1) node {\huge$=$};
+        \draw(answer1) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw(label21) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (operator2) node {\huge$\times$};
+        \draw (label22) node {\huge 3};
+        \draw (equal2) node {\huge$=$};
+        \draw(answer2) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw (label31) node {\huge 9};
+        \draw (operator3) node {\huge$\times$};
+        \draw(label32) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (equal3) node {\huge$=$};
+        \draw(answer3) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw(label41) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (operator4) node {\huge$\times$};
+        \draw(label42) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (equal4) node {\huge$=$};
+        \draw(answer4) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        % ---------------------------------------------------------------------
+
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.33\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -----------------------------------------------------
+
+        \coordinate (bottom) at (0,0);
+
+        \coordinate (label11) at ($(bottom) + (1.5\zerowidth, 0.5\zeroheight+1.5\baselineskip)$);
+        \coordinate (operator1) at ($(label11) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label12) at ($(operator1) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal1) at ($(label12) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer1) at ($(equal1) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label21) at ($(label11) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator2) at ($(label21) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label22) at ($(operator2) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal2) at ($(label22) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer2) at ($(equal2) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label31) at ($(label21) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator3) at ($(label31) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label32) at ($(operator3) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal3) at ($(label32) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer3) at ($(equal3) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label41) at ($(label31) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator4) at ($(label41) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label42) at ($(operator4) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal4) at ($(label42) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer4) at ($(equal4) + (3.0*\zerowidth, 0.0)$);
+
+        % ---------------------------------------------------------------------
+
+        % --- Bounding Box ----------------------------------------------------
+
+        % the distance between the top right corner and the box created for
+        % writing the answer in the first row is the same than the distance
+        % between the bottom and and the first operand of the last row
+        \coordinate (right) at ($(answer4) + (2.0\zerowidth, 0.5\zeroheight + 0.5\baselineskip)$);
+
+        % draw an invisible box used to properly align all sequences
+        \draw [white] (bottom) rectangle (right);
+
+        % ---------------------------------------------------------------------
+
+        % --- Table -----------------------------------------------------------
+
+        % numbers in the first column
+        \draw (label11) node {\huge 4};
+        \draw (operator1) node {\huge$\times$};
+        \draw (label12) node {\huge 4};
+        \draw (equal1) node {\huge$=$};
+        \draw(answer1) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw(label21) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (operator2) node {\huge$\times$};
+        \draw (label22) node {\huge 3};
+        \draw (equal2) node {\huge$=$};
+        \draw(answer2) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw (label31) node {\huge 4};
+        \draw (operator3) node {\huge$\times$};
+        \draw(label32) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (equal3) node {\huge$=$};
+        \draw(answer3) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw(label41) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (operator4) node {\huge$\times$};
+        \draw(label42) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (equal4) node {\huge$=$};
+        \draw(answer4) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        % ---------------------------------------------------------------------
+
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.33\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -----------------------------------------------------
+
+        \coordinate (bottom) at (0,0);
+
+        \coordinate (label11) at ($(bottom) + (1.5\zerowidth, 0.5\zeroheight+1.5\baselineskip)$);
+        \coordinate (operator1) at ($(label11) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label12) at ($(operator1) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal1) at ($(label12) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer1) at ($(equal1) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label21) at ($(label11) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator2) at ($(label21) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label22) at ($(operator2) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal2) at ($(label22) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer2) at ($(equal2) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label31) at ($(label21) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator3) at ($(label31) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label32) at ($(operator3) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal3) at ($(label32) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer3) at ($(equal3) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label41) at ($(label31) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator4) at ($(label41) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label42) at ($(operator4) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal4) at ($(label42) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer4) at ($(equal4) + (3.0*\zerowidth, 0.0)$);
+
+        % ---------------------------------------------------------------------
+
+        % --- Bounding Box ----------------------------------------------------
+
+        % the distance between the top right corner and the box created for
+        % writing the answer in the first row is the same than the distance
+        % between the bottom and and the first operand of the last row
+        \coordinate (right) at ($(answer4) + (2.0\zerowidth, 0.5\zeroheight + 0.5\baselineskip)$);
+
+        % draw an invisible box used to properly align all sequences
+        \draw [white] (bottom) rectangle (right);
+
+        % ---------------------------------------------------------------------
+
+        % --- Table -----------------------------------------------------------
+
+        % numbers in the first column
+        \draw (label11) node {\huge 6};
+        \draw (operator1) node {\huge$\times$};
+        \draw (label12) node {\huge 6};
+        \draw (equal1) node {\huge$=$};
+        \draw(answer1) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw(label21) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (operator2) node {\huge$\times$};
+        \draw (label22) node {\huge 3};
+        \draw (equal2) node {\huge$=$};
+        \draw(answer2) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw (label31) node {\huge 6};
+        \draw (operator3) node {\huge$\times$};
+        \draw(label32) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (equal3) node {\huge$=$};
+        \draw(answer3) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw(label41) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (operator4) node {\huge$\times$};
+        \draw(label42) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (equal4) node {\huge$=$};
+        \draw(answer4) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        % ---------------------------------------------------------------------
+
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.33\linewidth}
+    \begin{center}
+      \begin{tikzpicture}
+
+        % --- Coordinates -----------------------------------------------------
+
+        \coordinate (bottom) at (0,0);
+
+        \coordinate (label11) at ($(bottom) + (1.5\zerowidth, 0.5\zeroheight+1.5\baselineskip)$);
+        \coordinate (operator1) at ($(label11) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label12) at ($(operator1) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal1) at ($(label12) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer1) at ($(equal1) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label21) at ($(label11) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator2) at ($(label21) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label22) at ($(operator2) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal2) at ($(label22) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer2) at ($(equal2) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label31) at ($(label21) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator3) at ($(label31) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label32) at ($(operator3) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal3) at ($(label32) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer3) at ($(equal3) + (3.0*\zerowidth, 0.0)$);
+
+        \coordinate (label41) at ($(label31) + (0.0, \zeroheight+1.5*\baselineskip)$);
+        \coordinate (operator4) at ($(label41) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (label42) at ($(operator4) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (equal4) at ($(label42) + (2.5*\zerowidth, 0.0)$);
+        \coordinate (answer4) at ($(equal4) + (3.0*\zerowidth, 0.0)$);
+
+        % ---------------------------------------------------------------------
+
+        % --- Bounding Box ----------------------------------------------------
+
+        % the distance between the top right corner and the box created for
+        % writing the answer in the first row is the same than the distance
+        % between the bottom and and the first operand of the last row
+        \coordinate (right) at ($(answer4) + (2.0\zerowidth, 0.5\zeroheight + 0.5\baselineskip)$);
+
+        % draw an invisible box used to properly align all sequences
+        \draw [white] (bottom) rectangle (right);
+
+        % ---------------------------------------------------------------------
+
+        % --- Table -----------------------------------------------------------
+
+        % numbers in the first column
+        \draw (label11) node {\huge 3};
+        \draw (operator1) node {\huge$\times$};
+        \draw (label12) node {\huge 3};
+        \draw (equal1) node {\huge$=$};
+        \draw(answer1) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw(label21) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (operator2) node {\huge$\times$};
+        \draw (label22) node {\huge 3};
+        \draw (equal2) node {\huge$=$};
+        \draw(answer2) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw (label31) node {\huge 3};
+        \draw (operator3) node {\huge$\times$};
+        \draw(label32) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (equal3) node {\huge$=$};
+        \draw(answer3) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        \draw(label41) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (operator4) node {\huge$\times$};
+        \draw(label42) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+        \draw (equal4) node {\huge$=$};
+        \draw(answer4) node [rounded corners, rectangle, minimum width=4.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {};
+
+        % ---------------------------------------------------------------------
+
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+
+
+
+\end{questions}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

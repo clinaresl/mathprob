@@ -31,8 +31,8 @@ import (
 	"time"
 
 	// go facility for processing templates
-
-	"bitbucket.org/mathprob/fstools"
+	"github.com/clinaresl/mathprob/fstools"
+	"github.com/clinaresl/mathprob/mathtools/components"
 )
 
 // types
@@ -128,7 +128,7 @@ func verifyDivisionDict(dict map[string]interface{}) {
 		// if a mandatory parameter has not been given, then
 		// raise an error and exit
 		if _, ok := dict[key]; !ok {
-			log.Fatalf(" Fatal Error: The key '%v' is not present in the dictionary given to create a division", key)
+			log.Fatalf(" Fatal Error: Mandatory key '%v' for defining a division not found", key)
 		}
 	}
 
@@ -179,11 +179,45 @@ func (masterFile MasterFile) GetOutfile() string {
 }
 
 // the following function is provided just to allow the text/template to repeat
-// the same statement an arbitrary number of times. It just return a slice of
+// the same statement an arbitrary number of times. It just returns a slice of
 // MasterFiles of a given length. Each element can then be used to invoke the
 // various services provided for text/templates
 func (masterFile MasterFile) Slice(n int) []MasterFile {
 	return make([]MasterFile, n)
+}
+
+// Components
+// ----------------------------------------------------------------------------
+
+func (masterFile MasterFile) GetCoordinate(dict map[string]interface{}) string {
+
+	// first things first, verify that the given dictionary is correct
+	if _, err := components.VerifyCoordinateDict(dict); err != nil {
+		log.Fatal(err)
+	}
+
+	// now, get the positionable item, either a point or a formula
+	var pos components.Position
+
+	// if a formula was given, then set the position to a formula
+	if value, ok := dict["formula"]; ok {
+		svalue := value.(string)
+		pos = components.Formula(svalue)
+	} else {
+
+		// otherwise, the dictionary contains a point which is accessible via
+		// the keys "x" and "y"
+		x := dict["x"].(float64)
+		y := dict["y"].(float64)
+		pos = components.Point{X: x, Y: y}
+	}
+
+	// so that at this point a valid coordinate can be returned
+	label := dict["label"].(string)
+	coord := components.NewCoordinate(pos, label)
+
+	// and return the string that represents this coordinate
+	return coord.String()
 }
 
 // Simple Operations
@@ -605,6 +639,9 @@ func (masterFile MasterFile) GetSequence100(seqtype int) (latexCode string) {
 	return latexSequenceProblem.Execute(seqtype)
 }
 
+// divisions
+// ----------------------------------------------------------------------------
+
 func (masterFile MasterFile) GetDivision(dict map[string]interface{}) string {
 
 	// seed the random generator
@@ -734,9 +771,6 @@ func (masterFile MasterFile) GetDivision(dict map[string]interface{}) string {
 	return divProblem.Execute()
 
 }
-
-// divisions
-// ----------------------------------------------------------------------------
 
 // templates
 // ----------------------------------------------------------------------------
