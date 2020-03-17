@@ -189,6 +189,10 @@ func (masterFile MasterFile) Slice(n int) []MasterFile {
 // Components
 // ----------------------------------------------------------------------------
 
+// This method is intended to be used in master files. It is substituted by TikZ
+// contents that create a coordinate with a label (identified with the key
+// "label") and located at a given position which can be identified either with
+// a position (using both keys "x" and "y") or a formula, with the key "formula"
 func (masterFile MasterFile) GetCoordinate(dict map[string]interface{}) string {
 
 	// first things first, verify that the given dictionary is correct
@@ -218,6 +222,27 @@ func (masterFile MasterFile) GetCoordinate(dict map[string]interface{}) string {
 
 	// and return the string that represents this coordinate
 	return coord.String()
+}
+
+// This method is intended to be used in master files. It is substituted by TikZ
+// contents that create a text box located at a coordinate (identified with the
+// key "label") and with the contents specified in the key "text"
+func (masterFile MasterFile) GetText(dict map[string]interface{}) string {
+
+	// first things first, verify that the given dictionary is correct
+	if _, err := components.VerifyTextDict(dict); err != nil {
+		log.Fatal(err)
+	}
+
+	// cast the arguments to their proper types
+	label := dict["label"].(string)
+	text := dict["text"].(string)
+
+	// finally, create a text
+	textBox := components.NewText(label, text)
+
+	// and return the string that shows up the contents of this text box
+	return textBox.String()
 }
 
 // Simple Operations

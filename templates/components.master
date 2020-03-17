@@ -54,6 +54,7 @@
 
   {{.GetCoordinate (dict "label" "test" "x" 1.506 "y" 3.14159)}}
   {{.GetCoordinate (dict "label" "test-1" "formula" "blah, blah, blah")}}
+  {{.GetText (dict "label" "label11" "text" `\huge 4`)}}
 
 \end{questions}
 

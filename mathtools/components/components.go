@@ -32,6 +32,9 @@ import (
 // TikZ code to generate a coordinate
 const tikzCoordinate = `\coordinate {{.GetLabel}} at {{.GetPosition}};`
 
+// TikZ code to generate text
+const tikzText = `\draw {{.GetLabel}} node {{.GetText}};`
+
 // types
 // ----------------------------------------------------------------------------
 
@@ -55,6 +58,14 @@ type Formula string
 type Coordinate struct {
 	Position
 	label string
+}
+
+// Text is written centered in a given coordinate identified by a label and can
+// hold any string (including other LaTeX commands that can affect the
+// look&feel)
+type Text struct {
+	label string
+	text  string
 }
 
 // functions
@@ -173,6 +184,41 @@ func VerifyCoordinateDict(dict map[string]interface{}) (bool, error) {
 	return true, nil
 }
 
+// return true if all the keys given in dict are correct for defining a
+// text box
+//
+// A dictionary is correct if and only if all the mandatory arguments have been
+// given. If not, false and an error is returned.
+//
+// A text box is specified providing the label of a coordinate and also the text
+// to show with the keywords "label" and "text"
+func VerifyTextDict(dict map[string]interface{}) (bool, error) {
+
+	// the mandatory keys are given next
+	mandatory := []string{"label", "text"}
+
+	// now, verify that all mandatory parameters are present in the dict
+	for _, key := range mandatory {
+
+		// if a mandatory parameter has not been given, then raise an error and
+		// exit
+		if _, ok := dict[key]; !ok {
+			return false, fmt.Errorf("Mandatory key '%v' for defining a text box not found", key)
+		}
+	}
+
+	// make also sure that parameters are given with the right type
+	if _, ok := dict["label"].(string); !ok {
+		return false, errors.New("the label of a text box should be given as a string")
+	}
+	if _, ok := dict["text"].(string); !ok {
+		return false, errors.New("the text to show in a text box should be given as a string")
+	}
+
+	// otherwise, the dictionary is correct
+	return true, nil
+}
+
 // methods
 // ----------------------------------------------------------------------------
 
@@ -223,6 +269,44 @@ func (c Coordinate) String() string {
 	// template is written to a string
 	var tplOutput bytes.Buffer
 	if err := tpl.Execute(&tplOutput, c); err != nil {
+		log.Fatal(err)
+	}
+
+	// and return the resulting string
+	return tplOutput.String()
+}
+
+// -- Text
+
+// Create a new instance of a text box given a coordinate (identified by its
+// label) and the text to show
+func NewText(label, text string) Text {
+	return Text{label: label, text: text}
+}
+
+// Return the label identifying the coordinate of this text box
+func (t Text) GetLabel() string {
+	return fmt.Sprintf("(%v)", t.label)
+}
+
+// Return the text to show of this text box
+func (t Text) GetText() string {
+	return fmt.Sprintf("{%v}", t.text)
+}
+
+// return a TikZ representation of a text box
+func (t Text) String() string {
+
+	// create a template with the TikZ code for showing a text box
+	tpl, err := template.New("text").Parse(tikzText)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// and now make the appropriate substitution. Note that the execution of the
+	// template is written to a string
+	var tplOutput bytes.Buffer
+	if err := tpl.Execute(&tplOutput, t); err != nil {
 		log.Fatal(err)
 	}
 

@@ -30,9 +30,6 @@ import (
 	"github.com/clinaresl/mathprob/mathtools"
 )
 
-// imports
-// ----------------------------------------------------------------------------
-
 // global variables
 // ----------------------------------------------------------------------------
 var VERSION string = "0.1.0" // current version
