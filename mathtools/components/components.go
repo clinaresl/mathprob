@@ -32,8 +32,10 @@ import (
 // TikZ code to generate a coordinate
 const tikzCoordinate = `\coordinate {{.GetLabel}} at {{.GetPosition}};`
 
-// TikZ code to generate text
-const tikzText = `\draw {{.GetLabel}} node {{.GetText}};`
+// TikZ code to generate text: first, the coordinate is created; next, the text
+// is shown centered on the coordinate
+const tikzText = `{{.GetCoord}}
+\draw {{.GetLabel}} node {{.GetText}};`
 
 // types
 // ----------------------------------------------------------------------------
@@ -60,12 +62,11 @@ type Coordinate struct {
 	label string
 }
 
-// Text is written centered in a given coordinate identified by a label and can
-// hold any string (including other LaTeX commands that can affect the
-// look&feel)
+// Text is written centered in a given coordinate and can hold any string
+// (including other LaTeX commands that can affect the look&feel)
 type Text struct {
-	label string
-	text  string
+	Coordinate
+	text string
 }
 
 // functions
@@ -187,15 +188,21 @@ func VerifyCoordinateDict(dict map[string]interface{}) (bool, error) {
 // return true if all the keys given in dict are correct for defining a
 // text box
 //
-// A dictionary is correct if and only if all the mandatory arguments have been
-// given. If not, false and an error is returned.
-//
-// A text box is specified providing the label of a coordinate and also the text
-// to show with the keywords "label" and "text"
+// A dictionary is correct if and only if it correctly defines a coordinate (see
+// VerifyCoordinateDict) and also provides text to be displayed (which can be an
+// empty string or might contain LaTeX commands to affect the appearance of the
+// text) with the keyword "text"
 func VerifyTextDict(dict map[string]interface{}) (bool, error) {
 
-	// the mandatory keys are given next
-	mandatory := []string{"label", "text"}
+	// first of all, verify that this dictionary correctly provides information
+	// for creating a coordinate
+	if ok, err := VerifyCoordinateDict(dict); !ok {
+		return false, fmt.Errorf("A coordinate was not properly defined while creating a text box: %v", err)
+	}
+
+	// now, beyond the definition of a coordinate, the mandatory keys are given
+	// next
+	mandatory := []string{"text"}
 
 	// now, verify that all mandatory parameters are present in the dict
 	for _, key := range mandatory {
@@ -278,13 +285,17 @@ func (c Coordinate) String() string {
 
 // -- Text
 
-// Create a new instance of a text box given a coordinate (identified by its
-// label) and the text to show
-func NewText(label, text string) Text {
-	return Text{label: label, text: text}
+// Create a new instance of a text box given a coordinate and the text to show
+func NewText(coord Coordinate, text string) Text {
+	return Text{Coordinate: coord, text: text}
 }
 
-// Return the label identifying the coordinate of this text box
+// Return the coordinate of this text box
+func (t Text) GetCoord() string {
+	return fmt.Sprintf("%v", t.Coordinate)
+}
+
+// Return the label of the coordinate of this text box
 func (t Text) GetLabel() string {
 	return fmt.Sprintf("(%v)", t.label)
 }

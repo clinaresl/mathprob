@@ -234,12 +234,35 @@ func (masterFile MasterFile) GetText(dict map[string]interface{}) string {
 		log.Fatal(err)
 	}
 
-	// cast the arguments to their proper types
+	// -- Coordinate
+
+	// now, get the positionable item, either a point or a formula
+	var pos components.Position
+
+	// if a formula was given, then set the position to a formula
+	if value, ok := dict["formula"]; ok {
+		svalue := value.(string)
+		pos = components.Formula(svalue)
+	} else {
+
+		// otherwise, the dictionary contains a point which is accessible via
+		// the keys "x" and "y"
+		x := dict["x"].(float64)
+		y := dict["y"].(float64)
+		pos = components.Point{X: x, Y: y}
+	}
+
+	// so that at this point a valid coordinate can be returned
 	label := dict["label"].(string)
+	coord := components.NewCoordinate(pos, label)
+
+	// -- Text
+
+	// cast the arguments to their proper types
 	text := dict["text"].(string)
 
-	// finally, create a text
-	textBox := components.NewText(label, text)
+	// finally, create a text box
+	textBox := components.NewText(coord, text)
 
 	// and return the string that shows up the contents of this text box
 	return textBox.String()
