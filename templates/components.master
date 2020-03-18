@@ -56,6 +56,7 @@
   {{.GetCoordinate (dict "label" "test-1" "formula" "blah, blah, blah")}}
   {{.GetText (dict "label" "label11" "x" 1.607 "y" 3.214 "text" `\huge 4`)}}
   {{.GetText (dict "label" "label11" "formula" `(bottom) + (1.5\zerowidth, 0.5\zeroheight+1.5\baselineskip)` "text" `\huge 4`)}}
+  {{.GetBox (dict "label" "answer1" "formula" `(equal1) + (2.5*\zerowidth, 0.0)` "minwidth" `3.0*\textwidth` "minheight" `\zeroheight + \baselineskip` "text" "")}}
 
 \end{questions}
 
