@@ -192,126 +192,54 @@ func (masterFile MasterFile) Slice(n int) []MasterFile {
 // This method is intended to be used in master files. It is substituted by TikZ
 // contents that create a coordinate with a label (identified with the key
 // "label") and located at a given position which can be identified either with
-// a position (using both keys "x" and "y") or a formula, with the key "formula"
+// a position (using both keys "x" and "y") or a formula, with the key
+// "formula". The coordinates x and y must be given as floating-point numbers
+// whereas formulas should be given as strings.
 func (masterFile MasterFile) GetCoordinate(dict map[string]interface{}) string {
 
 	// first things first, verify that the given dictionary is correct
-	if _, err := components.VerifyCoordinateDict(dict); err != nil {
+	var err error
+	var coord components.Coordinate
+	if coord, err = components.VerifyCoordinateDict(dict); err != nil {
 		log.Fatal(err)
 	}
 
-	// now, get the positionable item, either a point or a formula
-	var pos components.Position
-
-	// if a formula was given, then set the position to a formula
-	if value, ok := dict["formula"]; ok {
-		svalue := value.(string)
-		pos = components.Formula(svalue)
-	} else {
-
-		// otherwise, the dictionary contains a point which is accessible via
-		// the keys "x" and "y"
-		x := dict["x"].(float64)
-		y := dict["y"].(float64)
-		pos = components.Point{X: x, Y: y}
-	}
-
-	// so that at this point a valid coordinate can be returned
-	label := dict["label"].(string)
-	coord := components.NewCoordinate(pos, label)
-
-	// and return the string that represents this coordinate
+	// otherwise return the string that represents this coordinate
 	return coord.String()
 }
 
 // This method is intended to be used in master files. It is substituted by TikZ
-// contents that create a text box located at a coordinate (identified with the
-// key "label") and with the contents specified in the key "text"
+// contents that create a text box located at a coordinate (either by providing
+// the coordinates of a Point or giving a Formula) with the contents
+// specified in the key "text"
 func (masterFile MasterFile) GetText(dict map[string]interface{}) string {
 
 	// first things first, verify that the given dictionary is correct
-	if _, err := components.VerifyTextDict(dict); err != nil {
+	var err error
+	var text components.Text
+	if text, err = components.VerifyTextDict(dict); err != nil {
 		log.Fatal(err)
 	}
 
-	// -- Coordinate
-
-	// now, get the positionable item, either a point or a formula
-	var pos components.Position
-
-	// if a formula was given, then set the position to a formula
-	if value, ok := dict["formula"]; ok {
-		svalue := value.(string)
-		pos = components.Formula(svalue)
-	} else {
-
-		// otherwise, the dictionary contains a point which is accessible via
-		// the keys "x" and "y"
-		x := dict["x"].(float64)
-		y := dict["y"].(float64)
-		pos = components.Point{X: x, Y: y}
-	}
-
-	// so that at this point a valid coordinate can be returned
-	label := dict["label"].(string)
-	coord := components.NewCoordinate(pos, label)
-
-	// -- Text
-
-	// cast the arguments to their proper types
-	text := dict["text"].(string)
-
-	// finally, create a text box
-	textBox := components.NewText(coord, text)
-
 	// and return the string that shows up the contents of this text box
-	return textBox.String()
+	return text.String()
 }
 
 // This method is intended to be used in master files. It is substituted by TikZ
-// contents that create a box located at a coordinate (identified with the key
-// "label") and with the contents specified in the key "text" which has the
-// minimum width and height given in "minwidth" and "minheight"
+// contents that create a box located at a coordinate (either by providing the
+// coordinates of a Point of giving a Formula) and with the contents specified
+// in the key "text" which has the minimum width and height given in "minwidth"
+// and "minheight"
 func (masterFile MasterFile) GetBox(dict map[string]interface{}) string {
 
 	// first things first, verify that the given dictionary is correct
-	if _, err := components.VerifyBoxDict(dict); err != nil {
+	var err error
+	var box components.Box
+	if box, err = components.VerifyBoxDict(dict); err != nil {
 		log.Fatal(err)
 	}
 
-	// -- Coordinate
-
-	// now, get the positionable item, either a point or a formula
-	var pos components.Position
-
-	// if a formula was given, then set the position to a formula
-	if value, ok := dict["formula"]; ok {
-		svalue := value.(string)
-		pos = components.Formula(svalue)
-	} else {
-
-		// otherwise, the dictionary contains a point which is accessible via
-		// the keys "x" and "y"
-		x := dict["x"].(float64)
-		y := dict["y"].(float64)
-		pos = components.Point{X: x, Y: y}
-	}
-
-	// so that at this point a valid coordinate can be returned
-	label := dict["label"].(string)
-	coord := components.NewCoordinate(pos, label)
-
-	// -- Box
-
-	// cast the arguments to their proper types
-	minwidth := dict["minwidth"].(string)
-	minheight := dict["minheight"].(string)
-	text := dict["text"].(string)
-
-	// finally, create a box
-	box := components.NewBox(coord, minwidth, minheight, text)
-
-	// and return the string that shows up the contents of this text box
+	// and return the string that shows up the contents of this box
 	return box.String()
 }
 

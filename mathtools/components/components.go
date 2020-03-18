@@ -86,11 +86,13 @@ type Box struct {
 // functions
 // ----------------------------------------------------------------------------
 
-// return true and a valid Point if the keywords "x" and "y" are given in the
-// dictionary, and false otherwise. The values of "x" and "y" must be
-// floating-point numbers. If the keywords exist but the type assertion fails it
-// returns false the same
-func verifyPointDict(dict map[string]interface{}) (bool, Point) {
+// return a valid Point and no error if the keywords "x" and "y" are given in
+// the dictionary. Otherwise, an error is returned. If an error is returned the
+// contents of the Point are undetermined.
+//
+// The values of "x" and "y" must be floating-point numbers. If the keywords
+// exist but the type assertion fails it returns false the same
+func verifyPointDict(dict map[string]interface{}) (Point, error) {
 
 	// traverse the entire dictionary and get the values of "x" and "y" in case
 	// they are present
@@ -103,7 +105,7 @@ func verifyPointDict(dict map[string]interface{}) (bool, Point) {
 			// if the value of x is not given as a floating-point number
 			// immediately return false
 			if fvalue, ok = value.(float64); !ok {
-				return false, Point{0, 0}
+				return Point{}, errors.New("The x coordinate of a Point must be given as a floating-point number")
 			}
 			coords[key] = fvalue
 		}
@@ -112,7 +114,7 @@ func verifyPointDict(dict map[string]interface{}) (bool, Point) {
 			// if the value of y is not given as a floating-point number
 			// immediately return false
 			if fvalue, ok = value.(float64); !ok {
-				return false, Point{0, 0}
+				return Point{}, errors.New("The y coordinate of a Point must be given as a floating-point number")
 			}
 			coords[key] = fvalue
 		}
@@ -120,22 +122,25 @@ func verifyPointDict(dict map[string]interface{}) (bool, Point) {
 
 	// if either x or y is missing, then return false
 	if len(coords) < 2 {
-		return false, Point{0, 0}
+		return Point{}, errors.New("Both 'x' and 'y' coordinates must be given for defining a Point")
 	}
 
 	// at this point, two coordinates were correctly provided so that return the
-	// corresponding Point
-	return true, Point{X: coords["x"], Y: coords["y"]}
+	// corresponding Point and no error
+	return Point{X: coords["x"], Y: coords["y"]}, nil
 }
 
-// return true and a valid Formula if the keyword "formula" is given in the
-// dictionary, and false otherwise. The values of "string" must be a string. If
-// the keyword exist but the type assertion fails, or an empty string is given,
-// it returns false the same
-func verifyFormulaDict(dict map[string]interface{}) (bool, Formula) {
+// return a valid Formula and no error if the keyword "formula" is given in the
+// dictionary. Otherwise, an error is returned. If an error is returned the
+// contents of the Formula are undetermined.
+//
+// The value of the keyword "formula" must be a string. If the keyword exist but
+// the type assertion fails, or an empty string is given, it returns false the
+// same
+func verifyFormulaDict(dict map[string]interface{}) (Formula, error) {
 
-	// traverse the entire dictionary and get the values of "x" and "y" in case
-	// they are present
+	// traverse the entire dictionary and get the value of "formula" in case
+	// it is present
 	var ok bool
 	svalue := ""
 	for key, value := range dict {
@@ -144,30 +149,31 @@ func verifyFormulaDict(dict map[string]interface{}) (bool, Formula) {
 			// if the value of x is not given as a string immediately return
 			// false
 			if svalue, ok = value.(string); !ok {
-				return false, Formula("")
+				return Formula(""), errors.New("Formulas have to be given as strings")
 			}
 		}
 	}
 
 	// if no formula was given, or it was empty return false
 	if svalue == "" {
-		return false, Formula("")
+		return Formula(""), errors.New("Either a formula was not given or it is the empty string")
 	}
 
-	// at this point, a formula was given, so return it
-	return true, Formula(svalue)
+	// at this point, a valid formula has been specified
+	return Formula(svalue), nil
 }
 
-// return true if all the keys given in dict are correct for defining a
-// coordinate.
+// return a valid coordinate and no error if all the keys given in dict are
+// correct for defining a coordinate. Otherwise, return an error. If an error is
+// returned the contents of the Coordinate are undetermined
 //
 // A dictionary is correct if and only if all the mandatory arguments have been
-// given, and all parameters given are compatible. If not, false and an error is
-// returned.
+// given, and all parameters given are compatible.
 //
-// A coordinate can be specified either with a Formula which should consist of a
-// string, or as a pair of floating-point numbers x and y which create a Point
-func VerifyCoordinateDict(dict map[string]interface{}) (bool, error) {
+// A coordinate can be specified either with a Formula (using the keyword
+// "formula") which should consist of a string, or as a pair of floating-point
+// numbers x and y which create a Point, using the keywords "x" and "y"
+func VerifyCoordinateDict(dict map[string]interface{}) (Coordinate, error) {
 
 	// the mandatory keys are given next
 	mandatory := []string{"label"}
@@ -178,40 +184,50 @@ func VerifyCoordinateDict(dict map[string]interface{}) (bool, error) {
 		// if a mandatory parameter has not been given, then raise an error and
 		// exit
 		if _, ok := dict[key]; !ok {
-			return false, fmt.Errorf("Mandatory key '%v' for defining a coordinate not found", key)
+			return Coordinate{}, fmt.Errorf("Mandatory key '%v' for defining a coordinate not found", key)
 		}
 	}
 
 	// secondly, verify that a point and a formula haven not been simultaneously
 	// given
-	okp, _ := verifyPointDict(dict)
-	okf, _ := verifyFormulaDict(dict)
-	if okp && okf {
-		return false, errors.New("Either a 'position' or 'formula' have to be given, but not both")
+	point, errp := verifyPointDict(dict)
+	formula, errf := verifyFormulaDict(dict)
+	if errp == nil && errf == nil {
+		return Coordinate{}, errors.New("Either a 'position' or 'formula' have to be given, but not both")
 	}
 
-	// likewise, if neither a point nor a formula were given, then return an error
-	if !okp && !okf {
-		return false, errors.New("Either a 'position' or a 'formula' have to be given")
+	// likewise, if neither a point nor a formula were given, then return an
+	// error
+	if errp != nil && errf != nil {
+		return Coordinate{}, errors.New("Either a 'position' or a 'formula' have to be given")
 	}
 
-	// otherwise, the dictionary is correct
-	return true, nil
+	// otherwise, the dictionary is correct and a coordinate has been correctly
+	// speciied. First, if the coordinate was given relative to a point
+	if errp == nil {
+		return Coordinate{Position: point, label: dict["label"].(string)}, nil
+	}
+
+	// if not, then return the coordinate defined with a formula
+	return Coordinate{Position: formula, label: dict["label"].(string)}, nil
 }
 
-// return true if all the keys given in dict are correct for defining a
-// text box
+// return a valid text and no error if all the keys given in dict are correct
+// for defining a text box. Otherwise, return an error. If an error is returned
+// the contents of Text are undetermined
 //
 // A dictionary is correct if and only if it correctly defines a coordinate (see
 // VerifyCoordinateDict) and also provides text to be displayed (which can be an
 // empty string or might contain LaTeX commands to affect the appearance of the
 // text) with the keyword "text"
-func VerifyTextDict(dict map[string]interface{}) (bool, error) {
+func VerifyTextDict(dict map[string]interface{}) (Text, error) {
 
 	// first of all, verify that this dictionary correctly provides information
 	// for creating a coordinate
-	if ok, err := VerifyCoordinateDict(dict); !ok {
-		return false, fmt.Errorf("A coordinate was not properly defined while creating a text box: %v", err)
+	var err error
+	var coord Coordinate
+	if coord, err = VerifyCoordinateDict(dict); err != nil {
+		return Text{}, fmt.Errorf("A coordinate was not properly defined while creating a text box: %v", err)
 	}
 
 	// now, beyond the definition of a coordinate, the mandatory keys are given
@@ -224,34 +240,35 @@ func VerifyTextDict(dict map[string]interface{}) (bool, error) {
 		// if a mandatory parameter has not been given, then raise an error and
 		// exit
 		if _, ok := dict[key]; !ok {
-			return false, fmt.Errorf("Mandatory key '%v' for defining a text box not found", key)
+			return Text{}, fmt.Errorf("Mandatory key '%v' for defining a text box not found", key)
 		}
 	}
 
 	// make also sure that parameters are given with the right type
-	if _, ok := dict["label"].(string); !ok {
-		return false, errors.New("the label of a text box should be given as a string")
-	}
-	if _, ok := dict["text"].(string); !ok {
-		return false, errors.New("the text to show in a text box should be given as a string")
+	if text, ok := dict["text"].(string); ok {
+		return Text{Coordinate: coord, text: text}, nil
 	}
 
-	// otherwise, the dictionary is correct
-	return true, nil
+	// if the type assertion failed then return an error
+	return Text{}, errors.New("the text to show in a text box should be given as a string")
 }
 
-// return true if all the keys given in dict are correct for defining a box
+// return a valid specification of a box with no error if all the keys given in
+// dict are correct for defining a box. Otherwise, return an error. If an error
+// is returned, the contents of the box are undetermined
 //
 // A dictionary is correct if and only if it correctly defines a text box (see
 // VerifyTextDict) and also provides values from the minimum width and height
 // with the keywords "minwidth" and "minheight" which should be given as strings
 // as they can consist of LaTeX formulae
-func VerifyBoxDict(dict map[string]interface{}) (bool, error) {
+func VerifyBoxDict(dict map[string]interface{}) (Box, error) {
 
 	// first of all, verify that this dictionary correctly provides information
 	// for creating a text box
-	if ok, err := VerifyTextDict(dict); !ok {
-		return false, fmt.Errorf("A text box was not properly defined while creating a box: %v", err)
+	var err error
+	var text Text
+	if text, err = VerifyTextDict(dict); err != nil {
+		return Box{}, fmt.Errorf("A text box was not properly defined while creating a box: %v", err)
 	}
 
 	// now, beyond the definition of a text box, the mandatory keys are given
@@ -264,20 +281,23 @@ func VerifyBoxDict(dict map[string]interface{}) (bool, error) {
 		// if a mandatory parameter has not been given, then raise an error and
 		// exit
 		if _, ok := dict[key]; !ok {
-			return false, fmt.Errorf("Mandatory key '%v' for defining a box not found", key)
+			return Box{}, fmt.Errorf("Mandatory key '%v' for defining a box not found", key)
 		}
 	}
 
 	// make also sure that parameters are given with the right type
 	if _, ok := dict["minwidth"].(string); !ok {
-		return false, errors.New("the minimum width of a box should be given as a string")
+		return Box{}, errors.New("the minimum width of a box should be given as a string")
 	}
 	if _, ok := dict["minheight"].(string); !ok {
-		return false, errors.New("the minimum height of a box should be given as a string")
+		return Box{}, errors.New("the minimum height of a box should be given as a string")
 	}
 
 	// otherwise, the dictionary is correct
-	return true, nil
+	return Box{Coordinate: text.Coordinate,
+		minWidth:  dict["minwidth"].(string),
+		minHeight: dict["minheight"].(string),
+		text:      dict["text"].(string)}, nil
 }
 
 // methods
