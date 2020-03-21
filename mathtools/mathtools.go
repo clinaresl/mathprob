@@ -20,13 +20,14 @@
 package mathtools
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"log" // logging services
 	"math"
 	"math/rand"
 	"os" // access to file mgmt functions
-	"path"
 	"text/template"
 	"time"
 
@@ -83,9 +84,23 @@ func max(a, b float64) float64 {
 	return a
 }
 
-// return the number of digits of number n
+// return the number of digits of number n. In case the number is negative, then
+// 1 is added to display the unary -
 func nbdigits(n int) int {
-	return 1 + int(math.Ceil(math.Log10(float64(n))))
+
+	// because we use log10 to compute the number of digits of any number, we
+	// have to consider separately the case of 0
+	if n == 0 {
+		return 1
+	} else if n < 0 {
+
+		// also, if a number is negative, we should use its magnitude and add 1
+		// accounting for the unary -
+		return 2 + int(math.Log10(math.Abs(float64(n))))
+	}
+
+	// if the number is strictly positive, then
+	return 1 + int(math.Log10(float64(n)))
 }
 
 // return a random number with exactly n digits
@@ -111,6 +126,55 @@ func find(item string, container []string) bool {
 	// if it has not been found after traversing the container,
 	// then return false
 	return false
+}
+
+// return a valid specification of a sequence with no error if all the keys
+// given in dict are correct for defining a sequence. If not, an error is
+// returned. If an error is returned, the contents of the sequence are
+// undetermined
+//
+// A dictionary is correct if and only if it correctly provides a type of
+// sequence with the keyword "type", a number of items with the keyword
+// "nbitems", and a lower and upper bound with "geq" and "leq"
+func verifySequenceDict(dict map[string]interface{}) (sequence, error) {
+
+	// the mandatory keys are given next
+	mandatory := []string{"type", "nbitems", "geq", "leq"}
+
+	// now, verify that all mandatory parameters are present in the dict
+	for _, key := range mandatory {
+
+		// if a mandatory parameter has not been given, then
+		// raise an error and exit
+		if _, ok := dict[key]; !ok {
+			return sequence{}, fmt.Errorf("Mandatory key '%v' for defining a sequence not found", key)
+		}
+	}
+
+	// make also sure that parameters are given with the right type
+	if _, ok := dict["type"].(int); !ok {
+		return sequence{}, errors.New("the type of a sequence should be given as an integer")
+	}
+	if _, ok := dict["nbitems"].(int); !ok {
+		return sequence{}, errors.New("the number of items in a sequence should be given as an integer")
+	}
+	if _, ok := dict["geq"].(int); !ok {
+		return sequence{}, errors.New("the lower bound of a sequence should be given as an integer")
+	}
+	if _, ok := dict["leq"].(int); !ok {
+		return sequence{}, errors.New("the upper bound of a sequence should be given as a string")
+	}
+
+	// finally, ensure the type is correct
+	if seqtype := dict["type"].(int); seqtype < SEQNONE || seqtype > SEQBOTH {
+		return sequence{}, fmt.Errorf("the type of a sequence given '%v' is incorrect", seqtype)
+	}
+
+	// otherwise, the dictionary is correct
+	return sequence{seqtype: dict["type"].(int),
+		nbitems: dict["nbitems"].(int),
+		geq:     dict["geq"].(int),
+		leq:     dict["leq"].(int)}, nil
 }
 
 // verify that the keys given in dict are correct for defining
@@ -227,7 +291,7 @@ func (masterFile MasterFile) GetText(dict map[string]interface{}) string {
 
 // This method is intended to be used in master files. It is substituted by TikZ
 // contents that create a box located at a coordinate (either by providing the
-// coordinates of a Point of giving a Formula) and with the contents specified
+// coordinates of a Point or giving a Formula) and with the contents specified
 // in the key "text" which has the minimum width and height given in "minwidth"
 // and "minheight"
 func (masterFile MasterFile) GetBox(dict map[string]interface{}) string {
@@ -570,96 +634,24 @@ func (masterFile MasterFile) GetSimpleOperation22(operator int) (latexCode strin
 // Sequences
 // ----------------------------------------------------------------------------
 
-// Get the LaTeX code for generating a problem on sequences of the
-// given type: to either guess the previous (seqtype 1), subsequent
-// (2), or both (3). Indices are strictly less than 10
-func (masterFile MasterFile) GetSequence10(seqtype int) (latexCode string) {
+// Return the LaTeX code in TikZ format that generates a sequence with the
+// keywords given in the dictionary. The type of a sequence is: "first", if the
+// first number has to be given; "last", if the last number has to be given;
+// "none" or "both" if either none of them or both have to displayed. In
+// addition, a sequence is made up of a number of items, each one greater or
+// equal than a given threshold and lower or equal than another bound using the
+// keywords "geq" and "leq" respectively
+func (masterFile MasterFile) Sequence(dict map[string]interface{}) string {
 
-	// seed the random generator
-	rand.Seed(time.Now().UTC().UnixNano())
-
-	// decide first the x-position of the index and the box for
-	// drawing the answer
-	var xIndex, xAnswer float64
-	switch seqtype {
-	case PREVIOUS:
-		xIndex, xAnswer = 2.00, 0.50
-	case SUBSEQUENT:
-		xIndex, xAnswer = 0.50, 2.00
-	case FULL: // not implemented yet!
-		xIndex, xAnswer = 0.00, 0.00
+	// verify the given dictionary is correct and get an instance of a valid
+	// sequence
+	sequence, err := verifySequenceDict(dict)
+	if err != nil {
+		log.Fatalf("The dictionary given for creating a sequence is incorrect: %v", err)
 	}
 
-	// create the index. The value is chosen randomly
-	latexIndex := latexIndex{
-		label: "label1",
-		id:    "num1",
-		pos:   position{x: xIndex, y: 0.75},
-		value: 1 + rand.Intn(9),
-	}
-
-	// create the box to write the answer
-	latexAnswer := latexSequenceAnswer{
-		label:         "label2",
-		pos:           position{x: xAnswer, y: 0.75},
-		minimumWidth:  1.5,
-		minimumHeight: 1.25,
-	}
-
-	// and use all of these to create the sequence problem
-	latexSequenceProblem := sequenceProblem{
-		index:   latexIndex,
-		answer:  latexAnswer,
-		seqtype: seqtype,
-	}
-
-	return latexSequenceProblem.Execute(seqtype)
-}
-
-// Get the LaTeX code for generating a problem on sequences of the
-// given type: to either guess the previous (seqtype 1), subsequent
-// (2), or both (3). Indices are strictly less than 100
-func (masterFile MasterFile) GetSequence100(seqtype int) (latexCode string) {
-
-	// seed the random generator
-	rand.Seed(time.Now().UTC().UnixNano())
-
-	// decide first the x-position of the index and the box for
-	// drawing the answer
-	var xIndex, xAnswer float64
-	switch seqtype {
-	case PREVIOUS:
-		xIndex, xAnswer = 2.00, 0.50
-	case SUBSEQUENT:
-		xIndex, xAnswer = 0.50, 2.00
-	case FULL: // not implemented yet!
-		xIndex, xAnswer = 0.00, 0.00
-	}
-
-	// create the index. The value is chosen randomly
-	latexIndex := latexIndex{
-		label: "label1",
-		id:    "num1",
-		pos:   position{x: xIndex, y: 0.75},
-		value: 1 + rand.Intn(99),
-	}
-
-	// create the box to write the answer
-	latexAnswer := latexSequenceAnswer{
-		label:         "label2",
-		pos:           position{x: xAnswer, y: 0.75},
-		minimumWidth:  1.5,
-		minimumHeight: 1.25,
-	}
-
-	// and use all of these to create the sequence problem
-	latexSequenceProblem := sequenceProblem{
-		index:   latexIndex,
-		answer:  latexAnswer,
-		seqtype: seqtype,
-	}
-
-	return latexSequenceProblem.Execute(seqtype)
+	// and return the LaTeX/TikZ code for representing this sequence
+	return sequence.execute()
 }
 
 // divisions
@@ -798,21 +790,17 @@ func (masterFile MasterFile) GetDivision(dict map[string]interface{}) string {
 // templates
 // ----------------------------------------------------------------------------
 
-// Writes into the specified dst file the result of instantiating the
-// given master file. For a full description, see the manual.
-func (masterFile MasterFile) MasterToFileFromTemplate(dst string) {
+// Parse the template given in contents to a masterfile and returns the result
+// in a buffer, and nil if no error was found
+func (masterFile MasterFile) MasterToBufferFromTemplate(contents string) (bytes.Buffer, error) {
 
-	// verify that the given master file exists and is accessible
-	masterisregular, _ := fstools.IsRegular(masterFile.Infile)
-	if !masterisregular {
-		log.Fatalf("the master file '%s' does not exist or is not accessible",
-			masterFile.Infile)
-	}
+	// create the buffer to return the result of the execution
+	var result bytes.Buffer
 
-	// access a template and parse its contents. In addition it
-	// registers a function "dict" which allows the user to
-	// introduce in the text template any arguments
-	master := template.Must(template.New(path.Base(masterFile.Infile)).Funcs(template.FuncMap{
+	// access a template and parse its contents. In addition it registers a
+	// function "dict" which allows the user to introduce in the text template
+	// any arguments
+	t := template.Must(template.New(contents).Funcs(template.FuncMap{
 		"dict": func(values ...interface{}) (map[string]interface{}, error) {
 
 			// if the number of items is not even (as many
@@ -837,7 +825,37 @@ func (masterFile MasterFile) MasterToFileFromTemplate(dst string) {
 
 			// at this point no error has been reported, move therefore back
 			return dict, nil
-		}}).ParseFiles(masterFile.Infile))
+		}}).Parse(contents))
+
+	// execute the template with the information in this instance
+	err := t.Execute(&result, masterFile)
+	if err != nil {
+
+		// note that the result might contain some partial results
+		return result, err
+	}
+
+	// at this point return the result with no error
+	return result, nil
+}
+
+// Writes into the specified dst file the result of instantiating the
+// given master file
+func (masterFile MasterFile) MasterToFileFromTemplate(dst string) {
+
+	// verify that the given master file exists and is accessible
+	masterisregular, _ := fstools.IsRegular(masterFile.Infile)
+	if !masterisregular {
+		log.Fatalf("the master file '%s' does not exist or is not accessible",
+			masterFile.Infile)
+	}
+
+	// these files are expected to be not too long, actually, so read the entire
+	// contents of the file into main memory
+	contents, err := ioutil.ReadFile(masterFile.Infile)
+	if err != nil {
+		log.Fatalf("It was not possible to read the input file '%v'", masterFile.Infile)
+	}
 
 	// if the given filename already exists, then number it and so on until the
 	// resulting filename does not exist. If re-numbering is required, start
@@ -865,10 +883,15 @@ func (masterFile MasterFile) MasterToFileFromTemplate(dst string) {
 	// make sure the file is closed before leaving
 	defer file.Close()
 
-	// and now execute the template
-	err = master.Execute(file, masterFile)
+	// execute the template
+	result, err := masterFile.MasterToBufferFromTemplate(string(contents))
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Error when executing the template over the master file", result)
+	}
+
+	// and write the result in the output file
+	if _, err := file.WriteString(result.String()); err != nil {
+		log.Fatalf("Error while writing the result of a template in '%v'", dst)
 	}
 }
 

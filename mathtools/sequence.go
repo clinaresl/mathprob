@@ -23,252 +23,169 @@ import (
 	"bytes"
 	"fmt"
 	"log"
+	"math/rand"
 	"text/template"
+	"time"
+
+	"github.com/clinaresl/mathprob/mathtools/components"
 )
 
 // constants
 // ----------------------------------------------------------------------------
 
-// Three different types of sequences are acknowledged: either
-// computing the previous, the subsequent, or both
+// There are four different types of sequences: "first", "last", "none" or
+// "both" if the first, last, none or both numbers of the sequence have to be
+// shown
 const (
-	PREVIOUS   int = 1
-	SUBSEQUENT     = 2
-	FULL           = 3
+	SEQNONE int = iota
+	SEQFIRST
+	SEQLAST
+	SEQBOTH
 )
 
-// the TikZ code for generating sequences type "previous" is shown below
-const latexPreviousSequenceCode = `\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
+// the TikZ code for generating arbitrary sequences is shown next. Note that it
+// makes use of LaTeX/TikZ components
+const latexSequenceCode = `\begin{minipage}{0.25\linewidth}
+	\begin{center}
+		\begin{tikzpicture}
 
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
+			% draw the sequence
+			{{.GetTikZSequence}}
 
-      % show the area to draw the answer
-      {{.GetSequenceAnswer}}
+			% draw an invisible bounding box to properly align all sequences
 
-      % show the index
-      {{.GetIndex}}
-
-    \end{tikzpicture}
-  \end{center}
+		\end{tikzpicture}
+	\end{center}
 \end{minipage}
 `
-
-// the TikZ code for generating sequences type "subsequent" is shown below
-const latexSubsequentSequenceCode = `\begin{minipage}{0.25\linewidth}  
-  \begin{center}
-    \begin{tikzpicture}
-
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (3,1.5);
-
-      % show the index
-      {{.GetIndex}}
-
-      % show the area to draw the answer
-      {{.GetSequenceAnswer}}
-
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-`
-
-// the TikZ code for generating sequences type "full" (both previous and
-// subsequent) is shown below
-const latexFullSequenceCode = `\begin{minipage}{0.40\linewidth}
-  \begin{center}
-    \begin{tikzpicture}
-
-      % draw an invisible box used to properly align all sequences
-      \draw [white] (0,0) rectangle (4.5,1.5);
-
-      % show the index
-      {{.GetIndex}}
-
-      % show the areas to draw the answers
-      {{.GetPreviousSequenceAnswer}}
-      {{.GetSubsequentSequenceAnswer}}
-
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
-`
-
-// the TikZ code for generating the indices is the following
-const latexIndexCode = `\node at {{.GetPosition}} {\huge {{.GetValue}}};`
-
-// the TikZ code for generating the result is the following
-const latexSequenceAnswerCode = `\node [rounded corners, rectangle, minimum width={{.GetMinimumWidth}} cm, minimum height = {{.GetMinimumHeight}} cm, draw] at {{.GetPosition}} {};`
 
 // types
 // ----------------------------------------------------------------------------
 
-// An Index is the number shown whose precendent and/or subsequent has
-// to be obtained. It consists of a label, an identifier, a position
-// and an integer
-type latexIndex struct {
-	label, id string
-	pos       position
-	value     int
-}
-
-// A LaTeX Sequence Answer is the area where the student has to write
-// her answer. It consists of a label, a position, and a minimum width
-// and height
-type latexSequenceAnswer struct {
-	label                       string
-	pos                         position
-	minimumWidth, minimumHeight float64
-}
-
-// Finally, a problem on sequences is defined as shown next. Each one
-// consists of just an index and an answer that might precede or
-// follow the index according to the given sequence type.
-//
-// WARNING - Full sequences not implemented yet!
-type sequenceProblem struct {
-	index   latexIndex
-	answer  latexSequenceAnswer
-	seqtype int
-}
-
-// A full sequence problem consists of the same struct but with space for two
-// answers
-type fullSequenceProblem struct {
-	index                    latexIndex
-	prevAnswer, subseqAnswer latexSequenceAnswer
+// A Sequence consists of a type: "first", "last", "none" or "both" if either
+// the first number has to be given, the last one, none of them, or both
+// respectively. It consists of a number of items, each one greater or equal
+// than a given threshold and less or equal than another bound.
+type sequence struct {
+	seqtype  int
+	nbitems  int
+	geq, leq int
 }
 
 // methods
 // ----------------------------------------------------------------------------
 
-// -- latexIndex
+// -- sequence
 // ----------------------------------------------------------------------------
 
-// Provide TikZ code to represent an index
-func (index latexIndex) String() string {
+// use the values stored in a sequence to determine the order of the reusable
+// components to display the items
+func (sequence sequence) getComponents() []components.ComponentId {
 
-	// create a template with the TikZ code for showing indices
-	tpl, err := template.New("index").Parse(latexIndexCode)
-	if err != nil {
-		log.Fatal(err)
+	// create the output slice
+	order := make([]components.ComponentId, sequence.nbitems)
+
+	for idx := 0; idx < sequence.nbitems; idx++ {
+
+		// if it is either the first or last item and this specific element has been
+		// requested
+		if (idx == 0 && (sequence.seqtype == SEQFIRST || sequence.seqtype == SEQBOTH)) ||
+			(idx == sequence.nbitems-1 && (sequence.seqtype == SEQLAST || sequence.seqtype == SEQBOTH)) {
+
+			// then add a text for displaying a number
+			order[idx] = components.TEXT
+		} else {
+
+			// otherwise, just add a box to draw the answer
+			order[idx] = components.BOX
+		}
 	}
 
-	// and now make the appropriate substitutions. Note that the
-	// execution of the template is written to a string
-	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, index); err != nil {
-		log.Fatal(err)
+	// and return the order computed so far
+	return order
+}
+
+// return a valid LaTeX/TikZ representation of this sequence using TikZ
+// components
+func (sequence sequence) GetTikZSequence() string {
+
+	// determine the first number of the sequence ---even if it is not displayed.
+	// If the interval [geq, leq] is too narrow to host nbitems, immediately log a
+	// fatal error
+	if 1+sequence.leq-sequence.geq < sequence.nbitems {
+		log.Fatalf("It is not possible to fit %v different numbers taken from the range [%v, %v]",
+			sequence.nbitems, sequence.geq, sequence.leq)
 	}
 
-	return tplOutput.String() // and return the resulting string
-}
+	// and also the number of necessary digits per item. This is computed as the
+	// maximum number of digits that might be required ---in spite of the number
+	// of digits actually needed. Because it is potentially possible to create
+	// sequences with negative numbers then we consider both extrems
+	nbdigits := max(float64(nbdigits(sequence.geq)),
+		float64(nbdigits(sequence.leq)))
 
-// Return the label of an index
-func (index latexIndex) GetLabel() string {
-	return fmt.Sprintf("%v", index.label)
-}
+	// first, locate a coordinate to mark the origin. This is done using the
+	// reusable coordinate
+	t := `{{.GetCoordinate (dict "label" "label0" "x" 0.0 "y" 0.0)}}`
+	t += "\n"
 
-// Return the identifier of an index
-func (index latexIndex) GetId() string {
-	return fmt.Sprintf("%v", index.id)
-}
+	// The following expression takes into account not only the interval [geq,
+	// leq] but also the number of items to display in the sequence
+	rand.Seed(time.Now().UTC().UnixNano())
+	number1 := sequence.geq + rand.Int()%(2+sequence.leq-sequence.nbitems-sequence.geq)
 
-// Return the position of an index
-func (index latexIndex) GetPosition() string {
-	return fmt.Sprintf("%v", index.pos)
-}
+	// determine the order of reusable components to draw the sequence
+	for idx, component := range sequence.getComponents() {
 
-// Return the value of an index
-func (index latexIndex) GetValue() string {
-	return fmt.Sprintf("%v", index.value)
-}
+		// now, depending on the type of reusable component
+		switch component {
+		case components.TEXT:
 
-// -- latexSequenceAnswer
-// ----------------------------------------------------------------------------
+			// the number to show in this location is computed as the sum of the first
+			// number and the index of this position in the sequence, but other
+			// sequences can be created!
+			t += fmt.Sprintf("{{.GetText (dict \"label\" \"label%d\" \"formula\" `(label%d) + (%.2f\\zerowidth, 0.5\\zeroheight+1.5\\baselineskip)` \"text\" `\\huge %d`)}}",
+				1+idx, idx, 1+nbdigits/2, number1+idx)
+		case components.BOX:
+			t += fmt.Sprintf("{{.GetBox (dict \"label\" \"label%d\" \"formula\" `(label%d) + (%.2f\\zerowidth, 0.0)` \"minwidth\" `%.2f\\zerowidth` \"minheight\" `\\zeroheight + \\baselineskip` \"text\" \"\")}}",
+				1+idx, idx, 1+(2+nbdigits)/2, 2+nbdigits)
+		default:
+			log.Fatal("Unexpected type of a reusable component in a sequence")
+		}
 
-// Provide TikZ code to represent operands
-func (result latexSequenceAnswer) String() string {
-
-	// create a template with the TikZ code for showing the result
-	tpl, err := template.New("result").Parse(latexSequenceAnswerCode)
-	if err != nil {
-		log.Fatal(err)
+		// and move to the next line!
+		t += "\n"
 	}
 
-	// and now make the appropriate substitutions. Note that the
-	// execution of the template is written to a string
-	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, result); err != nil {
-		log.Fatal(err)
-	}
-
-	return tplOutput.String() // and return the resulting string
-}
-
-// return the label of a result
-func (result latexSequenceAnswer) GetLabel() string {
-	return fmt.Sprintf("%v", result.label)
-}
-
-// return the position of a result
-func (result latexSequenceAnswer) GetPosition() string {
-	return fmt.Sprintf("%v", result.pos)
-}
-
-// return the minimum width of a result in centimeters
-func (result latexSequenceAnswer) GetMinimumWidth() string {
-	return fmt.Sprintf("%v", result.minimumWidth)
-}
-
-// return the minimum height of a result in centimeters
-func (result latexSequenceAnswer) GetMinimumHeight() string {
-	return fmt.Sprintf("%v", result.minimumHeight)
-}
-
-// -- sequenceProblem
-// ----------------------------------------------------------------------------
-
-// Execute the given sequence and returns legal TikZ code to represent it
-func (sequence sequenceProblem) Execute(seqtype int) string {
-
-	// create a template with the TikZ code for showing this
-	// sequence according to the given type
-	var tpl *template.Template
+	// now, execute this template with a masterFile
 	var err error
-	switch seqtype {
-	case PREVIOUS:
-		tpl, err = template.New("sequence").Parse(latexPreviousSequenceCode)
-	case SUBSEQUENT:
-		tpl, err = template.New("sequence").Parse(latexSubsequentSequenceCode)
-	case FULL:
-		tpl, err = template.New("sequence").Parse(latexPreviousSequenceCode)
+	var result bytes.Buffer
+	var masterFile MasterFile
+	if result, err = masterFile.MasterToBufferFromTemplate(t); err != nil {
+		log.Fatalf("Error when executing the template for creating a sequence: %v", err)
 	}
 
+	return result.String()
+}
+
+// Return TikZ code that represents a sequence
+func (sequence sequence) execute() string {
+
+	// create a template with the TikZ code for showing this sequence
+	tpl, err := template.New("sequence").Parse(latexSequenceCode)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// and now make the appropriate substitutions. Note that the
-	// execution of the template is written to a string
+	// and now make the appropriate substitutions. Note that the execution of the
+	// template is written to a string
 	var tplOutput bytes.Buffer
 	if err := tpl.Execute(&tplOutput, sequence); err != nil {
 		log.Fatal(err)
 	}
 
-	return tplOutput.String() // and return the resulting string
-}
-
-// Generates TikZ code to draw the index
-func (sequence sequenceProblem) GetIndex() string {
-	return fmt.Sprintf("%v", sequence.index)
-}
-
-// Generates TikZ code to draw the area to write the answer
-func (sequence sequenceProblem) GetSequenceAnswer() string {
-	return fmt.Sprintf("%v", sequence.answer)
+	// and return the resulting string
+	return tplOutput.String()
 }
 
 /* Local Variables: */

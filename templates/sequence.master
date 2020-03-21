@@ -25,10 +25,7 @@
 \usepackage{array}
 
 \usepackage{tikz}
-\usepackage{pgflibraryarrows}
-\usepackage{pgflibrarysnakes}
-
-\usetikzlibrary{matrix,patterns,fadings,positioning}
+\usetikzlibrary{calc,matrix,patterns,fadings,positioning}
 
 \usepackage{array}
 \usepackage{eurosym}
@@ -37,6 +34,11 @@
 \usepackage{url}
 
 \usepackage{rotating}
+
+\newlength{\zerowidth}
+\settowidth{\zerowidth}{\huge 0}
+\newlength{\zeroheight}
+\settoheight{\zeroheight}{\huge 0}
 
 {{/* ------------------------------ Main body ---------------------------- */}}
 
@@ -64,20 +66,7 @@
     cada uno de los siguientes? No es más difícil que cuando jugamos a
     esto paseando por la calle:
 
-{{range .Slice 12}}{{.GetSequence10 (1)}}{{end}}
-
-    \part[3] !`Lo has hecho muy bien {\it {{.GetName}}}! Y estoy seguro que
-    también eres capaz de calcular el número posterior a cada uno de
-    los siguientes:
-
-{{range .Slice 12}}{{.GetSequence10 (2)}}{{end}}
-
-    \part[4] Y ahora mucho más difícil. ?`Serías capaz de calcular el
-    anterior y el posterior a los siguientes números que son mucho más
-    grandes? Estoy seguro que te divertirás intentándolo:
-
-{{range .Slice 12}}{{.GetSequence100 (1)}}{{end}}
-{{range .Slice 12}}{{.GetSequence100 (2)}}{{end}}
+    {{.Sequence (dict "type" 1 "nbitems" 3 "geq" 4 "leq" 9)}}
 
 \end{parts}
 
