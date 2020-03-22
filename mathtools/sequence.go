@@ -79,7 +79,8 @@ type sequence struct {
 // ----------------------------------------------------------------------------
 
 // use the values stored in a sequence to determine the order of the reusable
-// components to display the items
+// components to display the items. The output slice contains items of two
+// types, either text (to show numbers) or box (to show answer boxes)
 func (sequence sequence) getComponents() []components.ComponentId {
 
 	// create the output slice
@@ -124,6 +125,12 @@ func (sequence sequence) GetTikZSequence() string {
 	nbdigits := max(float64(nbdigits(sequence.geq)),
 		float64(nbdigits(sequence.leq)))
 
+	// the first item to be drawn should be raised by half the height of zero
+	// plus 1.5 the baselineskip, while all the other elements should be
+	// horizontally aligned
+	yshiftheight := 0.5
+	yshiftskip := 1.5
+
 	// first, locate a coordinate to mark the origin. This is done using the
 	// reusable coordinate
 	t := `{{.GetCoordinate (dict "label" "label0" "x" 0.0 "y" 0.0)}}`
@@ -134,21 +141,33 @@ func (sequence sequence) GetTikZSequence() string {
 	rand.Seed(time.Now().UTC().UnixNano())
 	number1 := sequence.geq + rand.Int()%(2+sequence.leq-sequence.nbitems-sequence.geq)
 
-	// determine the order of reusable components to draw the sequence
+	// determine the order of reusable components to draw the sequence. Note
+	// that text items are represented with boxes much the same anyway as their
+	// usage help to properly locate the items in the whole picture
 	for idx, component := range sequence.getComponents() {
+
+		// if this is not the first element of the sequence, restart the y-shift
+		if idx > 0 {
+			yshiftheight = 0.0
+			yshiftskip = 0.0
+		}
 
 		// now, depending on the type of reusable component
 		switch component {
 		case components.TEXT:
 
-			// the number to show in this location is computed as the sum of the first
-			// number and the index of this position in the sequence, but other
-			// sequences can be created!
-			t += fmt.Sprintf("{{.GetText (dict \"label\" \"label%d\" \"formula\" `(label%d) + (%.2f\\zerowidth, 0.5\\zeroheight+1.5\\baselineskip)` \"text\" `\\huge %d`)}}",
-				1+idx, idx, 1+nbdigits/2, number1+idx)
+			// the number to show in this location is computed as the sum of the
+			// first number and the index of this position in the sequence, but
+			// other sequences can be created! Note that text is positioned
+			// within an invisible box so that it is much easier to be
+			// positioned within the whole picture
+			t += fmt.Sprintf("{{.GetBox (dict \"label\" \"label%d\" \"formula\" `(label%d) + (%.2f\\zerowidth, %.2f\\zeroheight+%.2f\\baselineskip)` \"minwidth\" `%.2f\\zerowidth` \"minheight\" `\\zeroheight + \\baselineskip` \"draw\" 0 \"text\" `\\huge %d`)}}",
+				1+idx, idx, 3+nbdigits, yshiftheight, yshiftskip, 2+nbdigits, idx+number1)
+
 		case components.BOX:
-			t += fmt.Sprintf("{{.GetBox (dict \"label\" \"label%d\" \"formula\" `(label%d) + (%.2f\\zerowidth, 0.0)` \"minwidth\" `%.2f\\zerowidth` \"minheight\" `\\zeroheight + \\baselineskip` \"text\" \"\")}}",
-				1+idx, idx, 1+(2+nbdigits)/2, 2+nbdigits)
+			t += fmt.Sprintf("{{.GetBox (dict \"label\" \"label%d\" \"formula\" `(label%d) + (%.2f\\zerowidth, %.2f\\zeroheight+%.2f\\baselineskip)` \"minwidth\" `%.2f\\zerowidth` \"minheight\" `\\zeroheight + \\baselineskip` \"draw\" 1 \"text\" \"\")}}",
+				1+idx, idx, 3+nbdigits, yshiftheight, yshiftskip, 2+nbdigits)
+
 		default:
 			log.Fatal("Unexpected type of a reusable component in a sequence")
 		}

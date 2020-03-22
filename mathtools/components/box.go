@@ -30,17 +30,20 @@ import (
 // TikZ code to generate a box: first, the coordinate is created; next, the text
 // is shown centered on the given coordinate with the width and height specified
 const tikzBox = `{{.GetCoord}}
-\draw {{.GetLabel}} node [rounded corners, rectangle, minimum width={{.GetMinWidth}}, minimum height = {{.GetMinHeight}}, draw] {{.GetText}};`
+\draw {{.GetLabel}} node [rounded corners, rectangle, minimum width={{.GetMinWidth}}, minimum height = {{.GetMinHeight}}{{.GetDraw}}] {{.GetText}};`
 
 // types
 // ----------------------------------------------------------------------------
 
 // A box is centered in a coordinate and can show any text (including the empty
 // string). Additionally, the minimum width and height have to be given as
-// strings, the reason being that they can consist of TikZ formulae
+// strings, the reason being that they can consist of TikZ formulae. A box can
+// be drawn or not. When not drawn, it serves to properly locate items in a
+// bigger picture
 type Box struct {
 	Coordinate
 	minWidth, minHeight string
+	draw                bool
 	text                string
 }
 
@@ -48,8 +51,12 @@ type Box struct {
 // ----------------------------------------------------------------------------
 
 // Create a new instance of a box given a coordinate and the text to show
-func NewBox(coord Coordinate, minWidth, minHeight, text string) Box {
-	return Box{Coordinate: coord, minWidth: minWidth, minHeight: minHeight, text: text}
+func NewBox(coord Coordinate, draw bool, minWidth, minHeight, text string) Box {
+	return Box{Coordinate: coord,
+		minWidth:  minWidth,
+		minHeight: minHeight,
+		draw:      draw,
+		text:      text}
 }
 
 // return a valid specification of a box with no error if all the keys given in
@@ -59,7 +66,8 @@ func NewBox(coord Coordinate, minWidth, minHeight, text string) Box {
 // A dictionary is correct if and only if it correctly defines a text box (see
 // VerifyTextDict) and also provides values from the minimum width and height
 // with the keywords "minwidth" and "minheight" which should be given as strings
-// as they can consist of LaTeX formulae
+// as they can consist of LaTeX formulae, and an integer value (interpreted as a
+// boolean) for "draw" indicating whether the box should be displayed or not
 func VerifyBoxDict(dict map[string]interface{}) (Box, error) {
 
 	// first of all, verify that this dictionary correctly provides information
@@ -72,7 +80,7 @@ func VerifyBoxDict(dict map[string]interface{}) (Box, error) {
 
 	// now, beyond the definition of a text box, the mandatory keys are given
 	// next
-	mandatory := []string{"minwidth", "minheight"}
+	mandatory := []string{"minwidth", "minheight", "draw"}
 
 	// now, verify that all mandatory parameters are present in the dict
 	for _, key := range mandatory {
@@ -91,11 +99,15 @@ func VerifyBoxDict(dict map[string]interface{}) (Box, error) {
 	if _, ok := dict["minheight"].(string); !ok {
 		return Box{}, errors.New("the minimum height of a box should be given as a string")
 	}
+	if _, ok := dict["draw"].(int); !ok {
+		return Box{}, errors.New("the value for 'draw'ing a box should be given as an integer which is then interpreted as a bool value, where non-null values represent true")
+	}
 
 	// otherwise, the dictionary is correct
 	return Box{Coordinate: text.Coordinate,
 		minWidth:  dict["minwidth"].(string),
 		minHeight: dict["minheight"].(string),
+		draw:      dict["draw"].(int) != 0,
 		text:      dict["text"].(string)}, nil
 }
 
@@ -119,6 +131,15 @@ func (b Box) GetMinWidth() string {
 // Return the minimum height of this box
 func (b Box) GetMinHeight() string {
 	return fmt.Sprintf("%v", b.minHeight)
+}
+
+// Return the string ", draw" if and only if this box has to be drawn and ""
+// otherwise
+func (b Box) GetDraw() string {
+	if b.draw {
+		return ", draw"
+	}
+	return ""
 }
 
 // Return the text to show in this box

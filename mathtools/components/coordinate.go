@@ -26,8 +26,11 @@ import (
 // constants
 // ----------------------------------------------------------------------------
 
-// TikZ code to generate a coordinate
-const tikzCoordinate = `\coordinate {{.GetLabel}} at {{.GetPosition}};`
+// TikZ code to generate a coordinate. Note that coordinates actually take space
+// by drawing a small circle, this is necessary to avoid TikZ making unwanted
+// manipulations, e.g., shifting the image
+const tikzCoordinate = `\coordinate {{.GetLabel}} at {{.GetPosition}};
+\fill [white] {{.GetLabel}} circle (1pt);`
 
 // types
 // ----------------------------------------------------------------------------
