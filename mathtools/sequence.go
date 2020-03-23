@@ -83,6 +83,10 @@ type sequence struct {
 // types, either text (to show numbers) or box (to show answer boxes)
 func (sequence sequence) getComponents() []components.ComponentId {
 
+	// in case this sequence is of type SEQNONE, then randomly choose a position
+	// in between to show a number
+	pos := 1 + rand.Int()%(sequence.nbitems-2)
+
 	// create the output slice
 	order := make([]components.ComponentId, sequence.nbitems)
 
@@ -97,8 +101,15 @@ func (sequence sequence) getComponents() []components.ComponentId {
 			order[idx] = components.TEXT
 		} else {
 
-			// otherwise, just add a box to draw the answer
-			order[idx] = components.BOX
+			// otherwise, add a text also if this location is the one randomly
+			// chosen in a SEQNONE sequence
+			if sequence.seqtype == SEQNONE && idx == pos {
+				order[idx] = components.TEXT
+			} else {
+
+				// in any other case, just add an answer box
+				order[idx] = components.BOX
+			}
 		}
 	}
 
