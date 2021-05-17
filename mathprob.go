@@ -36,15 +36,17 @@ var VERSION string = "0.1.0" // current version
 var EXIT_SUCCESS int = 0     // exit with success
 
 // Options
-var masterFilename string // master file
-var texFilename string    // output tex filename
-var jsonFilename string   // JSON filename with info of all records to process
-var studentName string    // student's name
-var className string      // student's class name
-var helpMaster bool       // is help on master files requested?
-var helpJSON bool         // is help about JSON files requested?
-var verbose bool          // has verbose output been requested?
-var version bool          // has version info been requested?
+var masterFilename string      // master file
+var texFilename string         // output tex filename
+var jsonFilename string        // JSON filename with info of all records to process
+var jsonProblemFilename string // JSON input filename requesting problems to generate
+var studentName string         // student's name
+var className string           // student's class name
+var helpMaster bool            // is help on master files requested?
+var helpJSON bool              // is help about JSON files requested?
+var helpJSONProblem bool       // is help about JSON problem files requested?
+var verbose bool               // has verbose output been requested?
+var version bool               // has version info been requested?
 
 // functions
 // ----------------------------------------------------------------------------
@@ -56,11 +58,13 @@ func init() {
 	flag.StringVar(&masterFilename, "infile", "", "master file to use for generating the sheets of exercises. If a JSON file is given also, this parameter is automatically discarded. Use '-help-master' to obtain additional information")
 	flag.StringVar(&texFilename, "outfile", "", "output filename with the TeX code of the exercises generated from the template file. If not given, then the student's name provided with -student-name is used instead. If none is provided, then 'main.tex' is used by default. In case the resulting TeX file already exists, then it is re-numbered to avoid overwritting existing contents")
 	flag.StringVar(&jsonFilename, "json-file", "", "file with information of all records to process in JSON format. If a JSON file is given, the input file given with -infile is automatically discarded. It is not allowed to provide more than 1024 records in the JSON file. Use 'help-json' to obtain additional information")
+	flag.StringVar(&jsonProblemFilename, "json-problems-file", "", "JSON file requesting the generation of a number of problems which are return as another JSON file")
 	flag.StringVar(&studentName, "name", "", "Student's name")
 	flag.StringVar(&className, "class", "", "Student's class")
 
 	flag.BoolVar(&helpMaster, "help-master", false, "provides information about the format and usage of master files")
-	flag.BoolVar(&helpMaster, "help-json", false, "provides information about the JSON format used to specify multiple records")
+	flag.BoolVar(&helpJSON, "help-json", false, "provides information about the JSON format used to specify multiple records")
+	flag.BoolVar(&helpJSONProblem, "help-json-problem", false, "provides information about the JSON format used to request various problems as a JSON file")
 
 	// other optional parameters are verbose and version
 	flag.BoolVar(&verbose, "verbose", false, "provides verbose output")
@@ -78,16 +82,35 @@ func showVersion(signal int) {
 // shows informmation on master files
 func showHelpMaster(signal int) {
 
-	fmt.Println(` 
+	fmt.Println(`
+ MASTER FILES
+ ============
+ 
  TBW
 `)
 	os.Exit(signal)
 }
 
-// shows informmation on master files
+// shows informmation about input JSON files for generating many tex files in bach mode
 func showHelpJSON(signal int) {
 
-	fmt.Println(` 
+	fmt.Println(`
+ JSON FILES
+ ==========
+
+ TBW
+`)
+	os.Exit(signal)
+}
+
+// shows informmation about input JSON files for generating problems of any kind
+// as an output JSON file
+func showHelpJSONProblem(signal int) {
+
+	fmt.Println(`
+ JSON PROBLEM FILES
+ ==================
+
  TBW
 `)
 	os.Exit(signal)
@@ -110,19 +133,22 @@ func verify() {
 	if helpJSON {
 		showHelpJSON(EXIT_SUCCESS)
 	}
+	if helpJSONProblem {
+		showHelpJSONProblem(EXIT_SUCCESS)
+	}
 
 	// verify that a master file has been given
-	if masterFilename == "" && jsonFilename == "" {
+	if masterFilename == "" && jsonFilename == "" && jsonProblemFilename == "" {
 		log.Fatalf("Use either -master-file or -json-file to provide a master file. See -help for more details")
 	}
 
 	// if optional parameters have not been provided, issue a
 	// warning as it might be used in the master file
-	if studentName == "" && jsonFilename == "" {
+	if studentName == "" && jsonFilename == "" && jsonProblemFilename == "" {
 		log.Println("No student's name has been provided!")
 	}
 
-	if className == "" && jsonFilename == "" {
+	if className == "" && jsonFilename == "" && jsonProblemFilename == "" {
 		log.Println("No student's class has been provided!")
 	}
 }
@@ -160,8 +186,20 @@ func main() {
 	// verify the values parsed
 	verify()
 
-	// in case a JSON file was provided
-	if jsonFilename != "" {
+	// in case a JSON file was requested with different problems
+	if jsonProblemFilename != "" {
+
+		// Unmarshall the data from the input JSON file
+		jsonData, _ := ioutil.ReadFile(jsonProblemFilename)
+		if masterProblem, err := mathtools.Unmarshall(jsonData); err != nil {
+			log.Fatalf(" Fatal Error: %v", err)
+		} else {
+			fmt.Println(masterProblem)
+		}
+
+	} else if jsonFilename != "" {
+
+		// in case a JSON file was provided
 
 		// Unmarshal the JSON file to get all records to process
 		jsonData, _ := ioutil.ReadFile(jsonFilename)
