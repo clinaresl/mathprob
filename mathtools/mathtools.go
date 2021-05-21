@@ -28,6 +28,7 @@ import (
 	"math"
 	"math/rand"
 	"os" // access to file mgmt functions
+	"strconv"
 	"text/template"
 	"time"
 
@@ -128,6 +129,30 @@ func find(item string, container []string) bool {
 	return false
 }
 
+// transform the input into an integer by making sure that the input is either
+// an int, a float or a string. In case it is not possible, the value return is
+// undefined and an error is signaled
+func atoi(n interface{}) (int, error) {
+
+	switch value := n.(type) {
+	case int:
+		return value, nil
+	case float32:
+		return int(value), nil
+	case float64:
+		return int(value), nil
+	case string:
+		if result, err := strconv.Atoi(value); err != nil {
+			return 0, err
+		} else {
+			return result, nil
+		}
+	}
+
+	// if the type was not recognized, then return an error
+	return 0, fmt.Errorf("It was not possible to cast '%v' into an integer")
+}
+
 // return a valid specification of a sequence with no error if all the keys
 // given in dict are correct for defining a sequence. If not, an error is
 // returned. If an error is returned, the contents of the sequence are
@@ -152,29 +177,31 @@ func verifySequenceDict(dict map[string]interface{}) (sequence, error) {
 	}
 
 	// make also sure that parameters are given with the right type
-	if _, ok := dict["type"].(int); !ok {
-		return sequence{}, errors.New("the type of a sequence should be given as an integer")
+	var err error
+	var seqtype, nbitems, geq, leq int
+	if seqtype, err = atoi(dict["type"]); err != nil {
+		return sequence{}, errors.New("type type of a sequence should be given as a integer")
 	}
-	if _, ok := dict["nbitems"].(int); !ok {
+	if nbitems, err = atoi(dict["nbitems"]); err != nil {
 		return sequence{}, errors.New("the number of items in a sequence should be given as an integer")
 	}
-	if _, ok := dict["geq"].(int); !ok {
+	if geq, err = atoi(dict["geq"]); err != nil {
 		return sequence{}, errors.New("the lower bound of a sequence should be given as an integer")
 	}
-	if _, ok := dict["leq"].(int); !ok {
+	if leq, err = atoi(dict["leq"]); err != nil {
 		return sequence{}, errors.New("the upper bound of a sequence should be given as a string")
 	}
 
 	// finally, ensure the type is correct
-	if seqtype := dict["type"].(int); seqtype < SEQNONE || seqtype > SEQBOTH {
+	if seqtype < SEQNONE || seqtype > SEQBOTH {
 		return sequence{}, fmt.Errorf("the type of a sequence given '%v' is incorrect", seqtype)
 	}
 
 	// otherwise, the dictionary is correct
-	return sequence{seqtype: dict["type"].(int),
-		nbitems: dict["nbitems"].(int),
-		geq:     dict["geq"].(int),
-		leq:     dict["leq"].(int)}, nil
+	return sequence{seqtype: seqtype,
+		nbitems: nbitems,
+		geq:     geq,
+		leq:     leq}, nil
 }
 
 // verify that the keys given in dict are correct for defining

@@ -190,11 +190,17 @@ func main() {
 	if jsonProblemFilename != "" {
 
 		// Unmarshall the data from the input JSON file
-		jsonData, _ := ioutil.ReadFile(jsonProblemFilename)
-		if masterProblem, err := mathtools.Unmarshall(jsonData); err != nil {
+		jsonInput, _ := ioutil.ReadFile(jsonProblemFilename)
+		if masterProblem, err := mathtools.Unmarshall(jsonInput); err != nil {
 			log.Fatalf(" Fatal Error: %v", err)
 		} else {
-			fmt.Println(masterProblem)
+
+			// get the contents of problems in JSON format
+			if jsonOutput, err := mathtools.GenerateJSON(masterProblem); err != nil {
+				log.Fatalf(" Fatal Error: %v", err)
+			} else {
+				fmt.Println(string(jsonOutput))
+			}
 		}
 
 	} else if jsonFilename != "" {

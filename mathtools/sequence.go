@@ -21,9 +21,11 @@ package mathtools
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"log"
 	"math/rand"
+	"strconv"
 	"text/template"
 	"time"
 
@@ -72,11 +74,100 @@ type sequence struct {
 	geq, leq int
 }
 
+// A Sequence in JSON format consists of a list containing the sequence with
+// question marks which should be filled in by the student and another list with
+// the answer. The struct also contains another field probtype to recognize this
+// structure as a sequence problem in a JSSON file
+type sequenceJSON struct {
+	Probtype string   `json:"type"`
+	Args     []string `json:"args"`
+	Solution []string `json:"solution"`
+}
+
 // methods
 // ----------------------------------------------------------------------------
 
 // -- sequence
 // ----------------------------------------------------------------------------
+
+// return the instance of a specific sequence problem in JSON format as a slice
+// of bytes. The receiver is assumed to have been fully verified so that it
+// should be consistent
+func (sequence sequence) GenerateJSONInstance() (data []byte, err error) {
+
+	// from the given instance of a sequence, define the specific problem
+
+	// determine the first number of the sequence ---even if it is not
+	// displayed. If the interval [geq, leq] is too narrow to host nbitems,
+	// immediately log a fatal error
+	if 1+sequence.leq-sequence.geq < sequence.nbitems {
+		return data, fmt.Errorf("It is not possible to fit %v different numbers taken from the range [%v, %v]",
+			sequence.nbitems, sequence.geq, sequence.leq)
+	}
+
+	// The following expression takes into account not only the interval [geq,
+	// leq] but also the number of items to display in the sequence
+	rand.Seed(time.Now().UTC().UnixNano())
+	number1 := sequence.geq + rand.Int()%(2+sequence.leq-sequence.nbitems-sequence.geq)
+
+	// in case this sequence is of type SEQNONE, then randomly choose a position
+	// in between to show a number
+	pos := 1 + rand.Int()%(sequence.nbitems-2)
+
+	// and now fill in the sequence along with the solution
+	args := make([]string, sequence.nbitems)
+	solution := make([]string, sequence.nbitems)
+	for item := number1; item < number1+sequence.nbitems; item++ {
+
+		// first, write the solution
+		idx := item - number1
+		solution[idx] = strconv.FormatInt(int64(item), 10)
+
+		// now, depending on the position and type
+
+		switch idx {
+
+		case 0:
+			if sequence.seqtype == SEQNONE || sequence.seqtype == SEQLAST {
+				args[0] = "?"
+			} else {
+				args[0] = solution[0]
+			}
+
+		case pos:
+			if sequence.seqtype == SEQNONE {
+				args[pos] = solution[pos]
+			} else {
+				args[pos] = "?"
+			}
+
+		case sequence.nbitems - 1:
+			if sequence.seqtype == SEQNONE || sequence.seqtype == SEQFIRST {
+				args[idx] = "?"
+			} else {
+				args[idx] = solution[idx]
+			}
+
+		default:
+			args[idx] = "?"
+		}
+	}
+
+	// Marshal the problem in JSON format
+	seqprob := &sequenceJSON{
+		Probtype: "Sequence",
+		Args:     args,
+		Solution: solution}
+	data, err = json.MarshalIndent(seqprob, "", "\t")
+
+	// and if any error happened then return it immediately
+	if err != nil {
+		return data, err
+	}
+
+	// otherwise, return the data in JSON format
+	return data, nil
+}
 
 // use the values stored in a sequence to determine the order of the reusable
 // components to display the items. The output slice contains items of two
