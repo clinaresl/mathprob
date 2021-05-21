@@ -1,22 +1,22 @@
 [
 	{
 		"infile":"templates/sequence.master",
-	        "name":"Adriana",
-	        "class":"1º A",
+        "name":"Adriana",
+        "class":"1º A",
 		"outfile":"adriana.tex"
 	},
 	
 	{
 		"infile":"templates/sequence.master",
 		"name":"Darío",
-	        "class":"1º B",
+        "class":"1º B",
 		"outfile":"dario.tex"
 	},
 	
 	{
 		"infile":"templates/sequence.master",
 		"name":"Roberto",
-	        "class":"3º A",
+        "class":"3º A",
 		"outfile":"roberto.tex"
 	}
 ]
