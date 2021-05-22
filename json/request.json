@@ -1,0 +1,42 @@
+[
+    {
+        "type": "Sequence",
+        "args": {
+            "type": 0,
+            "nbitems": 10,
+            "geq": 100,
+            "leq": 999
+        },
+        "nbprobs": 5
+    },
+    {
+        "type": "Sequence",
+        "args": {
+            "type": 1,
+            "nbitems": 5,
+            "geq": 0,
+            "leq": 9
+        },
+        "nbprobs": 3
+    },
+    {
+        "type": "Sequence",
+        "args": {
+            "type": 2,
+            "nbitems": 5,
+            "geq": 0,
+            "leq": 9
+        },
+        "nbprobs": 1
+    },
+    {
+        "type": "Sequence",
+        "args": {
+            "type": 3,
+            "nbitems": 7,
+            "geq": -10,
+            "leq": 10
+        },
+        "nbprobs": 5
+    }
+]

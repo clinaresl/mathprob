@@ -21,7 +21,6 @@ package mathtools
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"log"
 	"math/rand"
@@ -74,34 +73,22 @@ type sequence struct {
 	geq, leq int
 }
 
-// A Sequence in JSON format consists of a list containing the sequence with
-// question marks which should be filled in by the student and another list with
-// the answer. The struct also contains another field probtype to recognize this
-// structure as a sequence problem in a JSSON file
-type sequenceJSON struct {
-	Probtype string   `json:"type"`
-	Args     []string `json:"args"`
-	Solution []string `json:"solution"`
-}
-
 // methods
 // ----------------------------------------------------------------------------
 
 // -- sequence
 // ----------------------------------------------------------------------------
 
-// return the instance of a specific sequence problem in JSON format as a slice
-// of bytes. The receiver is assumed to have been fully verified so that it
+// return the instance of a specific sequence problem that can be marshalled in
+// JSON format. The receiver is assumed to have been fully verified so that it
 // should be consistent
-func (sequence sequence) GenerateJSONInstance() (data []byte, err error) {
-
-	// from the given instance of a sequence, define the specific problem
+func (sequence sequence) GenerateJSONSequence() (problemJSON, error) {
 
 	// determine the first number of the sequence ---even if it is not
 	// displayed. If the interval [geq, leq] is too narrow to host nbitems,
 	// immediately log a fatal error
 	if 1+sequence.leq-sequence.geq < sequence.nbitems {
-		return data, fmt.Errorf("It is not possible to fit %v different numbers taken from the range [%v, %v]",
+		return problemJSON{}, fmt.Errorf("It is not possible to fit %v different numbers taken from the range [%v, %v]",
 			sequence.nbitems, sequence.geq, sequence.leq)
 	}
 
@@ -153,20 +140,11 @@ func (sequence sequence) GenerateJSONInstance() (data []byte, err error) {
 		}
 	}
 
-	// Marshal the problem in JSON format
-	seqprob := &sequenceJSON{
+	// and return the problem along with its solution
+	return problemJSON{
 		Probtype: "Sequence",
 		Args:     args,
-		Solution: solution}
-	data, err = json.MarshalIndent(seqprob, "", "\t")
-
-	// and if any error happened then return it immediately
-	if err != nil {
-		return data, err
-	}
-
-	// otherwise, return the data in JSON format
-	return data, nil
+		Solution: solution}, nil
 }
 
 // use the values stored in a sequence to determine the order of the reusable

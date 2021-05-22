@@ -6,9 +6,6 @@
 // Carlos Linares López <carlos.linares@uc3m.es>
 //
 
-//
-// Description
-//
 package mathtools
 
 import (
@@ -19,13 +16,13 @@ import (
 	"strings"
 )
 
+// This file contains general functions for handling requests to automatically
+// generate problems of different types in JSON format. It is intended to serve
+// as a bridge to connect mathprob to a front-end. It works from a list of
+// requests given also in JSON format
+
 // types
 // ----------------------------------------------------------------------------
-
-// A master file consists of an input filename that stores the
-// tempalte to fill in to generate the final sheet of exercises, and
-// an output tex filename. It also comes with other fields that can be
-// used for customizing the resulting file such as the student's name
 
 // A master problem consists of a number of arbitrary arguments of any type
 // indexed by a string, a specific type and a number of problems to generate
@@ -35,22 +32,20 @@ type MasterProblem struct {
 	nbprobs  int
 }
 
+// A problem in JSON format consists mainly of two fields: the arguments of the
+// problem and its solution. Those records in the arguments of the problem that
+// have to be filled in by the student are marked with a question mark "?". In
+// addition, different problems might have different types and thus, a probtype
+// field is given also
+type problemJSON struct {
+	Probtype string   `json:"type"`
+	Id       int      `json:"id"`
+	Args     []string `json:"args"`
+	Solution []string `json:"solution"`
+}
+
 // functions
 // ----------------------------------------------------------------------------
-
-// verify the type of problem requested is acknowledged by mathprob. In case it
-// is acknowledged, an error is returned; otherwise nil
-func AckProblemType(probtype string) error {
-
-	// if this problem is not among those supporting the automated generation of
-	// json problems then immediately return an error
-	if strings.ToUpper(probtype) != "SEQUENCE" {
-		return fmt.Errorf("Unknown problem type '%v'", probtype)
-	}
-
-	// otherwise acknwoledge by saying no error
-	return nil
-}
 
 // return an array of instances of MasterProblem from the contents of a json
 // file. In case it is not possible to unmarshall the contents of the json file,
@@ -145,6 +140,10 @@ func Unmarshall(data []byte) (output []MasterProblem, err error) {
 // the contents of the returned data are undefined and an error is raised
 func GenerateJSON(problems []MasterProblem) (data []byte, err error) {
 
+	// -- initialization: create a slice of JSON problems where each request is
+	//                    filled in. These is the slice to marshal
+	var jsonprobs []problemJSON
+
 	// for all problems
 	for _, problem := range problems {
 
@@ -152,63 +151,41 @@ func GenerateJSON(problems []MasterProblem) (data []byte, err error) {
 		// generate
 		for i := 0; i < problem.nbprobs; i++ {
 
-			// get a specific representation of this problem as a JSON stream
-			if jsondata, err := problem.getJSONProblem(); err != nil {
-				return data, err
-			} else {
+			// depending upon the type of problem to generate
+			switch strings.ToUpper(problem.probtype) {
 
-				// and if everything went fine then add it to the overall JSON
-				// data stream to return
-				data = append(data, jsondata...)
+			case "SEQUENCE":
+
+				// First, verify that all items in the dictionary of args are correct
+				if instance, err := verifySequenceDict(problem.args); err != nil {
+					return data, err
+				} else {
+
+					// if so, generate a JSON stream with the representation of this
+					// specific problem
+					if iprob, err := instance.GenerateJSONSequence(); err != nil {
+						return data, err
+					} else {
+
+						// if everything went on correctly, then correctly
+						// number this problem and add this problem to the slice
+						// of problems to marshal
+						iprob.Id = i
+						jsonprobs = append(jsonprobs, iprob)
+					}
+				}
+
+			default:
+				return data, fmt.Errorf("Unsupported generation of JSON problems for problem type '%v'", problem.probtype)
 			}
 		}
 	}
 
-	// Before leaving, enclose all problems in a json slice
-	data = append([]byte("[\n"), append(data, []byte("\n]")...)...)
-
-	return
-}
-
-// Methods
-// ----------------------------------------------------------------------------
-// Return a JSON string with instances of all problems specified in the master
-// problem. Note an error is returned if anything goes wrong
-func (m MasterProblem) getJSONProblem() (data []byte, err error) {
-
-	// first things first, verify that this problem has a correct type
-	if err := AckProblemType(m.probtype); err != nil {
-		return data, err
-	}
-
-	// given that this problem is correct, verify its arguments
-	switch strings.ToUpper(m.probtype) {
-
-	case "SEQUENCE":
-
-		// First, verify that all items in the dictionary of args are correct
-		if instance, err := verifySequenceDict(m.args); err != nil {
-			return data, err
-		} else {
-
-			// if so, generate a JSON stream with the representation of this
-			// specific problem
-			if data, err := instance.GenerateJSONInstance(); err != nil {
-				return data, err
-			} else {
-
-				// if everything went on correctly, then return the JSON data
-				// stream
-				return data, nil
-			}
-		}
-
-	default:
-		return data, fmt.Errorf("Unsupported generation of JSON problems for problem type '%v'", m.probtype)
-	}
-
-	// Data should have been returned before, this is just to avoid compiler errors
-	return
+	// Now, marshal data and return the json bytes stream. Note that this
+	// function returns straight away the same error returned by the Marshal
+	// function
+	data, err = json.MarshalIndent(jsonprobs, "", "\t")
+	return data, err
 }
 
 // Local Variables:
