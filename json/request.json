@@ -38,5 +38,14 @@
             "leq": 10
         },
         "nbprobs": 5
+    },
+    {
+        "type": "Division",
+        "args": {
+            "nbdvdigits": 5,
+            "nbdrdigits": 2,
+            "nbqdigits": 1
+        },
+        "nbprobs": 5
     }
 ]

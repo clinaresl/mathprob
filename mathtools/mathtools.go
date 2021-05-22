@@ -180,7 +180,7 @@ func verifySequenceDict(dict map[string]interface{}) (sequence, error) {
 	var err error
 	var seqtype, nbitems, geq, leq int
 	if seqtype, err = atoi(dict["type"]); err != nil {
-		return sequence{}, errors.New("type type of a sequence should be given as a integer")
+		return sequence{}, errors.New("the type of a sequence should be given as a integer")
 	}
 	if nbitems, err = atoi(dict["nbitems"]); err != nil {
 		return sequence{}, errors.New("the number of items in a sequence should be given as an integer")
@@ -197,6 +197,15 @@ func verifySequenceDict(dict map[string]interface{}) (sequence, error) {
 		return sequence{}, fmt.Errorf("the type of a sequence given '%v' is incorrect", seqtype)
 	}
 
+	// next, verify if there are some unnecessary parameters
+	for key := range dict {
+
+		// if this key was not requested then report a message
+		if !find(key, mandatory) {
+			log.Printf(" Warning: The key '%v' is not necessary for creating a sequence and it will be ignored", key)
+		}
+	}
+
 	// otherwise, the dictionary is correct
 	return sequence{seqtype: seqtype,
 		nbitems: nbitems,
@@ -208,7 +217,7 @@ func verifySequenceDict(dict map[string]interface{}) (sequence, error) {
 // divisions. A dictionary is correct if and only if all the mandatory
 // arguments have been given. If not, an error is raised and execution
 // is aborted. Unnecessary keys are reported
-func verifyDivisionDict(dict map[string]interface{}) {
+func verifyDivisionDict(dict map[string]interface{}) (division, error) {
 
 	// the mandatory keys are given next
 	mandatory := []string{"nbdvdigits", "nbdrdigits", "nbqdigits"}
@@ -223,7 +232,20 @@ func verifyDivisionDict(dict map[string]interface{}) {
 		}
 	}
 
-	// next, verify if there are some parameters
+	// make also sure that parameters are given with the right type
+	var err error
+	var nbdvdigits, nbdrdigits, nbqdigits int
+	if nbdvdigits, err = atoi(dict["nbdvdigits"]); err != nil {
+		return division{}, errors.New("the number of digits of the dividend should be given as a integer")
+	}
+	if nbdrdigits, err = atoi(dict["nbdrdigits"]); err != nil {
+		return division{}, errors.New("the number of digits of the divisor should be given as an integer")
+	}
+	if nbqdigits, err = atoi(dict["nbqdigits"]); err != nil {
+		return division{}, errors.New("the number of digits of the quotient should be given as an integer")
+	}
+
+	// next, verify if there are some unnecessary parameters
 	for key := range dict {
 
 		// if this key was not requested then report a message
@@ -231,6 +253,12 @@ func verifyDivisionDict(dict map[string]interface{}) {
 			log.Printf(" Warning: The key '%v' is not necessary for creating a division and it will be ignored", key)
 		}
 	}
+
+	// now, return the proper definition of a division problem
+	return division{
+		nbdvdigits: nbdvdigits,
+		nbdrdigits: nbdrdigits,
+		nbqdigits:  nbqdigits}, nil
 }
 
 // methods
@@ -691,46 +719,49 @@ func (masterFile MasterFile) GetDivision(dict map[string]interface{}) string {
 
 	// Verify the given keys in the dictionary are correct. Note
 	// that the types are not verified, only the presence of the
-	// keys
-	verifyDivisionDict(dict)
+	// keys. In case of an error, just generate a fatal error
+	div, err := verifyDivisionDict(dict)
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
 
 	// Now, build the components of the division according to the given parameters
 
 	// --coordinates
 	label1 := coordinateExplicit{
 		x: 0.0,
-		y: 1 + 2.0*dict["nbqdigits"].(float64) + 0.5,
+		y: 1 + 2.0*float64(div.nbqdigits) + 0.5,
 	}
 	label1.label = "label1"
 
 	label2 := coordinateFormula{
 		formula: fmt.Sprintf(`$(label1) + %v*(\zerowidth, 0.0)$`,
-			2.0+dict["nbdvdigits"].(float64)),
+			2.0+float64(div.nbdvdigits)),
 	}
 	label2.label = "label2"
 
 	label3 := coordinateFormula{
 		formula: fmt.Sprintf(`$(label2) + (%v*\zerowidth, -\zeroheight)$`,
-			0.5*(2+max(dict["nbdrdigits"].(float64), dict["nbqdigits"].(float64)))),
+			0.5*(2+max(float64(div.nbdrdigits), float64(div.nbqdigits)))),
 	}
 	label3.label = "label3"
 
 	line1 := coordinateFormula{
 		formula: fmt.Sprintf(`$(label2) + (%v\zerowidth, -2*\zeroheight-0.15 cm)$`,
-			2.0+dict["nbdvdigits"].(float64)),
+			2.0+float64(div.nbdvdigits)),
 	}
 	line1.label = "line1"
 
 	// --bounding box
 	bottom := coordinateFormula{
 		formula: fmt.Sprintf(`$(line1) + %v*(0.0, -\zeroheight-\baselineskip-0.5/%v*\zeroheight)$`,
-			2.0*dict["nbqdigits"].(float64)-1.0,
-			2.0*dict["nbqdigits"].(float64)-1.0),
+			2.0*float64(div.nbqdigits-1.0),
+			2.0*float64(div.nbqdigits-1.0)),
 	}
 	bottom.label = "bottom"
 	right := coordinateFormula{
 		formula: fmt.Sprintf(`$(label2) + (%v*\zerowidth, \zeroheight)$`,
-			2.0+max(dict["nbdrdigits"].(float64), dict["nbqdigits"].(float64))),
+			2.0+max(float64(div.nbdrdigits), float64(div.nbqdigits))),
 	}
 	right.label = "right"
 	bBox := boundingBox{
@@ -747,8 +778,8 @@ func (masterFile MasterFile) GetDivision(dict map[string]interface{}) string {
 	}
 	coord3 := coordinateFormula{
 		formula: fmt.Sprintf(`$(label2) + %v*(\zerowidth, -\zeroheight/%v)$`,
-			2.0+max(dict["nbdrdigits"].(float64), dict["nbqdigits"].(float64)),
-			2.0+max(dict["nbdrdigits"].(float64), dict["nbqdigits"].(float64))),
+			2.0+max(float64(div.nbdrdigits), float64(div.nbqdigits)),
+			2.0+max(float64(div.nbdrdigits), float64(div.nbqdigits))),
 	}
 	sBox := splitBox{
 		coord1: coord1,
@@ -758,7 +789,7 @@ func (masterFile MasterFile) GetDivision(dict map[string]interface{}) string {
 
 	// --answer
 	answer := latexAnswer{
-		width: 2.0 + max(dict["nbdrdigits"].(float64), dict["nbqdigits"].(float64)),
+		width: 2.0 + max(float64(div.nbdrdigits), float64(div.nbqdigits)),
 	}
 
 	// --operands
@@ -775,24 +806,21 @@ func (masterFile MasterFile) GetDivision(dict map[string]interface{}) string {
 
 	// First, verify that parameters are correct. If they are not,
 	// take the best action
-	if dict["nbqdigits"].(float64) < dict["nbdvdigits"].(float64)-dict["nbdrdigits"].(float64) {
-		log.Printf(" It is not possible to generate quotients with %v digits if the dividend has %v digits and the divisor has %v digits. Thus, %v digits in the quotient are generated instead", dict["nbqdigits"], dict["nbdvdigits"], dict["nbdrdigits"], dict["nbdvdigits"].(float64)-dict["nbdrdigits"].(float64))
-		dict["nbqdigits"] = dict["nbdvdigits"].(float64) - dict["nbdrdigits"].(float64)
+	if div.nbqdigits < div.nbdvdigits-div.nbdrdigits {
+		log.Printf(" It is not possible to generate quotients with %v digits if the dividend has %v digits and the divisor has %v digits. Thus, %v digits in the quotient are generated instead", div.nbqdigits, div.nbdvdigits, div.nbdrdigits, div.nbdvdigits-div.nbdrdigits)
+		div.nbqdigits = div.nbdvdigits - div.nbdrdigits
 	}
 
-	if dict["nbqdigits"].(float64) > dict["nbdvdigits"].(float64)-dict["nbdrdigits"].(float64)+1 {
-		log.Printf(" It is not possible to generate quotients with %v digits if the dividend has %v digits and the divisor has %v digits. Thus, %v digits in the quotient are generated instead", dict["nbqdigits"], dict["nbdvdigits"], dict["nbdrdigits"], dict["nbdvdigits"].(float64)-dict["nbdrdigits"].(float64)+1)
-		dict["nbqdigits"] = dict["nbdvdigits"].(float64) - dict["nbdrdigits"].(float64) + 1
+	if div.nbqdigits > div.nbdvdigits-div.nbdrdigits+1 {
+		log.Printf(" It is not possible to generate quotients with %v digits if the dividend has %v digits and the divisor has %v digits. Thus, %v digits in the quotient are generated instead", div.nbqdigits, div.nbdvdigits, div.nbdrdigits, div.nbdvdigits-div.nbdrdigits+1)
+		div.nbqdigits = div.nbdvdigits - div.nbdrdigits + 1
 	}
 
 	// now, generate numbers in their corresponding range
-	log.Print(dict)
 	var qvalue int
-	nbdivdigits := int(dict["nbdivdigits"].(float64))
-	nbdrdigits := int(dict["nbdrdigits"].(float64))
-	for nbdigits(qvalue) < nbdivdigits || qvalue == 0 {
-		dividend.value = randN(nbdivdigits)
-		divisor.value = randN(nbdrdigits)
+	for nbdigits(qvalue) < div.nbdvdigits || qvalue == 0 {
+		dividend.value = randN(div.nbdvdigits)
+		divisor.value = randN(div.nbdrdigits)
 		qvalue = dividend.value / divisor.value
 	}
 
@@ -810,7 +838,7 @@ func (masterFile MasterFile) GetDivision(dict map[string]interface{}) string {
 	}
 
 	// and return the TikZ code necessary for drawing this operation
-	return divProblem.Execute()
+	return divProblem.execute()
 
 }
 

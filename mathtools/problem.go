@@ -90,35 +90,13 @@ func Unmarshall(data []byte) (output []MasterProblem, err error) {
 			}
 		}
 
-		// Thirdly, process the arguments. Verify first that they exist as a map
-		// of keys to values of any type; if so, extract them
+		// Thirdly, ensure the arguments are given and extract'em
 		var args map[string]interface{} = make(map[string]interface{})
 		if _, ok = entry["args"]; !ok {
 			return output, errors.New("The arguments for generating a type of problem has not been found!")
 		} else {
-			if _, ok = entry["args"].(map[string]interface{}); !ok {
+			if args, ok = entry["args"].(map[string]interface{}); !ok {
 				return output, errors.New("The arguments are not given as a dict of strings to values of any type")
-			} else {
-
-				// then process all entries in this dictionary, looking for
-				// specific keys
-				jsonargs := entry["args"].(map[string]interface{})
-				for _, ikey := range []string{"type", "nbitems", "geq", "leq"} {
-
-					// if this key has not been given, then immediately issue an
-					// error
-					if _, ok = jsonargs[ikey]; !ok {
-						return output, fmt.Errorf("The arg '%v' has not been found!", ikey)
-					} else {
-						if ivalue, ok := jsonargs[ikey].(interface{}); !ok {
-							return output, fmt.Errorf("It was not possible to decode the value of the arg '%v'", ikey)
-						} else {
-
-							// store this key
-							args[ikey] = ivalue
-						}
-					}
-				}
 			}
 		}
 
@@ -163,7 +141,28 @@ func GenerateJSON(problems []MasterProblem) (data []byte, err error) {
 
 					// if so, generate a JSON stream with the representation of this
 					// specific problem
-					if iprob, err := instance.GenerateJSONSequence(); err != nil {
+					if iprob, err := instance.generateJSONProblem(); err != nil {
+						return data, err
+					} else {
+
+						// if everything went on correctly, then correctly
+						// number this problem and add this problem to the slice
+						// of problems to marshal
+						iprob.Id = i
+						jsonprobs = append(jsonprobs, iprob)
+					}
+				}
+
+			case "DIVISION":
+
+				// First, verify that all items in the dictionary of args are correct
+				if instance, err := verifyDivisionDict(problem.args); err != nil {
+					return data, err
+				} else {
+
+					// if so, generate a JSON stream with the representation of this
+					// specific problem
+					if iprob, err := instance.generateJSONProblem(); err != nil {
 						return data, err
 					} else {
 

@@ -23,6 +23,7 @@ import (
 	"bytes"
 	"fmt"
 	"log"
+	"strconv"
 	"text/template"
 )
 
@@ -171,8 +172,67 @@ type divisionProblem struct {
 	divisor  latexDivOperand
 }
 
+// The formal definition of a division problem is given below. It is defined
+// with the number of digits of the dividend, divisor and quotient
+type division struct {
+	nbdvdigits int
+	nbdrdigits int
+	nbqdigits  int
+}
+
 // methods
 // ----------------------------------------------------------------------------
+
+// -- division
+
+// return the instance of a specific division problem that can be marshalled in
+// JSON format. The receiver is assumed to have been fully verified so that it
+// should be consistent
+func (div division) generateJSONProblem() (problemJSON, error) {
+
+	// First, verify that parameters are correct. If they are not, take the best
+	// action
+	if div.nbqdigits < div.nbdvdigits-div.nbdrdigits {
+		log.Printf(" It is not possible to generate quotients with %v digits if the dividend has %v digits and the divisor has %v digits. Thus, %v digits in the quotient are generated instead", div.nbqdigits, div.nbdvdigits, div.nbdrdigits, div.nbdvdigits-div.nbdrdigits)
+		div.nbqdigits = div.nbdvdigits - div.nbdrdigits
+	}
+
+	if div.nbqdigits > div.nbdvdigits-div.nbdrdigits+1 {
+		log.Printf(" It is not possible to generate quotients with %v digits if the dividend has %v digits and the divisor has %v digits. Thus, %v digits in the quotient are generated instead", div.nbqdigits, div.nbdvdigits, div.nbdrdigits, div.nbdvdigits-div.nbdrdigits+1)
+		div.nbqdigits = div.nbdvdigits - div.nbdrdigits + 1
+	}
+
+	// create two slices: one for storing the instance of this problem in the
+	// order: dividend, divisor, quotient and remainder where those parts that
+	// should be filled in by the student are marked with question marks "?";
+	// and another one with the full solution
+	args := make([]string, 4)
+	solution := make([]string, 4)
+
+	// now, generate numbers in their corresponding range
+	var dividend, divisor, quotient int
+	for nbdigits(quotient) != div.nbqdigits || quotient == 0 {
+		dividend = randN(div.nbdvdigits)
+		divisor = randN(div.nbdrdigits)
+		quotient = dividend / divisor
+	}
+
+	// now, copy the arguments and the full solution
+	solution[0] = strconv.FormatInt(int64(dividend), 10)
+	solution[1] = strconv.FormatInt(int64(divisor), 10)
+	solution[2] = strconv.FormatInt(int64(quotient), 10)
+	solution[3] = strconv.FormatInt(int64(dividend-divisor*quotient), 10)
+	args[0] = solution[0]
+	args[1] = solution[1]
+	args[2] = "?"
+	args[3] = "?"
+
+	// and return the problem along with its solution
+	return problemJSON{
+		Probtype: "Division",
+		Args:     args,
+		Solution: solution}, nil
+}
 
 // -- coordinates
 
@@ -451,7 +511,7 @@ func (division divisionProblem) GetDivDivisor() string {
 
 // Execute the given division problem and returns legal TikZ code to
 // represent it
-func (division divisionProblem) Execute() string {
+func (division divisionProblem) execute() string {
 
 	// create a template with the TikZ code for showing this
 	// division problem
