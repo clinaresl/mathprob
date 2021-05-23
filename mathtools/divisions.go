@@ -28,8 +28,8 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/clinaresl/mathprob/components"
 	"github.com/clinaresl/mathprob/helpers"
+	"github.com/clinaresl/mathprob/mathtools/components"
 )
 
 // constants

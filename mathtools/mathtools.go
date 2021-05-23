@@ -32,9 +32,9 @@ import (
 	"time"
 
 	// go facility for processing templates
-	"github.com/clinaresl/mathprob/components"
 	"github.com/clinaresl/mathprob/fstools"
 	"github.com/clinaresl/mathprob/helpers"
+	"github.com/clinaresl/mathprob/mathtools/components"
 )
 
 // types
