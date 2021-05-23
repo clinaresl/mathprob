@@ -1,4 +1,4 @@
-module github.com/clinaresl/mathprob/mathtools/components
+module github.com/clinaresl/mathprob/components
 
 go 1.16
 
