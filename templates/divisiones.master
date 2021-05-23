@@ -67,7 +67,7 @@ Pues aquí las tienes mi niño.
   quieres dividir. Si lo has hecho así, ?`cuántos garbanzos hay en
   cada grupo?
   
-{{range .Slice 48}}{{.GetSimpleOperation11 (3)}}{{end}}
+{{range .Slice 1}}{{.GetSimpleOperation11 (3)}}{{end}}
 
   \part[5] Sinceramente, pensaba que cometerías muchos más errores en
   los ejercicios anteriores que los que has cometido. Pero me gustaría
@@ -76,7 +76,7 @@ Pues aquí las tienes mi niño.
   siguientes deberían costarte bastante más, y estoy seguro que
   cometerás muchos errores !`es normal!
   
-{{range .Slice 48}}{{.GetSimpleOperation21 (3)}}{{end}}
+{{range .Slice 1}}{{.GetSimpleOperation21 (3)}}{{end}}
 
 \end{parts}
 

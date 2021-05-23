@@ -712,10 +712,13 @@ func (masterFile MasterFile) Sequence(dict map[string]interface{}) string {
 // divisions
 // ----------------------------------------------------------------------------
 
-func (masterFile MasterFile) GetDivision(dict map[string]interface{}) string {
-
-	// seed the random generator
-	rand.Seed(time.Now().UTC().UnixNano())
+// Return the LaTeX code in TikZ format that generates a division with the
+// keywords given in the dictionary:
+//
+// nbdvdigits: number of digits of the dividend
+// nbdrdigits: number of digits of the divisor
+// nbqdigits: number of digits of the quotient
+func (masterFile MasterFile) Division(dict map[string]interface{}) string {
 
 	// Verify the given keys in the dictionary are correct. Note
 	// that the types are not verified, only the presence of the
@@ -725,121 +728,7 @@ func (masterFile MasterFile) GetDivision(dict map[string]interface{}) string {
 		log.Fatalf("%v", err)
 	}
 
-	// Now, build the components of the division according to the given parameters
-
-	// --coordinates
-	label1 := coordinateExplicit{
-		x: 0.0,
-		y: 1 + 2.0*float64(div.nbqdigits) + 0.5,
-	}
-	label1.label = "label1"
-
-	label2 := coordinateFormula{
-		formula: fmt.Sprintf(`$(label1) + %v*(\zerowidth, 0.0)$`,
-			2.0+float64(div.nbdvdigits)),
-	}
-	label2.label = "label2"
-
-	label3 := coordinateFormula{
-		formula: fmt.Sprintf(`$(label2) + (%v*\zerowidth, -\zeroheight)$`,
-			0.5*(2+max(float64(div.nbdrdigits), float64(div.nbqdigits)))),
-	}
-	label3.label = "label3"
-
-	line1 := coordinateFormula{
-		formula: fmt.Sprintf(`$(label2) + (%v\zerowidth, -2*\zeroheight-0.15 cm)$`,
-			2.0+float64(div.nbdvdigits)),
-	}
-	line1.label = "line1"
-
-	// --bounding box
-	bottom := coordinateFormula{
-		formula: fmt.Sprintf(`$(line1) + %v*(0.0, -\zeroheight-\baselineskip-0.5/%v*\zeroheight)$`,
-			2.0*float64(div.nbqdigits-1.0),
-			2.0*float64(div.nbqdigits-1.0)),
-	}
-	bottom.label = "bottom"
-	right := coordinateFormula{
-		formula: fmt.Sprintf(`$(label2) + (%v*\zerowidth, \zeroheight)$`,
-			2.0+max(float64(div.nbdrdigits), float64(div.nbqdigits))),
-	}
-	right.label = "right"
-	bBox := boundingBox{
-		bottom: bottom,
-		right:  right,
-	}
-
-	// --split box
-	coord1 := coordinateFormula{
-		formula: `$(label2) + (0.0, \zeroheight)$`,
-	}
-	coord2 := coordinateFormula{
-		formula: `$(label2) + (0.0, -\zeroheight)$`,
-	}
-	coord3 := coordinateFormula{
-		formula: fmt.Sprintf(`$(label2) + %v*(\zerowidth, -\zeroheight/%v)$`,
-			2.0+max(float64(div.nbdrdigits), float64(div.nbqdigits)),
-			2.0+max(float64(div.nbdrdigits), float64(div.nbqdigits))),
-	}
-	sBox := splitBox{
-		coord1: coord1,
-		coord2: coord2,
-		coord3: coord3,
-	}
-
-	// --answer
-	answer := latexAnswer{
-		width: 2.0 + max(float64(div.nbdrdigits), float64(div.nbqdigits)),
-	}
-
-	// --operands
-	dividend := latexDivOperand{
-		ref:   "label1",
-		label: "dividend",
-	}
-	divisor := latexDivOperand{
-		ref:   "label2",
-		label: "divisor",
-	}
-
-	// randomly determine the values of the operands
-
-	// First, verify that parameters are correct. If they are not,
-	// take the best action
-	if div.nbqdigits < div.nbdvdigits-div.nbdrdigits {
-		log.Printf(" It is not possible to generate quotients with %v digits if the dividend has %v digits and the divisor has %v digits. Thus, %v digits in the quotient are generated instead", div.nbqdigits, div.nbdvdigits, div.nbdrdigits, div.nbdvdigits-div.nbdrdigits)
-		div.nbqdigits = div.nbdvdigits - div.nbdrdigits
-	}
-
-	if div.nbqdigits > div.nbdvdigits-div.nbdrdigits+1 {
-		log.Printf(" It is not possible to generate quotients with %v digits if the dividend has %v digits and the divisor has %v digits. Thus, %v digits in the quotient are generated instead", div.nbqdigits, div.nbdvdigits, div.nbdrdigits, div.nbdvdigits-div.nbdrdigits+1)
-		div.nbqdigits = div.nbdvdigits - div.nbdrdigits + 1
-	}
-
-	// now, generate numbers in their corresponding range
-	var qvalue int
-	for nbdigits(qvalue) < div.nbdvdigits || qvalue == 0 {
-		dividend.value = randN(div.nbdvdigits)
-		divisor.value = randN(div.nbdrdigits)
-		qvalue = dividend.value / divisor.value
-	}
-
-	// And put all this elements together to bring up the defintion of a division
-	divProblem := divisionProblem{
-		label1:   label1,
-		label2:   label2,
-		label3:   label3,
-		line1:    line1,
-		bBox:     bBox,
-		sBox:     sBox,
-		answer:   answer,
-		dividend: dividend,
-		divisor:  divisor,
-	}
-
-	// and return the TikZ code necessary for drawing this operation
-	return divProblem.execute()
-
+	return div.execute()
 }
 
 // templates
@@ -847,7 +736,7 @@ func (masterFile MasterFile) GetDivision(dict map[string]interface{}) string {
 
 // Parse the template given in contents to a masterfile and returns the result
 // in a buffer, and nil if no error was found
-func (masterFile MasterFile) MasterToBufferFromTemplate(contents string) (bytes.Buffer, error) {
+func (masterFile MasterFile) masterToBufferFromTemplate(contents string) (bytes.Buffer, error) {
 
 	// create the buffer to return the result of the execution
 	var result bytes.Buffer
@@ -939,7 +828,7 @@ func (masterFile MasterFile) MasterToFileFromTemplate(dst string) {
 	defer file.Close()
 
 	// execute the template
-	result, err := masterFile.MasterToBufferFromTemplate(string(contents))
+	result, err := masterFile.masterToBufferFromTemplate(string(contents))
 	if err != nil {
 		log.Fatalf("Error when executing the template over the master file", result)
 	}

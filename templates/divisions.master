@@ -1,2 +1,79 @@
-Pruebas con diccionarios
-{{.GetDivision (dict "nbdvdigits" 5.0 "nbdrdigits" 3.0 "nbqdigits" 4.0)}}
+{{/*
+
+	This template provides the basic functionality to just show
+	how different exercises can be generated
+
+*/}}
+
+\documentclass[svgnames,addpoints]{exam}
+
+{{/* ------------------------------ Preamble ----------------------------- */}}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{examen}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+\usepackage{pifont}
+
+\usepackage{cancel}
+\usepackage{array}
+
+\usepackage{tikz}
+\usetikzlibrary{calc,matrix,patterns,fadings,positioning}
+
+\usepackage{array}
+\usepackage{eurosym}
+
+\usepackage{booktabs}
+\usepackage{url}
+
+\usepackage{rotating}
+
+\newlength{\zerowidth}
+\settowidth{\zerowidth}{\huge 0}
+\newlength{\zeroheight}
+\settoheight{\zeroheight}{\huge 0}
+
+{{/* ------------------------------ Main body ---------------------------- */}}
+
+\begin{document}
+
+\titulacion{Grado en Informática}
+\asignatura{Heurística y Optimización}
+
+\convocatoria{\today}
+\tiempo{4 horas}
+
+\principio
+
+{{/* ------------------------------ Questions ---------------------------- */}}
+
+\begin{questions}
+
+  \question {\bf {{.GetName}}}, asi que crees que ya sabes hacer divisiones. ¡Te
+  voy a dar yo a ti divisiones! Si eres capaz de hacer estas divisiones, cuenta
+  entonces con un par de números más de la colección de \textit{Academy Hero}.
+
+  \begin{parts}
+
+    \part[1] Vamos a calentar primero un poco. Lo sé, lo sé, me he pasado de
+    fácil, pero esto no es más que un calentamiento:
+
+    {{range .Slice 8}}{{.Division (dict "nbdvdigits" 2 "nbdrdigits" 1 "nbqdigits" 1)}}{{end}}
+
+    \part[2] Un poquito más difícil. ¡Seguro que eres capaz campeón!
+
+    {{range .Slice 8}}{{.Division (dict "nbdvdigits" 2 "nbdrdigits" 1 "nbqdigits" 2)}}{{end}}
+
+\end{parts}
+
+\end{questions}
+
+
+\end{document}

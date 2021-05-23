@@ -51,7 +51,7 @@ const latexSequenceCode = `\begin{minipage}{0.25\linewidth}
 		\begin{tikzpicture}
 
 			% draw the sequence
-			{{.GetTikZSequence}}
+			{{.GetTikZPicture}}
 
 			% draw an invisible bounding box to properly align all sequences
 
@@ -187,7 +187,7 @@ func (sequence sequence) getComponents() []components.ComponentId {
 
 // return a valid LaTeX/TikZ representation of this sequence using TikZ
 // components
-func (sequence sequence) GetTikZSequence() string {
+func (sequence sequence) GetTikZPicture() string {
 
 	// determine the first number of the sequence ---even if it is not displayed.
 	// If the interval [geq, leq] is too narrow to host nbitems, immediately log a
@@ -259,7 +259,7 @@ func (sequence sequence) GetTikZSequence() string {
 	var err error
 	var result bytes.Buffer
 	var masterFile MasterFile
-	if result, err = masterFile.MasterToBufferFromTemplate(t); err != nil {
+	if result, err = masterFile.masterToBufferFromTemplate(t); err != nil {
 		log.Fatalf("Error when executing the template for creating a sequence: %v", err)
 	}
 

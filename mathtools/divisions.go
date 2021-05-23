@@ -23,8 +23,10 @@ import (
 	"bytes"
 	"fmt"
 	"log"
+	"math/rand"
 	"strconv"
 	"text/template"
+	"time"
 )
 
 // constants
@@ -32,11 +34,21 @@ import (
 
 // the TikZ code for generating divisions with any parameters is shown
 // below
-const latexPreviousDivisionCode = `\begin{minipage}{0.25\linewidth}  
+// the TikZ code for generating divisions with any parameters is shown
+// below
+const latexDivisionCode = `\begin{minipage}{0.25\linewidth}
   \begin{center}
     \begin{tikzpicture}
 
-        % --- Coordinates -------------------------------------------------------
+        % draw the division
+        {{.GetTikZPicture}}
+
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+`
+
+const tikZDivisionCode = `% --- Coordinates -------------------------------------------------------
 {{.GetDivFirstLabel}}
 {{.GetDivNextLabels}}
         % -----------------------------------------------------------------------
@@ -61,11 +73,8 @@ const latexPreviousDivisionCode = `\begin{minipage}{0.25\linewidth}
         % Divisor
 {{.GetDivDivisor}}
         % -----------------------------------------------------------------------
-
-    \end{tikzpicture}
-  \end{center}
-\end{minipage}
 `
+
 const latexCoordinateExplicitCode = `        \coordinate {{.GetDivLabel}} at {{.GetDivCoords}};`
 
 const latexCoordinateFormulaCode = `        \coordinate {{.GetDivLabel}} at ({{.GetDivFormula}});
@@ -150,18 +159,20 @@ type divisionProblem struct {
 	label1         coordinateExplicit
 	label2, label3 coordinateFormula
 
-	// likewise the coordinate for determining the location of the
-	// first line is computed with respect to another coordinate
-	// and hence a formula is used
-	line1 coordinateFormula
+	// likewise the coordinate for determining the location of the first line is
+	// computed with respect to another coordinate and hence a formula is used.
+	// Also, the second line below the dividend (not to confuse with the
+	// divisor) has to be computed as it serves as a reference for computing
+	// other points
+	line1, line2 coordinateFormula
 
-	// the bounding box surrounding all the necessary area for
-	// solving the exercise is defined next
+	// the bounding box surrounding all the necessary area for solving the
+	// exercise is defined next and it is computed using a bottom and right
+	// formula coordinates
 	bBox boundingBox
 
-	// the box surrounding the dividend is consists of a path
-	// drawn between three coordinates whose location is
-	// determined using formulas
+	// the box surrounding the dividend consists of a path drawn between three
+	// coordinates whose location is determined using formulas
 	sBox splitBox
 
 	// the answer should be written within a box explicitly shown
@@ -509,14 +520,13 @@ func (division divisionProblem) GetDivDivisor() string {
 	return division.divisor.String()
 }
 
-// Execute the given division problem and returns legal TikZ code to
-// represent it
-func (division divisionProblem) execute() string {
+// Execute the given division problem and returns legal TikZ code to represent
+// it
+func (div divisionProblem) execute() string {
 
 	// create a template with the TikZ code for showing this
 	// division problem
-	tpl, err := template.New("division").Parse(latexPreviousDivisionCode)
-
+	tpl, err := template.New("division").Parse(tikZDivisionCode)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -524,11 +534,160 @@ func (division divisionProblem) execute() string {
 	// and now make the appropriate substitutions. Note that the
 	// execution of the template is written to a string
 	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, division); err != nil {
+	if err := tpl.Execute(&tplOutput, div); err != nil {
 		log.Fatal(err)
 	}
 
-	return tplOutput.String() // and return the resulting string
+	// and return the resulting string
+	return tplOutput.String()
+}
+
+// return a valid LaTeX/TikZ representation of this sequence using TikZ
+// components
+func (div division) GetTikZPicture() string {
+
+	// seed the random generator
+	rand.Seed(time.Now().UTC().UnixNano())
+
+	// --coordinates
+	label1 := coordinateExplicit{
+		x: 0.0,
+		y: 1 + 2.0*float64(div.nbqdigits) + 0.5,
+	}
+	label1.label = "label1"
+
+	label2 := coordinateFormula{
+		formula: fmt.Sprintf(`$(label1) + %v*(\zerowidth, 0.0)$`,
+			2.0+float64(div.nbdvdigits)),
+	}
+	label2.label = "label2"
+
+	label3 := coordinateFormula{
+		formula: fmt.Sprintf(`$(label2) + (%v*\zerowidth, -\zeroheight)$`,
+			0.5*(2+max(float64(div.nbdrdigits), float64(div.nbqdigits)))),
+	}
+	label3.label = "label3"
+
+	line1 := coordinateFormula{
+		formula: fmt.Sprintf(`$(label2) + (-%v\zerowidth, -2*\zeroheight-0.15 cm)$`,
+			2.0+float64(div.nbdvdigits)),
+	}
+	line1.label = "line1"
+
+	line2 := coordinateFormula{
+		formula: `$(line1) + (0.0, -\zeroheight-\baselineskip)$`,
+	}
+	line2.label = "line2"
+
+	// --bounding box
+	bottom := coordinateFormula{
+		formula: fmt.Sprintf(`$(line1) + %v*(0.0, -\zeroheight-\baselineskip-0.5/%v*\zeroheight)$`,
+			2.0*float64(div.nbqdigits)-1.0,
+			2.0*float64(div.nbqdigits)-1.0),
+	}
+	bottom.label = "bottom"
+	right := coordinateFormula{
+		formula: fmt.Sprintf(`$(label2) + (%v*\zerowidth, \zeroheight)$`,
+			2.0+max(float64(div.nbdrdigits), float64(div.nbqdigits))),
+	}
+	right.label = "right"
+	bBox := boundingBox{
+		bottom: bottom,
+		right:  right,
+	}
+
+	// --split box
+	coord1 := coordinateFormula{
+		formula: `$(label2) + (0.0, \zeroheight)$`,
+	}
+	coord2 := coordinateFormula{
+		formula: `$(label2) + (0.0, -\zeroheight)$`,
+	}
+	coord3 := coordinateFormula{
+		formula: fmt.Sprintf(`$(label2) + %v*(\zerowidth, -\zeroheight/%v)$`,
+			2.0+max(float64(div.nbdrdigits), float64(div.nbqdigits)),
+			2.0+max(float64(div.nbdrdigits), float64(div.nbqdigits))),
+	}
+	sBox := splitBox{
+		coord1: coord1,
+		coord2: coord2,
+		coord3: coord3,
+	}
+
+	// --answer
+	answer := latexAnswer{
+		width: 2.0 + max(float64(div.nbdrdigits), float64(div.nbqdigits)),
+	}
+
+	// --operands
+	dividend := latexDivOperand{
+		ref:   "label1",
+		label: "dividend",
+	}
+	divisor := latexDivOperand{
+		ref:   "label2",
+		label: "divisor",
+	}
+
+	// randomly determine the values of the operands
+
+	// First, verify that parameters are correct. If they are not,
+	// take the best action
+	if div.nbqdigits < div.nbdvdigits-div.nbdrdigits {
+		log.Printf(" It is not possible to generate quotients with %v digits if the dividend has %v digits and the divisor has %v digits. Thus, %v digits in the quotient are generated instead", div.nbqdigits, div.nbdvdigits, div.nbdrdigits, div.nbdvdigits-div.nbdrdigits)
+		div.nbqdigits = div.nbdvdigits - div.nbdrdigits
+	}
+
+	if div.nbqdigits > div.nbdvdigits-div.nbdrdigits+1 {
+		log.Printf(" It is not possible to generate quotients with %v digits if the dividend has %v digits and the divisor has %v digits. Thus, %v digits in the quotient are generated instead", div.nbqdigits, div.nbdvdigits, div.nbdrdigits, div.nbdvdigits-div.nbdrdigits+1)
+		div.nbqdigits = div.nbdvdigits - div.nbdrdigits + 1
+	}
+
+	// now, generate numbers in their corresponding range
+	var qvalue int
+	for nbdigits(qvalue) != div.nbqdigits || qvalue == 0 {
+		dividend.value = randN(div.nbdvdigits)
+		divisor.value = randN(div.nbdrdigits)
+		qvalue = dividend.value / divisor.value
+	}
+
+	// And put all this elements together to bring up the defintion of a division
+	divProblem := divisionProblem{
+		label1:   label1,
+		label2:   label2,
+		label3:   label3,
+		line1:    line1,
+		bBox:     bBox,
+		sBox:     sBox,
+		answer:   answer,
+		dividend: dividend,
+		divisor:  divisor,
+	}
+
+	// and return the TikZ code necessary for drawing this operation
+	return divProblem.execute()
+}
+
+// Execute the given division instance and returns legal TikZ code to represent
+// it
+func (div division) execute() string {
+
+	// create a template with the TikZ code for showing this
+	// division problem
+	tpl, err := template.New("division").Parse(latexDivisionCode)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// and now make the appropriate substitutions. Note that the
+	// execution of the template is written to a string
+	var tplOutput bytes.Buffer
+	if err := tpl.Execute(&tplOutput, div); err != nil {
+		log.Fatal(err)
+	}
+
+	// and return the resulting string
+	return tplOutput.String()
 }
 
 /* Local Variables: */
