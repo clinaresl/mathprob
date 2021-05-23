@@ -52,11 +52,11 @@
   automáticamente para tí. Lo que ves a continuación son diferentes componentes
   que se pueden emplear para componer ejercicios que ojalá te diviertan mucho
 
-  {{.GetCoordinate (dict "label" "test" "x" 1.506 "y" 3.14159)}}
-  {{.GetCoordinate (dict "label" "test-1" "formula" "blah, blah, blah")}}
-  {{.GetText (dict "label" "label11" "x" 1.607 "y" 3.214 "text" `\huge 4`)}}
-  {{.GetText (dict "label" "label11" "formula" `(bottom) + (1.5\zerowidth, 0.5\zeroheight+1.5\baselineskip)` "text" `\huge 4`)}}
-  {{.GetBox (dict "label" "answer1" "formula" `(equal1) + (2.5*\zerowidth, 0.0)` "minwidth" `3.0*\textwidth` "minheight" `\zeroheight + \baselineskip` "text" "")}}
+  {{.Coordinate (dict "label" "test" "x" 1.506 "y" 3.14159)}}
+  {{.Coordinate (dict "label" "test-1" "formula" "blah, blah, blah")}}
+  {{.Text (dict "label" "label11" "x" 1.607 "y" 3.214 "text" `\huge 4`)}}
+  {{.Text (dict "label" "label11" "formula" `(bottom) + (1.5\zerowidth, 0.5\zeroheight+1.5\baselineskip)` "text" `\huge 4`)}}
+  {{/* {{.Box (dict "label" "answer1" "formula" `(equal1) + (2.5*\zerowidth, 0.0)` "minwidth" `3.0*\textwidth` "minheight" `\zeroheight + \baselineskip` "text" "")}} */}}
 
 \end{questions}
 

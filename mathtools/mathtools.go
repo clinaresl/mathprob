@@ -28,7 +28,6 @@ import (
 	"math"
 	"math/rand"
 	"os" // access to file mgmt functions
-	"strconv"
 	"text/template"
 	"time"
 
@@ -67,91 +66,91 @@ func NewMasterFile(filename, name, class string) MasterFile {
 	return MasterFile{Infile: filename, Name: name, Class: class}
 }
 
-// helpers
+// // helpers
 
-// compute the minimum of two ints
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
+// // compute the minimum of two ints
+// func min(a, b int) int {
+// 	if a < b {
+// 		return a
+// 	}
+// 	return b
+// }
 
-// compute the maximum of two floats
-func max(a, b float64) float64 {
-	if a < b {
-		return b
-	}
-	return a
-}
+// // compute the maximum of two floats
+// func max(a, b float64) float64 {
+// 	if a < b {
+// 		return b
+// 	}
+// 	return a
+// }
 
-// return the number of digits of number n. In case the number is negative, then
-// 1 is added to display the unary -
-func nbdigits(n int) int {
+// // return the number of digits of number n. In case the number is negative, then
+// // 1 is added to display the unary -
+// func nbdigits(n int) int {
 
-	// because we use log10 to compute the number of digits of any number, we
-	// have to consider separately the case of 0
-	if n == 0 {
-		return 1
-	} else if n < 0 {
+// 	// because we use log10 to compute the number of digits of any number, we
+// 	// have to consider separately the case of 0
+// 	if n == 0 {
+// 		return 1
+// 	} else if n < 0 {
 
-		// also, if a number is negative, we should use its magnitude and add 1
-		// accounting for the unary -
-		return 2 + int(math.Log10(math.Abs(float64(n))))
-	}
+// 		// also, if a number is negative, we should use its magnitude and add 1
+// 		// accounting for the unary -
+// 		return 2 + int(math.Log10(math.Abs(float64(n))))
+// 	}
 
-	// if the number is strictly positive, then
-	return 1 + int(math.Log10(float64(n)))
-}
+// 	// if the number is strictly positive, then
+// 	return 1 + int(math.Log10(float64(n)))
+// }
 
-// return a random number with exactly n digits
-func randN(n int) int {
-	lower := int(math.Pow(float64(10), float64(n)-1))
-	upper := int(math.Pow(float64(10), float64(n)))
-	return lower + rand.Int()%(upper-lower)
-}
+// // return a random number with exactly n digits
+// func randN(n int) int {
+// 	lower := int(math.Pow(float64(10), float64(n)-1))
+// 	upper := int(math.Pow(float64(10), float64(n)))
+// 	return lower + rand.Int()%(upper-lower)
+// }
 
-// return true if and only if the given value has been found in the
-// specified slice
-func find(item string, container []string) bool {
+// // return true if and only if the given value has been found in the
+// // specified slice
+// func find(item string, container []string) bool {
 
-	// for all items in the container
-	for _, value := range container {
+// 	// for all items in the container
+// 	for _, value := range container {
 
-		// in case it has been found, then exit immediately
-		if value == item {
-			return true
-		}
-	}
+// 		// in case it has been found, then exit immediately
+// 		if value == item {
+// 			return true
+// 		}
+// 	}
 
-	// if it has not been found after traversing the container,
-	// then return false
-	return false
-}
+// 	// if it has not been found after traversing the container,
+// 	// then return false
+// 	return false
+// }
 
-// transform the input into an integer by making sure that the input is either
-// an int, a float or a string. In case it is not possible, the value return is
-// undefined and an error is signaled
-func atoi(n interface{}) (int, error) {
+// // transform the input into an integer by making sure that the input is either
+// // an int, a float or a string. In case it is not possible, the value return is
+// // undefined and an error is signaled
+// func atoi(n interface{}) (int, error) {
 
-	switch value := n.(type) {
-	case int:
-		return value, nil
-	case float32:
-		return int(value), nil
-	case float64:
-		return int(value), nil
-	case string:
-		if result, err := strconv.Atoi(value); err != nil {
-			return 0, err
-		} else {
-			return result, nil
-		}
-	}
+// 	switch value := n.(type) {
+// 	case int:
+// 		return value, nil
+// 	case float32:
+// 		return int(value), nil
+// 	case float64:
+// 		return int(value), nil
+// 	case string:
+// 		if result, err := strconv.Atoi(value); err != nil {
+// 			return 0, err
+// 		} else {
+// 			return result, nil
+// 		}
+// 	}
 
-	// if the type was not recognized, then return an error
-	return 0, fmt.Errorf("It was not possible to cast '%v' into an integer")
-}
+// 	// if the type was not recognized, then return an error
+// 	return 0, fmt.Errorf("It was not possible to cast '%v' into an integer")
+// }
 
 // return a valid specification of a sequence with no error if all the keys
 // given in dict are correct for defining a sequence. If not, an error is
@@ -314,7 +313,7 @@ func (masterFile MasterFile) Slice(n int) []MasterFile {
 // a position (using both keys "x" and "y") or a formula, with the key
 // "formula". The coordinates x and y must be given as floating-point numbers
 // whereas formulas should be given as strings.
-func (masterFile MasterFile) GetCoordinate(dict map[string]interface{}) string {
+func (masterFile MasterFile) Coordinate(dict map[string]interface{}) string {
 
 	// first things first, verify that the given dictionary is correct
 	var err error
@@ -331,7 +330,7 @@ func (masterFile MasterFile) GetCoordinate(dict map[string]interface{}) string {
 // contents that create a text box located at a coordinate (either by providing
 // the coordinates of a Point or giving a Formula) with the contents
 // specified in the key "text"
-func (masterFile MasterFile) GetText(dict map[string]interface{}) string {
+func (masterFile MasterFile) Text(dict map[string]interface{}) string {
 
 	// first things first, verify that the given dictionary is correct
 	var err error
@@ -349,7 +348,7 @@ func (masterFile MasterFile) GetText(dict map[string]interface{}) string {
 // coordinates of a Point or giving a Formula) and with the contents specified
 // in the key "text" which has the minimum width and height given in "minwidth"
 // and "minheight"
-func (masterFile MasterFile) GetBox(dict map[string]interface{}) string {
+func (masterFile MasterFile) Box(dict map[string]interface{}) string {
 
 	// first things first, verify that the given dictionary is correct
 	var err error

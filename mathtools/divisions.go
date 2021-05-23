@@ -27,6 +27,8 @@ import (
 	"strconv"
 	"text/template"
 	"time"
+
+	"github.com/clinaresl/mathprob/mathtools/components"
 )
 
 // constants
@@ -75,8 +77,6 @@ const tikZDivisionCode = `% --- Coordinates ------------------------------------
         % -----------------------------------------------------------------------
 `
 
-const latexCoordinateExplicitCode = `        \coordinate {{.GetDivLabel}} at {{.GetDivCoords}};`
-
 const latexCoordinateFormulaCode = `        \coordinate {{.GetDivLabel}} at ({{.GetDivFormula}});
 `
 
@@ -101,13 +101,6 @@ const latexDivOperandCode = `        \node [right=0.0 cm of {{.GetDivRef}}] ({{.
 // compute the final location of the coordinate
 type coordinate struct {
 	label string
-}
-
-// explicit coordinates are defined with a pair (x,y) defined as
-// floating-point numbers
-type coordinateExplicit struct {
-	x, y float64
-	coordinate
 }
 
 // coordinates computed with a formula are characterized by a string
@@ -154,10 +147,11 @@ type latexDivOperand struct {
 // box enclosing the divisor, and also the operands
 type divisionProblem struct {
 
-	// the first label is computed explicitly whereas the next two
-	// labels are computed with respect to the previous ones
-	label1         coordinateExplicit
-	label2, label3 coordinateFormula
+	// the first label is computed explicitly whereas the next two labels are
+	// computed with respect to the previous ones using formulas. All of them
+	// are implemented using the reusable components of TikZ coordinates
+	label1         components.Coordinate
+	label2, label3 components.Coordinate
 
 	// likewise the coordinate for determining the location of the first line is
 	// computed with respect to another coordinate and hence a formula is used.
@@ -252,37 +246,8 @@ func (coord coordinate) GetDivLabel() string {
 	return fmt.Sprintf("(%v)", coord.label)
 }
 
-func (coord coordinateExplicit) GetDivCoords() string {
-	return fmt.Sprintf("(%v, %v)", coord.x, coord.y)
-}
-
 func (coord coordinateFormula) GetDivFormula() string {
 	return fmt.Sprintf("%v", coord.formula)
-}
-
-// Provide TikZ code to represent an explicit coordinate fully
-func (coord coordinateExplicit) String() string {
-
-	// create a template with the TikZ code for showing indices
-	tpl, err := template.New("coordinate").Parse(latexCoordinateExplicitCode)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// and now make the appropriate substitutions. Note that the
-	// execution of the template is written to a string
-	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, coord); err != nil {
-		log.Fatal(err)
-	}
-
-	return tplOutput.String() // and return the resulting string
-}
-
-// Return the pair (x, y) of the current coordinate
-func (coord coordinateExplicit) GetCoords() string {
-
-	return fmt.Sprintf("(%v, %v)", coord.x, coord.y)
 }
 
 // -- bounding Box
@@ -430,42 +395,20 @@ func (operand latexDivOperand) String() string {
 // Generates the TikZ code necessary for positioning the first coordinate
 func (division divisionProblem) GetDivFirstLabel() string {
 
-	// use the template defined for creating split boxes
-	tpl, err := template.New("division").Parse(latexCoordinateExplicitCode)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, division.label1); err != nil {
-		log.Fatal(err)
-	}
-	return tplOutput.String()
+	// The label locating the dividend is stored in label1 as a
+	// components.Coordinate. It then just suffices to print it
+	return fmt.Sprintf("%v", division.label1)
 }
 
-// Generates the TikZ code necessary for positioning other coordinates
-// after the first one
+// Generates the TikZ code necessary for positioning other coordinates after the
+// first one
 func (division divisionProblem) GetDivNextLabels() string {
 
-	// use the template defined for creating explicit coords
-	tpl, err := template.New("division").Parse(latexCoordinateFormulaCode)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// now, use the same template to generate the code of the
-	// second and third coordinate. Note that the first execution
-	// actually writes to the output writter, which is then
-	// buffered when the second execution is invoked, so that
-	// reading the resulting string only once works correctly
-	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, division.label2); err != nil {
-		log.Fatal(err)
-	}
-	if err := tpl.Execute(&tplOutput, division.label3); err != nil {
-		log.Fatal(err)
-	}
-	return tplOutput.String()
+	// The labels used for locating the left margin of the bounding box
+	// surrounding the divisor and also its lower margin are stored as
+	// components.Coordinate in label2 and label3. It then just suffices to show
+	// their location
+	return fmt.Sprintf("%v\n%v", division.label2, division.label3)
 }
 
 // Generates the TikZ code necessary for positioning the first line of results
@@ -550,23 +493,32 @@ func (div division) GetTikZPicture() string {
 	rand.Seed(time.Now().UTC().UnixNano())
 
 	// --coordinates
-	label1 := coordinateExplicit{
-		x: 0.0,
-		y: 1 + 2.0*float64(div.nbqdigits) + 0.5,
-	}
-	label1.label = "label1"
+	label1 := components.NewCoordinate(components.Point{
+		X: 0.0,
+		Y: 1 + 2.0*float64(div.nbqdigits) + 0.5,
+	}, "label1")
 
-	label2 := coordinateFormula{
-		formula: fmt.Sprintf(`$(label1) + %v*(\zerowidth, 0.0)$`,
-			2.0+float64(div.nbdvdigits)),
-	}
-	label2.label = "label2"
+	label2 := components.NewCoordinate(
+		components.Formula(fmt.Sprintf(`$(label1) + %v*(\zerowidth, 0.0)$`,
+			2.0+float64(div.nbdvdigits))),
+		"label2")
 
-	label3 := coordinateFormula{
-		formula: fmt.Sprintf(`$(label2) + (%v*\zerowidth, -\zeroheight)$`,
-			0.5*(2+max(float64(div.nbdrdigits), float64(div.nbqdigits)))),
-	}
-	label3.label = "label3"
+	// label2 := coordinateFormula{
+	// 	formula: fmt.Sprintf(`$(label1) + %v*(\zerowidth, 0.0)$`,
+	// 		2.0+float64(div.nbdvdigits)),
+	// }
+	// label2.label = "label2"
+
+	label3 := components.NewCoordinate(
+		components.Formula(fmt.Sprintf(`$(label2) + (%v*\zerowidth, -\zeroheight)$`,
+			0.5*(2+max(float64(div.nbdrdigits), float64(div.nbqdigits))))),
+		"label3")
+
+	// label3 := coordinateFormula{
+	// 	formula: fmt.Sprintf(`$(label2) + (%v*\zerowidth, -\zeroheight)$`,
+	// 		0.5*(2+max(float64(div.nbdrdigits), float64(div.nbqdigits)))),
+	// }
+	// label3.label = "label3"
 
 	line1 := coordinateFormula{
 		formula: fmt.Sprintf(`$(label2) + (-%v\zerowidth, -2*\zeroheight-0.15 cm)$`,

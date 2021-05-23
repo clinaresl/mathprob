@@ -13,6 +13,8 @@
   Login <carlos.linares@uc3m.es>
 */
 
+// This package provides a number of reusable components that can be used for
+// creating TikZ drawings
 package components
 
 import (
@@ -36,7 +38,7 @@ const tikzCoordinate = `\coordinate {{.GetLabel}} at {{.GetPosition}};
 // ----------------------------------------------------------------------------
 
 // Any element that can be positioned is by definition a position
-type Position interface {
+type Positioner interface {
 	Position() string
 }
 
@@ -53,7 +55,7 @@ type Formula string
 // A coordinate is created by providing a label to either a point or a formula
 // and, in general, to any component that is positionable
 type Coordinate struct {
-	Position
+	Positioner
 	label string
 }
 
@@ -61,8 +63,8 @@ type Coordinate struct {
 // ----------------------------------------------------------------------------
 
 // Create a new coordinate given a label and a positionable element
-func NewCoordinate(position Position, label string) Coordinate {
-	return Coordinate{Position: position, label: label}
+func NewCoordinate(position Positioner, label string) Coordinate {
+	return Coordinate{Positioner: position, label: label}
 }
 
 // return a valid Point and no error if the keywords "x" and "y" are given in
@@ -184,11 +186,11 @@ func VerifyCoordinateDict(dict map[string]interface{}) (Coordinate, error) {
 	// otherwise, the dictionary is correct and a coordinate has been correctly
 	// speciied. First, if the coordinate was given relative to a point
 	if errp == nil {
-		return Coordinate{Position: point, label: dict["label"].(string)}, nil
+		return Coordinate{Positioner: point, label: dict["label"].(string)}, nil
 	}
 
 	// if not, then return the coordinate defined with a formula
-	return Coordinate{Position: formula, label: dict["label"].(string)}, nil
+	return Coordinate{Positioner: formula, label: dict["label"].(string)}, nil
 }
 
 // methods
@@ -208,7 +210,7 @@ func (p Point) Position() string {
 // and, as such, they return a string that can be used to compute their location
 // as a valid TikZ representation
 func (f Formula) Position() string {
-	return fmt.Sprintf("($%v$)", string(f))
+	return fmt.Sprintf("(%v)", string(f))
 }
 
 // -- Coordinate
@@ -220,7 +222,7 @@ func (c Coordinate) GetLabel() string {
 
 // Return the position of this coordinate.
 func (c Coordinate) GetPosition() string {
-	return c.Position.Position()
+	return c.Positioner.Position()
 }
 
 // return a TikZ representation of a coordinate
