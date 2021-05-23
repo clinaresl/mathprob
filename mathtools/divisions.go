@@ -28,7 +28,8 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/clinaresl/mathprob/mathtools/components"
+	"github.com/clinaresl/mathprob/components"
+	"github.com/clinaresl/mathprob/helpers"
 )
 
 // constants
@@ -216,9 +217,9 @@ func (div division) generateJSONProblem() (problemJSON, error) {
 
 	// now, generate numbers in their corresponding range
 	var dividend, divisor, quotient int
-	for nbdigits(quotient) != div.nbqdigits || quotient == 0 {
-		dividend = randN(div.nbdvdigits)
-		divisor = randN(div.nbdrdigits)
+	for helpers.NbDigits(quotient) != div.nbqdigits || quotient == 0 {
+		dividend = helpers.RandN(div.nbdvdigits)
+		divisor = helpers.RandN(div.nbdrdigits)
 		quotient = dividend / divisor
 	}
 
@@ -511,7 +512,7 @@ func (div division) GetTikZPicture() string {
 
 	label3 := components.NewCoordinate(
 		components.Formula(fmt.Sprintf(`$(label2) + (%v*\zerowidth, -\zeroheight)$`,
-			0.5*(2+max(float64(div.nbdrdigits), float64(div.nbqdigits))))),
+			0.5*(2+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits))))),
 		"label3")
 
 	// label3 := coordinateFormula{
@@ -540,7 +541,7 @@ func (div division) GetTikZPicture() string {
 	bottom.label = "bottom"
 	right := coordinateFormula{
 		formula: fmt.Sprintf(`$(label2) + (%v*\zerowidth, \zeroheight)$`,
-			2.0+max(float64(div.nbdrdigits), float64(div.nbqdigits))),
+			2.0+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits))),
 	}
 	right.label = "right"
 	bBox := boundingBox{
@@ -557,8 +558,8 @@ func (div division) GetTikZPicture() string {
 	}
 	coord3 := coordinateFormula{
 		formula: fmt.Sprintf(`$(label2) + %v*(\zerowidth, -\zeroheight/%v)$`,
-			2.0+max(float64(div.nbdrdigits), float64(div.nbqdigits)),
-			2.0+max(float64(div.nbdrdigits), float64(div.nbqdigits))),
+			2.0+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits)),
+			2.0+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits))),
 	}
 	sBox := splitBox{
 		coord1: coord1,
@@ -568,7 +569,7 @@ func (div division) GetTikZPicture() string {
 
 	// --answer
 	answer := latexAnswer{
-		width: 2.0 + max(float64(div.nbdrdigits), float64(div.nbqdigits)),
+		width: 2.0 + helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits)),
 	}
 
 	// --operands
@@ -597,9 +598,9 @@ func (div division) GetTikZPicture() string {
 
 	// now, generate numbers in their corresponding range
 	var qvalue int
-	for nbdigits(qvalue) != div.nbqdigits || qvalue == 0 {
-		dividend.value = randN(div.nbdvdigits)
-		divisor.value = randN(div.nbdrdigits)
+	for helpers.NbDigits(qvalue) != div.nbqdigits || qvalue == 0 {
+		dividend.value = helpers.RandN(div.nbdvdigits)
+		divisor.value = helpers.RandN(div.nbdrdigits)
 		qvalue = dividend.value / divisor.value
 	}
 

@@ -28,7 +28,8 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/clinaresl/mathprob/mathtools/components"
+	"github.com/clinaresl/mathprob/components"
+	"github.com/clinaresl/mathprob/helpers"
 )
 
 // constants
@@ -201,8 +202,8 @@ func (sequence sequence) GetTikZPicture() string {
 	// maximum number of digits that might be required ---in spite of the number
 	// of digits actually needed. Because it is potentially possible to create
 	// sequences with negative numbers then we consider both extrems
-	nbdigits := max(float64(nbdigits(sequence.geq)),
-		float64(nbdigits(sequence.leq)))
+	nbdigits := helpers.Max(float64(helpers.NbDigits(sequence.geq)),
+		float64(helpers.NbDigits(sequence.leq)))
 
 	// the first item to be drawn should be raised by half the height of zero
 	// plus 1.5 the baselineskip, while all the other elements should be

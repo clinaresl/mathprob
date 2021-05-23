@@ -32,8 +32,9 @@ import (
 	"time"
 
 	// go facility for processing templates
+	"github.com/clinaresl/mathprob/components"
 	"github.com/clinaresl/mathprob/fstools"
-	"github.com/clinaresl/mathprob/mathtools/components"
+	"github.com/clinaresl/mathprob/helpers"
 )
 
 // types
@@ -66,88 +67,6 @@ func NewMasterFile(filename, name, class string) MasterFile {
 	return MasterFile{Infile: filename, Name: name, Class: class}
 }
 
-// // helpers
-
-// // compute the minimum of two ints
-// func min(a, b int) int {
-// 	if a < b {
-// 		return a
-// 	}
-// 	return b
-// }
-
-// // compute the maximum of two floats
-// func max(a, b float64) float64 {
-// 	if a < b {
-// 		return b
-// 	}
-// 	return a
-// }
-
-// // return the number of digits of number n. In case the number is negative, then
-// // 1 is added to display the unary -
-// func nbdigits(n int) int {
-
-// 	// because we use log10 to compute the number of digits of any number, we
-// 	// have to consider separately the case of 0
-// 	if n == 0 {
-// 		return 1
-// 	} else if n < 0 {
-
-// 		// also, if a number is negative, we should use its magnitude and add 1
-// 		// accounting for the unary -
-// 		return 2 + int(math.Log10(math.Abs(float64(n))))
-// 	}
-
-// 	// if the number is strictly positive, then
-// 	return 1 + int(math.Log10(float64(n)))
-// }
-
-// // return a random number with exactly n digits
-// func randN(n int) int {
-// 	lower := int(math.Pow(float64(10), float64(n)-1))
-// 	upper := int(math.Pow(float64(10), float64(n)))
-// 	return lower + rand.Int()%(upper-lower)
-// }
-
-// // return true if and only if the given value has been found in the
-// // specified slice
-// func find(item string, container []string) bool {
-
-// 	// for all items in the container
-// 	for _, value := range container {
-
-// 		// in case it has been found, then exit immediately
-// 		if value == item {
-// 			return true
-// 		}
-// 	}
-
-// 	// if it has not been found after traversing the container,
-// 	// then return false
-// 	return false
-// }
-
-// // transform the input into an integer by making sure that the input is either
-// // an int, a float or a string. In case it is not possible, the value return is
-// // undefined and an error is signaled
-// func atoi(n interface{}) (int, error) {
-
-// 	switch value := n.(type) {
-// 	case int:
-// 		return value, nil
-// 	case float32:
-// 		return int(value), nil
-// 	case float64:
-// 		return int(value), nil
-// 	case string:
-// 		if result, err := strconv.Atoi(value); err != nil {
-// 			return 0, err
-// 		} else {
-// 			return result, nil
-// 		}
-// 	}
-
 // 	// if the type was not recognized, then return an error
 // 	return 0, fmt.Errorf("It was not possible to cast '%v' into an integer")
 // }
@@ -178,16 +97,16 @@ func verifySequenceDict(dict map[string]interface{}) (sequence, error) {
 	// make also sure that parameters are given with the right type
 	var err error
 	var seqtype, nbitems, geq, leq int
-	if seqtype, err = atoi(dict["type"]); err != nil {
+	if seqtype, err = helpers.Atoi(dict["type"]); err != nil {
 		return sequence{}, errors.New("the type of a sequence should be given as a integer")
 	}
-	if nbitems, err = atoi(dict["nbitems"]); err != nil {
+	if nbitems, err = helpers.Atoi(dict["nbitems"]); err != nil {
 		return sequence{}, errors.New("the number of items in a sequence should be given as an integer")
 	}
-	if geq, err = atoi(dict["geq"]); err != nil {
+	if geq, err = helpers.Atoi(dict["geq"]); err != nil {
 		return sequence{}, errors.New("the lower bound of a sequence should be given as an integer")
 	}
-	if leq, err = atoi(dict["leq"]); err != nil {
+	if leq, err = helpers.Atoi(dict["leq"]); err != nil {
 		return sequence{}, errors.New("the upper bound of a sequence should be given as a string")
 	}
 
@@ -200,7 +119,7 @@ func verifySequenceDict(dict map[string]interface{}) (sequence, error) {
 	for key := range dict {
 
 		// if this key was not requested then report a message
-		if !find(key, mandatory) {
+		if !helpers.Find(key, mandatory) {
 			log.Printf(" Warning: The key '%v' is not necessary for creating a sequence and it will be ignored", key)
 		}
 	}
@@ -234,13 +153,13 @@ func verifyDivisionDict(dict map[string]interface{}) (division, error) {
 	// make also sure that parameters are given with the right type
 	var err error
 	var nbdvdigits, nbdrdigits, nbqdigits int
-	if nbdvdigits, err = atoi(dict["nbdvdigits"]); err != nil {
+	if nbdvdigits, err = helpers.Atoi(dict["nbdvdigits"]); err != nil {
 		return division{}, errors.New("the number of digits of the dividend should be given as a integer")
 	}
-	if nbdrdigits, err = atoi(dict["nbdrdigits"]); err != nil {
+	if nbdrdigits, err = helpers.Atoi(dict["nbdrdigits"]); err != nil {
 		return division{}, errors.New("the number of digits of the divisor should be given as an integer")
 	}
-	if nbqdigits, err = atoi(dict["nbqdigits"]); err != nil {
+	if nbqdigits, err = helpers.Atoi(dict["nbqdigits"]); err != nil {
 		return division{}, errors.New("the number of digits of the quotient should be given as an integer")
 	}
 
@@ -248,7 +167,7 @@ func verifyDivisionDict(dict map[string]interface{}) (division, error) {
 	for key := range dict {
 
 		// if this key was not requested then report a message
-		if !find(key, mandatory) {
+		if !helpers.Find(key, mandatory) {
 			log.Printf(" Warning: The key '%v' is not necessary for creating a division and it will be ignored", key)
 		}
 	}
@@ -418,7 +337,7 @@ func (masterFile MasterFile) GetSimpleOperation11(operator int) (latexCode strin
 
 			// just divide by the minimum of both operands and
 			// randomly select the larger number to be below 10
-			latexOperandB.value = min(latexOperandA.value, latexOperandB.value)
+			latexOperandB.value = helpers.Min(latexOperandA.value, latexOperandB.value)
 			latexOperandA.value = int(float64(latexOperandB.value) * math.Floor((math.Log(float64(10)))/(math.Log(float64(latexOperandB.value)))))
 		}
 	default:
@@ -499,7 +418,7 @@ func (masterFile MasterFile) GetSimpleOperation21Bounded20(operator int) (latexC
 
 			// just divide by the minimum of both operands and
 			// randomly select the larger number to be below 10
-			latexOperandB.value = min(latexOperandA.value, latexOperandB.value)
+			latexOperandB.value = helpers.Min(latexOperandA.value, latexOperandB.value)
 			latexOperandA.value = int(float64(latexOperandB.value) * math.Floor((math.Log(float64(10)))/(math.Log(float64(latexOperandB.value)))))
 		}
 	default:
@@ -579,7 +498,7 @@ func (masterFile MasterFile) GetSimpleOperation21(operator int) (latexCode strin
 
 			// just divide by the minimum of both operands and
 			// randomly select the larger number to be below 10
-			latexOperandB.value = min(latexOperandA.value, latexOperandB.value)
+			latexOperandB.value = helpers.Min(latexOperandA.value, latexOperandB.value)
 			latexOperandA.value = int(float64(latexOperandB.value) * math.Floor((math.Log(float64(10)))/(math.Log(float64(latexOperandB.value)))))
 		}
 	default:
@@ -659,7 +578,7 @@ func (masterFile MasterFile) GetSimpleOperation22(operator int) (latexCode strin
 
 			// just divide by the minimum of both operands and
 			// randomly select the larger number to be below 10
-			latexOperandB.value = min(latexOperandA.value, latexOperandB.value)
+			latexOperandB.value = helpers.Min(latexOperandA.value, latexOperandB.value)
 			latexOperandA.value = int(float64(latexOperandB.value) * math.Floor((math.Log(float64(100)))/(math.Log(float64(latexOperandB.value)))))
 		}
 	default:
