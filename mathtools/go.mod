@@ -7,9 +7,9 @@ replace github.com/clinaresl/mathprob/components => ../components
 replace github.com/clinaresl/mathprob/fstools => ../fstools
 
 require (
-	github.com/clinaresl/mathprob/components v0.0.0-00010101000000-000000000000
-	github.com/clinaresl/mathprob/fstools v0.0.0-00010101000000-000000000000
-	github.com/clinaresl/mathprob/helpers v0.0.0-00010101000000-000000000000
+	github.com/clinaresl/mathprob/components v0.0.0-20210523185513-4af87bf01910
+	github.com/clinaresl/mathprob/fstools v0.0.0-20210523185513-4af87bf01910
+	github.com/clinaresl/mathprob/helpers v0.0.0-20210523185513-4af87bf01910
 )
 
 replace github.com/clinaresl/mathprob/helpers => ../helpers
