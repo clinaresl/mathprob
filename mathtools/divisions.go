@@ -81,9 +81,6 @@ const tikZDivisionCode = `% --- Coordinates ------------------------------------
 const latexCoordinateFormulaCode = `        \coordinate {{.GetDivLabel}} at ({{.GetDivFormula}});
 `
 
-const latexBoundingBoxCode = `{{.GetDivBottom}}{{.GetDivRight}}        \draw [white] (bottom) rectangle (right);
-`
-
 const latexSplitBoxCode = `        \draw [thick, rounded corners] ({{.GetDivFirstCoord}}) -- ({{.GetDivSecondCoord}}) -- ({{.GetDivThirdCoord}});
 `
 
@@ -110,15 +107,6 @@ type coordinate struct {
 type coordinateFormula struct {
 	formula string
 	coordinate
-}
-
-// A bounding box is defined with a couple of coordinates
-// (bottom)--(right) which define the lower-left and upper-right
-// corners
-type boundingBox struct {
-
-	// both coordinates are computed using formulas
-	bottom, right coordinateFormula
 }
 
 // the box surrounding the dividend is consists of a path
@@ -162,9 +150,9 @@ type divisionProblem struct {
 	line1, line2 coordinateFormula
 
 	// the bounding box surrounding all the necessary area for solving the
-	// exercise is defined next and it is computed using a bottom and right
-	// formula coordinates
-	bBox boundingBox
+	// exercise is defined next and it is computed with two formulas that
+	// specify the lower left and upper right corners
+	bBox components.CoordinatedRectangle
 
 	// the box surrounding the dividend consists of a path drawn between three
 	// coordinates whose location is determined using formulas
@@ -249,55 +237,6 @@ func (coord coordinate) GetDivLabel() string {
 
 func (coord coordinateFormula) GetDivFormula() string {
 	return fmt.Sprintf("%v", coord.formula)
-}
-
-// -- bounding Box
-
-// Get the coordinate at the bottom-left corner of the bounding box
-func (bbox boundingBox) GetDivBottom() string {
-
-	// use the template defined for creating formula coords
-	tpl, err := template.New("boundingBox").Parse(latexCoordinateFormulaCode)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, bbox.bottom); err != nil {
-		log.Fatal(err)
-	}
-	return tplOutput.String()
-}
-
-// Get the coordinate at the top-right corner of the bounding box
-func (bbox boundingBox) GetDivRight() string {
-
-	// use the template defined for creating formula coords
-	tpl, err := template.New("boundingBox").Parse(latexCoordinateFormulaCode)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, bbox.right); err != nil {
-		log.Fatal(err)
-	}
-	return tplOutput.String()
-}
-
-func (bbox boundingBox) String() string {
-
-	// use the template defined for creating bounding boxes
-	tpl, err := template.New("boundingBox").Parse(latexBoundingBoxCode)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, bbox); err != nil {
-		log.Fatal(err)
-	}
-	return tplOutput.String()
 }
 
 // -- split box
@@ -432,8 +371,8 @@ func (division divisionProblem) GetDivLine() string {
 // for solving the whole exercise
 func (division divisionProblem) GetDivBoundingBox() string {
 
-	// bounding boxes draw themselves
-	return division.bBox.String()
+	// Bounding box draw themselves
+	return fmt.Sprintf("%v", division.bBox)
 }
 
 // Generates the TikZ code necessary for drawing the split box
@@ -504,23 +443,12 @@ func (div division) GetTikZPicture() string {
 			2.0+float64(div.nbdvdigits))),
 		"label2")
 
-	// label2 := coordinateFormula{
-	// 	formula: fmt.Sprintf(`$(label1) + %v*(\zerowidth, 0.0)$`,
-	// 		2.0+float64(div.nbdvdigits)),
-	// }
-	// label2.label = "label2"
-
 	label3 := components.NewCoordinate(
 		components.Formula(fmt.Sprintf(`$(label2) + (%v*\zerowidth, -\zeroheight)$`,
 			0.5*(2+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits))))),
 		"label3")
 
-	// label3 := coordinateFormula{
-	// 	formula: fmt.Sprintf(`$(label2) + (%v*\zerowidth, -\zeroheight)$`,
-	// 		0.5*(2+max(float64(div.nbdrdigits), float64(div.nbqdigits)))),
-	// }
-	// label3.label = "label3"
-
+	// --lines
 	line1 := coordinateFormula{
 		formula: fmt.Sprintf(`$(label2) + (-%v\zerowidth, -2*\zeroheight-0.15 cm)$`,
 			2.0+float64(div.nbdvdigits)),
@@ -533,21 +461,17 @@ func (div division) GetTikZPicture() string {
 	line2.label = "line2"
 
 	// --bounding box
-	bottom := coordinateFormula{
-		formula: fmt.Sprintf(`$(line1) + %v*(0.0, -\zeroheight-\baselineskip-0.5/%v*\zeroheight)$`,
+	bottom := components.NewCoordinate(
+		components.Formula(fmt.Sprintf(`$(line1) + %v*(0.0, -\zeroheight-\baselineskip-0.5/%v*\zeroheight)$`,
 			2.0*float64(div.nbqdigits)-1.0,
-			2.0*float64(div.nbqdigits)-1.0),
-	}
-	bottom.label = "bottom"
-	right := coordinateFormula{
-		formula: fmt.Sprintf(`$(label2) + (%v*\zerowidth, \zeroheight)$`,
-			2.0+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits))),
-	}
-	right.label = "right"
-	bBox := boundingBox{
-		bottom: bottom,
-		right:  right,
-	}
+			2.0*float64(div.nbqdigits)-1.0)),
+		"bottom")
+	right := components.NewCoordinate(
+		components.Formula(fmt.Sprintf(`$(line1) + %v*(0.0, -\zeroheight-\baselineskip-0.5/%v*\zeroheight)$`,
+			2.0*float64(div.nbqdigits)-1.0,
+			2.0*float64(div.nbqdigits)-1.0)),
+		"right")
+	bBox := components.NewCoordinatedRectangle(bottom, right)
 
 	// --split box
 	coord1 := coordinateFormula{

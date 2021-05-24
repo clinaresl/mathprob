@@ -213,6 +213,12 @@ func (f Formula) Position() string {
 	return fmt.Sprintf("(%v)", string(f))
 }
 
+// Indeed, Formulas are also stringers so that they can be used by any other
+// components as well. They only print the formula itself
+func (f Formula) String() string {
+	return fmt.Sprintf("(%v)", string(f))
+}
+
 // -- Coordinate
 
 // Return the label of this coordinate
