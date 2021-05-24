@@ -78,29 +78,8 @@ const tikZDivisionCode = `% --- Coordinates ------------------------------------
         % -----------------------------------------------------------------------
 `
 
-const latexAnswerCode = `        \node [rounded corners, rectangle, minimum width={{.GetDivWidth}}*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
-`
-
-const latexDivOperandCode = `        \node [right=0.0 cm of {{.GetDivRef}}] ({{.GetDivLabel}}) {\huge {{.GetDivValue}}};
-`
-
 // types
 // ----------------------------------------------------------------------------
-
-// The answer should be written in a box explicitly shown in the
-// exercise. The only important parameter for drawing it is its width
-// which is computed as a factor of the width of a digit in LaTeX
-type latexAnswer struct {
-	width float64
-}
-
-// Operands (either the dividend or the divisor) are characterized by
-// its value, and its location which is computed with respect to a
-// reference coordinate which is identified by its name, and a label
-type latexDivOperand struct {
-	value      int
-	ref, label string
-}
 
 // A division is characterized by its coordinates, a bounding box
 // surrounding all the available area for solving the exercise, the
@@ -129,11 +108,10 @@ type divisionProblem struct {
 	sBox components.Line
 
 	// the answer should be written within a box explicitly shown
-	answer latexAnswer
+	answer components.Text
 
-	// finally, both operands, are created next
-	dividend latexDivOperand
-	divisor  latexDivOperand
+	// finally, both operands, are created next and implemented as Texts
+	dividend, divisor components.Text
 }
 
 // The formal definition of a division problem is given below. It is defined
@@ -198,62 +176,6 @@ func (div division) generateJSONProblem() (problemJSON, error) {
 		Solution: solution}, nil
 }
 
-// -- answer
-
-// Return the width of the answer box
-func (answer latexAnswer) GetDivWidth() string {
-	return fmt.Sprintf("%v", answer.width)
-}
-
-// Return the Tikz code for drawing answer boxes
-func (answer latexAnswer) String() string {
-
-	// use the template defined for drawing answer boxes
-	tpl, err := template.New("division").Parse(latexAnswerCode)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, answer); err != nil {
-		log.Fatal(err)
-	}
-	return tplOutput.String()
-}
-
-// -- operands
-
-// Return the reference point used for drawing this operand
-func (operand latexDivOperand) GetDivRef() string {
-	return fmt.Sprintf("%v", operand.ref)
-}
-
-// Return the label used for drawing this operand
-func (operand latexDivOperand) GetDivLabel() string {
-	return fmt.Sprintf("%v", operand.label)
-}
-
-// Return the of this operand
-func (operand latexDivOperand) GetDivValue() string {
-	return fmt.Sprintf("%v", operand.value)
-}
-
-// Return the Tikz code for drawing an operand
-func (operand latexDivOperand) String() string {
-
-	// use the template defined for drawing an operand
-	tpl, err := template.New("division").Parse(latexDivOperandCode)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, operand); err != nil {
-		log.Fatal(err)
-	}
-	return tplOutput.String()
-}
-
 // -- divisionProblem
 // ----------------------------------------------------------------------------
 
@@ -301,22 +223,22 @@ func (division divisionProblem) GetDivSplitBox() string {
 // Generates the TikZ code necessary for drawing the answer box
 func (division divisionProblem) GetDivAnswer() string {
 
-	// answers draw themselves
-	return division.answer.String()
+	// text boxes draw themselves
+	return fmt.Sprintf("%v", division.answer)
 }
 
 // Generates the TikZ code necessary for drawing the dividend
 func (division divisionProblem) GetDivDividend() string {
 
-	// answers draw themselves
-	return division.dividend.String()
+	// text boxes draw themselves
+	return fmt.Sprintf("%v", division.dividend)
 }
 
 // Generates the TikZ code necessary for drawing the divisor
 func (division divisionProblem) GetDivDivisor() string {
 
-	// answers draw themselves
-	return division.divisor.String()
+	// text boxes draw draw themselves
+	return fmt.Sprintf("%v", division.divisor)
 }
 
 // Execute the given division problem and returns legal TikZ code to represent
@@ -392,19 +314,17 @@ func (div division) GetTikZPicture() string {
 	sBox.SetOptions("thick, rounded corners")
 
 	// --answer
-	answer := latexAnswer{
-		width: 2.0 + helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits)),
-	}
+
+	// note the answer is written withing a text box which necessarily contains
+	// nothing. No label is assigned to it as well as no computations are
+	// performed from its location
+	answer := components.NewText(
+		fmt.Sprintf(`rounded corners, rectangle, minimum width=%v*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3`,
+			2.0+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits))),
+		"", "",
+	)
 
 	// --operands
-	dividend := latexDivOperand{
-		ref:   "label1",
-		label: "dividend",
-	}
-	divisor := latexDivOperand{
-		ref:   "label2",
-		label: "divisor",
-	}
 
 	// randomly determine the values of the operands
 
@@ -421,12 +341,23 @@ func (div division) GetTikZPicture() string {
 	}
 
 	// now, generate numbers in their corresponding range
-	var qvalue int
+	var dvvalue, drvalue, qvalue int
 	for helpers.NbDigits(qvalue) != div.nbqdigits || qvalue == 0 {
-		dividend.value = helpers.RandN(div.nbdvdigits)
-		divisor.value = helpers.RandN(div.nbdrdigits)
-		qvalue = dividend.value / divisor.value
+		dvvalue = helpers.RandN(div.nbdvdigits)
+		drvalue = helpers.RandN(div.nbdrdigits)
+		qvalue = dvvalue / drvalue
 	}
+
+	dividend := components.NewText(
+		`right=0.0 cm of label1`,
+		"dividend",
+		`\huge `+strconv.FormatInt(int64(dvvalue), 10),
+	)
+	divisor := components.NewText(
+		`right=0.0 cm of label2`,
+		"divisor",
+		`\huge `+strconv.FormatInt(int64(drvalue), 10),
+	)
 
 	// And put all this elements together to bring up the defintion of a division
 	divProblem := divisionProblem{

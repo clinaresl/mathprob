@@ -262,24 +262,6 @@ func (masterFile MasterFile) Text(dict map[string]interface{}) string {
 	return text.String()
 }
 
-// This method is intended to be used in master files. It is substituted by TikZ
-// contents that create a box located at a coordinate (either by providing the
-// coordinates of a Point or giving a Formula) and with the contents specified
-// in the key "text" which has the minimum width and height given in "minwidth"
-// and "minheight"
-func (masterFile MasterFile) Box(dict map[string]interface{}) string {
-
-	// first things first, verify that the given dictionary is correct
-	var err error
-	var box components.Box
-	if box, err = components.VerifyBoxDict(dict); err != nil {
-		log.Fatal(err)
-	}
-
-	// and return the string that shows up the contents of this box
-	return box.String()
-}
-
 // Simple Operations
 // ----------------------------------------------------------------------------
 

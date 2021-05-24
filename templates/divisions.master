@@ -71,6 +71,12 @@
 
     {{range .Slice 8}}{{.Division (dict "nbdvdigits" 2 "nbdrdigits" 1 "nbqdigits" 2)}}{{end}}
 
+    \part[5] El más difícil todavía, ...
+
+    {{range .Slice 3}}{{.Division (dict "nbdvdigits" 5 "nbdrdigits" 2 "nbqdigits" 3)}}{{end}}
+    {{range .Slice 3}}{{.Division (dict "nbdvdigits" 5 "nbdrdigits" 2 "nbqdigits" 3)}}{{end}}
+    {{range .Slice 3}}{{.Division (dict "nbdvdigits" 5 "nbdrdigits" 2 "nbqdigits" 3)}}{{end}}
+
 \end{parts}
 
 \end{questions}
