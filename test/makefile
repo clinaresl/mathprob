@@ -30,6 +30,7 @@ LATEX 	= ./pytex.py
 DVIPS   = dvips
 PSPDF   = ps2pdf
 RM 	= /bin/rm -f
+RMDIR = /bin/rm -rf
 
 .SUFFIXES: .tex .pdf
 
@@ -52,6 +53,7 @@ tarball:
 
 clean:
 	@$(RM) *.aux *.log *.nav *.out *.snm *.toc *.dvi *.bbl *.blg *.spl *.vrb *~
+	@$(RMDIR) .auctex-auto
 
 delete: clean
 	@$(RM) $(NAME) $(OBJ) *.ps

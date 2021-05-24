@@ -132,6 +132,8 @@ type division struct {
 // should be consistent
 func (div division) generateJSONProblem() (problemJSON, error) {
 
+	rand.Seed(time.Now().UTC().UnixNano())
+
 	// First, verify that parameters are correct. If they are not, take the best
 	// action
 	if div.nbqdigits < div.nbdvdigits-div.nbdrdigits {
@@ -174,6 +176,121 @@ func (div division) generateJSONProblem() (problemJSON, error) {
 		Probtype: "Division",
 		Args:     args,
 		Solution: solution}, nil
+}
+
+// return a valid LaTeX/TikZ representation of this sequence using TikZ
+// components
+func (div division) GetTikZPicture() string {
+
+	// --coordinates
+	label1 := components.NewCoordinate(components.Point{
+		X: 0.0,
+		Y: 1 + 2.0*float64(div.nbqdigits) + 0.5,
+	}, "label1")
+
+	label2 := components.NewCoordinate(
+		components.Formula(fmt.Sprintf(`$(label1) + %v*(\zerowidth, 0.0)$`,
+			2.0+float64(div.nbdvdigits))),
+		"label2")
+
+	label3 := components.NewCoordinate(
+		components.Formula(fmt.Sprintf(`$(label2) + (%v*\zerowidth, -\zeroheight)$`,
+			0.5*(2+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits))))),
+		"label3")
+
+	// --lines
+	line1 := components.NewCoordinate(
+		components.Formula(fmt.Sprintf(`$(label2) + (-%v\zerowidth, -2*\zeroheight-0.15 cm)$`,
+			2.0+float64(div.nbdvdigits))),
+		"line1")
+
+	// --bounding box
+	bottom := components.NewCoordinate(
+		components.Formula(fmt.Sprintf(`$(line1) + %v*(0.0, -\zeroheight-\baselineskip-0.5/%v*\zeroheight)$`,
+			2.0*float64(div.nbqdigits)-1.0,
+			2.0*float64(div.nbqdigits)-1.0)),
+		"bottom")
+	right := components.NewCoordinate(
+		components.Formula(fmt.Sprintf(`$(line1) + %v*(0.0, -\zeroheight-\baselineskip-0.5/%v*\zeroheight)$`,
+			2.0*float64(div.nbqdigits)-1.0,
+			2.0*float64(div.nbqdigits)-1.0)),
+		"right")
+	bBox := components.NewCoordinatedRectangle(bottom, right)
+
+	// --split box
+	sBox := components.NewLine(`$(label2) + (0.0, \zeroheight)$`,
+		`$(label2) + (0.0, -\zeroheight)$`,
+		fmt.Sprintf(`$(label2) + %v*(\zerowidth, -\zeroheight/%v)$`,
+			2.0+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits)),
+			2.0+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits))))
+	sBox.SetOptions("thick, rounded corners")
+
+	// --answer
+
+	// note the answer is written withing a text box which necessarily contains
+	// nothing. No label is assigned to it as well as no computations are
+	// performed from its location
+	answer := components.NewText(
+		fmt.Sprintf(`rounded corners, rectangle, minimum width=%v*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3`,
+			2.0+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits))),
+		"", "",
+	)
+
+	// --operands
+
+	// randomly determine the values of the operands. For this, the service that
+	// generates problems is the one that can marshal them into JSON format. The
+	// dividend is returned in the first position and the divisor in the second
+	instance, _ := div.generateJSONProblem()
+
+	dividend := components.NewText(
+		`right=0.0 cm of label1`,
+		"dividend",
+		`\huge `+instance.Solution[0],
+	)
+	divisor := components.NewText(
+		`right=0.0 cm of label2`,
+		"divisor",
+		`\huge `+instance.Solution[1],
+	)
+
+	// And put all this elements together to bring up the defintion of a division
+	divProblem := divisionProblem{
+		label1:   label1,
+		label2:   label2,
+		label3:   label3,
+		line1:    line1,
+		bBox:     bBox,
+		sBox:     sBox,
+		answer:   answer,
+		dividend: dividend,
+		divisor:  divisor,
+	}
+
+	// and return the TikZ code necessary for drawing this operation
+	return divProblem.execute()
+}
+
+// Execute the given division instance and returns legal TikZ code to represent
+// it
+func (div division) execute() string {
+
+	// create a template with the TikZ code for showing this
+	// division problem
+	tpl, err := template.New("division").Parse(latexDivisionCode)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// and now make the appropriate substitutions. Note that the
+	// execution of the template is written to a string
+	var tplOutput bytes.Buffer
+	if err := tpl.Execute(&tplOutput, div); err != nil {
+		log.Fatal(err)
+	}
+
+	// and return the resulting string
+	return tplOutput.String()
 }
 
 // -- divisionProblem
@@ -248,141 +365,6 @@ func (div divisionProblem) execute() string {
 	// create a template with the TikZ code for showing this
 	// division problem
 	tpl, err := template.New("division").Parse(tikZDivisionCode)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// and now make the appropriate substitutions. Note that the
-	// execution of the template is written to a string
-	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, div); err != nil {
-		log.Fatal(err)
-	}
-
-	// and return the resulting string
-	return tplOutput.String()
-}
-
-// return a valid LaTeX/TikZ representation of this sequence using TikZ
-// components
-func (div division) GetTikZPicture() string {
-
-	// seed the random generator
-	rand.Seed(time.Now().UTC().UnixNano())
-
-	// --coordinates
-	label1 := components.NewCoordinate(components.Point{
-		X: 0.0,
-		Y: 1 + 2.0*float64(div.nbqdigits) + 0.5,
-	}, "label1")
-
-	label2 := components.NewCoordinate(
-		components.Formula(fmt.Sprintf(`$(label1) + %v*(\zerowidth, 0.0)$`,
-			2.0+float64(div.nbdvdigits))),
-		"label2")
-
-	label3 := components.NewCoordinate(
-		components.Formula(fmt.Sprintf(`$(label2) + (%v*\zerowidth, -\zeroheight)$`,
-			0.5*(2+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits))))),
-		"label3")
-
-	// --lines
-	line1 := components.NewCoordinate(
-		components.Formula(fmt.Sprintf(`$(label2) + (-%v\zerowidth, -2*\zeroheight-0.15 cm)$`,
-			2.0+float64(div.nbdvdigits))),
-		"line1")
-
-	// --bounding box
-	bottom := components.NewCoordinate(
-		components.Formula(fmt.Sprintf(`$(line1) + %v*(0.0, -\zeroheight-\baselineskip-0.5/%v*\zeroheight)$`,
-			2.0*float64(div.nbqdigits)-1.0,
-			2.0*float64(div.nbqdigits)-1.0)),
-		"bottom")
-	right := components.NewCoordinate(
-		components.Formula(fmt.Sprintf(`$(line1) + %v*(0.0, -\zeroheight-\baselineskip-0.5/%v*\zeroheight)$`,
-			2.0*float64(div.nbqdigits)-1.0,
-			2.0*float64(div.nbqdigits)-1.0)),
-		"right")
-	bBox := components.NewCoordinatedRectangle(bottom, right)
-
-	// --split box
-	sBox := components.NewLine(`$(label2) + (0.0, \zeroheight)$`,
-		`$(label2) + (0.0, -\zeroheight)$`,
-		fmt.Sprintf(`$(label2) + %v*(\zerowidth, -\zeroheight/%v)$`,
-			2.0+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits)),
-			2.0+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits))))
-	sBox.SetOptions("thick, rounded corners")
-
-	// --answer
-
-	// note the answer is written withing a text box which necessarily contains
-	// nothing. No label is assigned to it as well as no computations are
-	// performed from its location
-	answer := components.NewText(
-		fmt.Sprintf(`rounded corners, rectangle, minimum width=%v*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3`,
-			2.0+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits))),
-		"", "",
-	)
-
-	// --operands
-
-	// randomly determine the values of the operands
-
-	// First, verify that parameters are correct. If they are not,
-	// take the best action
-	if div.nbqdigits < div.nbdvdigits-div.nbdrdigits {
-		log.Printf(" It is not possible to generate quotients with %v digits if the dividend has %v digits and the divisor has %v digits. Thus, %v digits in the quotient are generated instead", div.nbqdigits, div.nbdvdigits, div.nbdrdigits, div.nbdvdigits-div.nbdrdigits)
-		div.nbqdigits = div.nbdvdigits - div.nbdrdigits
-	}
-
-	if div.nbqdigits > div.nbdvdigits-div.nbdrdigits+1 {
-		log.Printf(" It is not possible to generate quotients with %v digits if the dividend has %v digits and the divisor has %v digits. Thus, %v digits in the quotient are generated instead", div.nbqdigits, div.nbdvdigits, div.nbdrdigits, div.nbdvdigits-div.nbdrdigits+1)
-		div.nbqdigits = div.nbdvdigits - div.nbdrdigits + 1
-	}
-
-	// now, generate numbers in their corresponding range
-	var dvvalue, drvalue, qvalue int
-	for helpers.NbDigits(qvalue) != div.nbqdigits || qvalue == 0 {
-		dvvalue = helpers.RandN(div.nbdvdigits)
-		drvalue = helpers.RandN(div.nbdrdigits)
-		qvalue = dvvalue / drvalue
-	}
-
-	dividend := components.NewText(
-		`right=0.0 cm of label1`,
-		"dividend",
-		`\huge `+strconv.FormatInt(int64(dvvalue), 10),
-	)
-	divisor := components.NewText(
-		`right=0.0 cm of label2`,
-		"divisor",
-		`\huge `+strconv.FormatInt(int64(drvalue), 10),
-	)
-
-	// And put all this elements together to bring up the defintion of a division
-	divProblem := divisionProblem{
-		label1:   label1,
-		label2:   label2,
-		label3:   label3,
-		line1:    line1,
-		bBox:     bBox,
-		sBox:     sBox,
-		answer:   answer,
-		dividend: dividend,
-		divisor:  divisor,
-	}
-
-	// and return the TikZ code necessary for drawing this operation
-	return divProblem.execute()
-}
-
-// Execute the given division instance and returns legal TikZ code to represent
-// it
-func (div division) execute() string {
-
-	// create a template with the TikZ code for showing this
-	// division problem
-	tpl, err := template.New("division").Parse(latexDivisionCode)
 	if err != nil {
 		log.Fatal(err)
 	}
