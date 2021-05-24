@@ -78,12 +78,6 @@ const tikZDivisionCode = `% --- Coordinates ------------------------------------
         % -----------------------------------------------------------------------
 `
 
-const latexCoordinateFormulaCode = `        \coordinate {{.GetDivLabel}} at ({{.GetDivFormula}});
-`
-
-const latexSplitBoxCode = `        \draw [thick, rounded corners] ({{.GetDivFirstCoord}}) -- ({{.GetDivSecondCoord}}) -- ({{.GetDivThirdCoord}});
-`
-
 const latexAnswerCode = `        \node [rounded corners, rectangle, minimum width={{.GetDivWidth}}*\zerowidth, minimum height = \zeroheight+\baselineskip, draw, below=0.15 cm of label3] {};
 `
 
@@ -92,29 +86,6 @@ const latexDivOperandCode = `        \node [right=0.0 cm of {{.GetDivRef}}] ({{.
 
 // types
 // ----------------------------------------------------------------------------
-
-// A coordinate is defined just with a label. From this basic
-// definition it is then possible to specify either coordinates
-// explicitly, with a pair (x, y) or with a formula which is used to
-// compute the final location of the coordinate
-type coordinate struct {
-	label string
-}
-
-// coordinates computed with a formula are characterized by a string
-// which contains the formula tu use for computing the final location
-// of the coordinate
-type coordinateFormula struct {
-	formula string
-	coordinate
-}
-
-// the box surrounding the dividend is consists of a path
-// drawn between three coordinates whose location is
-// determined using formulas
-type splitBox struct {
-	coord1, coord2, coord3 coordinateFormula
-}
 
 // The answer should be written in a box explicitly shown in the
 // exercise. The only important parameter for drawing it is its width
@@ -144,10 +115,9 @@ type divisionProblem struct {
 
 	// likewise the coordinate for determining the location of the first line is
 	// computed with respect to another coordinate and hence a formula is used.
-	// Also, the second line below the dividend (not to confuse with the
-	// divisor) has to be computed as it serves as a reference for computing
-	// other points
-	line1, line2 coordinateFormula
+	// There might be an arbitrary number of points but other points are
+	// computed only wrt the location of the first line
+	line1 components.Coordinate
 
 	// the bounding box surrounding all the necessary area for solving the
 	// exercise is defined next and it is computed with two formulas that
@@ -156,7 +126,7 @@ type divisionProblem struct {
 
 	// the box surrounding the dividend consists of a path drawn between three
 	// coordinates whose location is determined using formulas
-	sBox splitBox
+	sBox components.Line
 
 	// the answer should be written within a box explicitly shown
 	answer latexAnswer
@@ -226,51 +196,6 @@ func (div division) generateJSONProblem() (problemJSON, error) {
 		Probtype: "Division",
 		Args:     args,
 		Solution: solution}, nil
-}
-
-// -- coordinates
-
-// Return the label of this coordinate
-func (coord coordinate) GetDivLabel() string {
-	return fmt.Sprintf("(%v)", coord.label)
-}
-
-func (coord coordinateFormula) GetDivFormula() string {
-	return fmt.Sprintf("%v", coord.formula)
-}
-
-// -- split box
-
-// Return the TikZ code that represents the first coordinate of the split box
-func (sbox splitBox) GetDivFirstCoord() string {
-	return fmt.Sprintf("%v", sbox.coord1.formula)
-}
-
-// Return the TikZ code that represents the second coordinate of the split box
-func (sbox splitBox) GetDivSecondCoord() string {
-	return fmt.Sprintf("%v", sbox.coord2.formula)
-}
-
-// Return the TikZ code that represents the third coordinate of the split box
-func (sbox splitBox) GetDivThirdCoord() string {
-	return fmt.Sprintf("%v", sbox.coord3.formula)
-}
-
-// Return the TikZ code that draws the split box
-func (sbox splitBox) String() string {
-
-	// use the template defined for creating explicit coords
-	tpl, err := template.New("division").Parse(latexSplitBoxCode)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, sbox); err != nil {
-		log.Fatal(err)
-	}
-	return tplOutput.String()
-
 }
 
 // -- answer
@@ -354,17 +279,8 @@ func (division divisionProblem) GetDivNextLabels() string {
 // Generates the TikZ code necessary for positioning the first line of results
 func (division divisionProblem) GetDivLine() string {
 
-	// use the template defined for creating coords with a formula
-	tpl, err := template.New("division").Parse(latexCoordinateFormulaCode)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, division.line1); err != nil {
-		log.Fatal(err)
-	}
-	return tplOutput.String()
+	// Coordinates draw themselves
+	return fmt.Sprintf("%v", division.line1)
 }
 
 // Generates the TikZ code necessary for positioning the bounding box
@@ -378,8 +294,8 @@ func (division divisionProblem) GetDivBoundingBox() string {
 // Generates the TikZ code necessary for drawing the split box
 func (division divisionProblem) GetDivSplitBox() string {
 
-	// split boxes draw themselves
-	return division.sBox.String()
+	// Lines draw themselves
+	return fmt.Sprintf("%v", division.sBox)
 }
 
 // Generates the TikZ code necessary for drawing the answer box
@@ -449,16 +365,10 @@ func (div division) GetTikZPicture() string {
 		"label3")
 
 	// --lines
-	line1 := coordinateFormula{
-		formula: fmt.Sprintf(`$(label2) + (-%v\zerowidth, -2*\zeroheight-0.15 cm)$`,
-			2.0+float64(div.nbdvdigits)),
-	}
-	line1.label = "line1"
-
-	line2 := coordinateFormula{
-		formula: `$(line1) + (0.0, -\zeroheight-\baselineskip)$`,
-	}
-	line2.label = "line2"
+	line1 := components.NewCoordinate(
+		components.Formula(fmt.Sprintf(`$(label2) + (-%v\zerowidth, -2*\zeroheight-0.15 cm)$`,
+			2.0+float64(div.nbdvdigits))),
+		"line1")
 
 	// --bounding box
 	bottom := components.NewCoordinate(
@@ -474,22 +384,12 @@ func (div division) GetTikZPicture() string {
 	bBox := components.NewCoordinatedRectangle(bottom, right)
 
 	// --split box
-	coord1 := coordinateFormula{
-		formula: `$(label2) + (0.0, \zeroheight)$`,
-	}
-	coord2 := coordinateFormula{
-		formula: `$(label2) + (0.0, -\zeroheight)$`,
-	}
-	coord3 := coordinateFormula{
-		formula: fmt.Sprintf(`$(label2) + %v*(\zerowidth, -\zeroheight/%v)$`,
+	sBox := components.NewLine(`$(label2) + (0.0, \zeroheight)$`,
+		`$(label2) + (0.0, -\zeroheight)$`,
+		fmt.Sprintf(`$(label2) + %v*(\zerowidth, -\zeroheight/%v)$`,
 			2.0+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits)),
-			2.0+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits))),
-	}
-	sBox := splitBox{
-		coord1: coord1,
-		coord2: coord2,
-		coord3: coord3,
-	}
+			2.0+helpers.Max(float64(div.nbdrdigits), float64(div.nbqdigits))))
+	sBox.SetOptions("thick, rounded corners")
 
 	// --answer
 	answer := latexAnswer{

@@ -17,12 +17,46 @@ import (
 	"strconv"
 )
 
-// compute the minimum of two ints
-func Min(a, b int) int {
-	if a < b {
-		return a
+// transform the input into an integer by making sure that the input is either
+// an int, a float or a string. In case it is not possible, the value return is
+// undefined and an error is signaled
+func Atoi(n interface{}) (int, error) {
+
+	switch value := n.(type) {
+	case int:
+		return value, nil
+	case float32:
+		return int(value), nil
+	case float64:
+		return int(value), nil
+	case string:
+		if result, err := strconv.Atoi(value); err != nil {
+			return 0, err
+		} else {
+			return result, nil
+		}
 	}
-	return b
+
+	// if the type was not recognized, then return an error
+	return 0, fmt.Errorf("It was not possible to cast '%v' into an integer")
+}
+
+// return true if and only if the given value has been found in the
+// specified slice
+func Find(item string, container []string) bool {
+
+	// for all items in the container
+	for _, value := range container {
+
+		// in case it has been found, then exit immediately
+		if value == item {
+			return true
+		}
+	}
+
+	// if it has not been found after traversing the container,
+	// then return false
+	return false
 }
 
 // compute the maximum of two floats
@@ -31,6 +65,14 @@ func Max(a, b float64) float64 {
 		return b
 	}
 	return a
+}
+
+// compute the minimum of two ints
+func Min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
 }
 
 // return the number of digits of number n. In case the number is negative, then
@@ -57,48 +99,6 @@ func RandN(n int) int {
 	lower := int(math.Pow(float64(10), float64(n)-1))
 	upper := int(math.Pow(float64(10), float64(n)))
 	return lower + rand.Int()%(upper-lower)
-}
-
-// return true if and only if the given value has been found in the
-// specified slice
-func Find(item string, container []string) bool {
-
-	// for all items in the container
-	for _, value := range container {
-
-		// in case it has been found, then exit immediately
-		if value == item {
-			return true
-		}
-	}
-
-	// if it has not been found after traversing the container,
-	// then return false
-	return false
-}
-
-// transform the input into an integer by making sure that the input is either
-// an int, a float or a string. In case it is not possible, the value return is
-// undefined and an error is signaled
-func Atoi(n interface{}) (int, error) {
-
-	switch value := n.(type) {
-	case int:
-		return value, nil
-	case float32:
-		return int(value), nil
-	case float64:
-		return int(value), nil
-	case string:
-		if result, err := strconv.Atoi(value); err != nil {
-			return 0, err
-		} else {
-			return result, nil
-		}
-	}
-
-	// if the type was not recognized, then return an error
-	return 0, fmt.Errorf("It was not possible to cast '%v' into an integer")
 }
 
 // Local Variables:

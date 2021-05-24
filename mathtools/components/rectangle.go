@@ -153,6 +153,8 @@ func VerifyRectangleDict(dict map[string]interface{}) (Rectangle, error) {
 // methods
 // ----------------------------------------------------------------------------
 
+// --BaseRectangle
+
 // Set the options of a rectangle
 func (rect *BaseRectangle) SetOptions(options string) {
 	rect.options = options
@@ -160,7 +162,6 @@ func (rect *BaseRectangle) SetOptions(options string) {
 
 // Get the options used
 func (rect BaseRectangle) GetOptions() string {
-
 	return rect.options
 }
 
