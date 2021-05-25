@@ -318,6 +318,29 @@ func (masterFile MasterFile) Text(dict map[string]interface{}) string {
 	return text.String()
 }
 
+// Basic Operations
+// ----------------------------------------------------------------------------
+
+// Return the LaTeX code in TikZ format that generates a basic operation with
+// the keywords given in the dictionary. A dictionary is correct if and only if
+// it correctly provides a type of basic operation with the keyword "type", a
+// number of digits of the operands, and the result, and the number of operands
+// to show, with "nboperands", "nbdigitsop" and "nbdigitsrslt" respectively
+func (masterFile MasterFile) BasicOperation(dict map[string]interface{}) string {
+
+	// verify the given dictionary is correct and get an instance of a valid
+	// basic operation
+	basicOperation, err := verifyBasicOperationDict(dict)
+	if err != nil {
+		log.Fatalf("The dictionary given for creating a basic operation is incorrect: %v", err)
+	}
+
+	log.Println(basicOperation)
+
+	// and return the LaTeX/TikZ code for representing this sequence
+	return basicOperation.execute()
+}
+
 // Sequences
 // ----------------------------------------------------------------------------
 
@@ -341,7 +364,7 @@ func (masterFile MasterFile) Sequence(dict map[string]interface{}) string {
 	return sequence.execute()
 }
 
-// divisions
+// Divisions
 // ----------------------------------------------------------------------------
 
 // Return the LaTeX code in TikZ format that generates a division with the

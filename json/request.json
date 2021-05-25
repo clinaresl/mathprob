@@ -47,5 +47,16 @@
             "nbqdigits": 1
         },
         "nbprobs": 5
+    },
+    {
+        "type": "BasicOperation",
+        "args": {
+            "type": 1,
+            "operator": "-",
+            "nboperands": 3,
+            "nbdigitsop": 2,
+            "nbdigitsrslt": 1
+        },
+        "nbprobs": 5
     }
 ]

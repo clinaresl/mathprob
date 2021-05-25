@@ -232,7 +232,11 @@ func (seq sequenceTikZ) execute() string {
 
 // return the instance of a specific sequence problem that can be marshalled in
 // JSON format. The receiver is assumed to have been fully verified so that it
-// should be consistent
+// should be consistent.
+//
+// The result is given with a list with as many elements as items in the
+// sequence where "?" signals those locations that have to be guessed by the
+// student
 func (seq sequence) generateJSONProblem() (problemJSON, error) {
 
 	rand.Seed(time.Now().UTC().UnixNano())

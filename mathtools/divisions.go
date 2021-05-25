@@ -212,7 +212,11 @@ func (tikz divisionTikZ) execute() string {
 
 // return the instance of a specific division problem that can be marshalled in
 // JSON format. The receiver is assumed to have been fully verified so that it
-// should be consistent
+// should be consistent.
+//
+// The result is given with four items: dividend, divisor, quotient and
+// remainer. The remainder and the quotient are shown as "?" in the arguments as
+// they have to be guessed by the student
 func (div division) generateJSONProblem() (problemJSON, error) {
 
 	rand.Seed(time.Now().UTC().UnixNano())
