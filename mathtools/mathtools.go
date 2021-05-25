@@ -25,11 +25,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log" // logging services
-	"math"
-	"math/rand"
-	"os" // access to file mgmt functions
+	"os"  // access to file mgmt functions
 	"text/template"
-	"time"
 
 	// go facility for processing templates
 	"github.com/clinaresl/mathprob/fstools"
@@ -39,13 +36,6 @@ import (
 
 // types
 // ----------------------------------------------------------------------------
-
-// Positions are used by virtually any operation to create. Thus, it
-// is provided here. Every position is qualified by its x- and y-
-// coordinates
-type position struct {
-	x, y float64
-}
 
 // A master file consists of an input filename that stores the
 // tempalte to fill in to generate the final sheet of exercises, and
@@ -67,9 +57,78 @@ func NewMasterFile(filename, name, class string) MasterFile {
 	return MasterFile{Infile: filename, Name: name, Class: class}
 }
 
-// 	// if the type was not recognized, then return an error
-// 	return 0, fmt.Errorf("It was not possible to cast '%v' into an integer")
-// }
+// return a valid specification of a basic operation with no error ir all the
+// keys given in dict are correct for defining a basic sequence. If not, an
+// error is returned. If an error is returned, the contents of the basic
+// operation are undefined
+//
+// A dictionary is correct if and only if it correctly provides a type of basic
+// operation with the keyword "type", a number of digits of the operands, and
+// the result, and the number of operands to show.
+func verifyBasicOperationDict(dict map[string]interface{}) (basicOperation, error) {
+
+	// the mandatory keys are given next
+	mandatory := []string{"type", "operator", "nboperands", "nbdigitsop", "nbdigitsrslt"}
+
+	// now, verify that all mandatory parameters are present in the dict
+	for _, key := range mandatory {
+
+		// if a mandatory parameter has not been given, then
+		// raise an error and exit
+		if _, ok := dict[key]; !ok {
+			return basicOperation{}, fmt.Errorf("Mandatory key '%v' for defining a basic operation not found", key)
+		}
+	}
+
+	// make also sure that parameters are given with the right type
+	var ok bool
+	var err error
+	var operator string
+	var botype, nboperands, nbdigitsop, nbdigitsrslt int
+	if operator, ok = dict["operator"].(string); !ok {
+		return basicOperation{}, errors.New("The operator of a basic operation should be given as a stirng")
+	} else {
+		operators := []string{"+", "-", "*", "/"}
+		if !helpers.Find(operator, operators) {
+			return basicOperation{}, errors.New("The operator of a basic operation has to be one and only one among the following: '+', '-', '*' or '/'")
+		}
+	}
+	if botype, err = helpers.Atoi(dict["type"]); err != nil {
+		return basicOperation{}, errors.New("the type of a basic operation should be given as an integer")
+	}
+	if nboperands, err = helpers.Atoi(dict["nboperands"]); err != nil {
+		return basicOperation{}, errors.New("the number of operands in a basic operation should be given as an integer")
+	}
+	if nbdigitsop, err = helpers.Atoi(dict["nbdigitsop"]); err != nil {
+		return basicOperation{}, errors.New("the number of digits of all operands should be given as an integer")
+	}
+	if nbdigitsrslt, err = helpers.Atoi(dict["nbdigitsrslt"]); err != nil {
+		return basicOperation{}, errors.New("the number of digits of the result of a basic operation should be given as a string")
+	}
+
+	// finally, ensure the type is correct
+	if botype < BORESULT || botype > BOOPERAND {
+		return basicOperation{}, fmt.Errorf("the type of a basic operation given '%v' is incorrect", botype)
+	}
+
+	// next, verify if there are some unnecessary parameters
+	for key := range dict {
+
+		// if this key was not requested then report a message
+		if !helpers.Find(key, mandatory) {
+			log.Printf(" Warning: The key '%v' is not necessary for creating a basic operation and it will be ignored", key)
+		}
+	}
+
+	// otherwise, the dictionary is correct
+	return basicOperation{
+		botype:       botype,
+		operator:     operator,
+		nboperands:   nboperands,
+		nbdigitsop:   nbdigitsop,
+		nbdigitsrslt: nbdigitsrslt,
+	}, nil
+}
 
 // return a valid specification of a sequence with no error if all the keys
 // given in dict are correct for defining a sequence. If not, an error is
@@ -98,7 +157,7 @@ func verifySequenceDict(dict map[string]interface{}) (sequence, error) {
 	var err error
 	var seqtype, nbitems, geq, leq int
 	if seqtype, err = helpers.Atoi(dict["type"]); err != nil {
-		return sequence{}, errors.New("the type of a sequence should be given as a integer")
+		return sequence{}, errors.New("the type of a sequence should be given as an integer")
 	}
 	if nbitems, err = helpers.Atoi(dict["nbitems"]); err != nil {
 		return sequence{}, errors.New("the number of items in a sequence should be given as an integer")
@@ -125,10 +184,12 @@ func verifySequenceDict(dict map[string]interface{}) (sequence, error) {
 	}
 
 	// otherwise, the dictionary is correct
-	return sequence{seqtype: seqtype,
+	return sequence{
+		seqtype: seqtype,
 		nbitems: nbitems,
 		geq:     geq,
-		leq:     leq}, nil
+		leq:     leq,
+	}, nil
 }
 
 // verify that the keys given in dict are correct for defining
@@ -176,20 +237,12 @@ func verifyDivisionDict(dict map[string]interface{}) (division, error) {
 	return division{
 		nbdvdigits: nbdvdigits,
 		nbdrdigits: nbdrdigits,
-		nbqdigits:  nbqdigits}, nil
+		nbqdigits:  nbqdigits,
+	}, nil
 }
 
 // methods
 // ----------------------------------------------------------------------------
-
-// -- position
-// ----------------------------------------------------------------------------
-
-// String provides a human readable/TikZ digestible forma of the
-// contents of any position
-func (pos position) String() string {
-	return fmt.Sprintf("(%v, %v)", pos.x, pos.y)
-}
 
 // -- MasterFile
 // ----------------------------------------------------------------------------
@@ -223,7 +276,10 @@ func (masterFile MasterFile) Slice(n int) []MasterFile {
 	return make([]MasterFile, n)
 }
 
-// Components
+// TikZ reusable components
+//
+// The following meethods provide direct access to the TikZ reusable components
+// to be used in a master file directly
 // ----------------------------------------------------------------------------
 
 // This method is intended to be used in master files. It is substituted by TikZ
@@ -260,330 +316,6 @@ func (masterFile MasterFile) Text(dict map[string]interface{}) string {
 
 	// and return the string that shows up the contents of this text box
 	return text.String()
-}
-
-// Simple Operations
-// ----------------------------------------------------------------------------
-
-// Get the LaTeX code for a simple operation where both operands must
-// be lower than 10
-func (masterFile MasterFile) GetSimpleOperation11(operator int) (latexCode string) {
-
-	// seed the random generator
-	rand.Seed(time.Now().UTC().UnixNano())
-
-	// create the two operands
-	latexOperandA := latexOperand{
-		label: "label1",
-		id:    "num1",
-		pos:   position{x: 2.50, y: 3.50},
-		value: 1 + rand.Intn(9),
-	}
-	latexOperandB := latexOperand{
-		label: "label2",
-		id:    "num2",
-		pos:   position{x: 2.50, y: 2.50},
-		value: 1 + rand.Intn(9),
-	}
-
-	// create the operator and, in passing, verify specific conditions for
-	// the operands to make sense with the requested operator
-	latexOperator := latexOperator{
-		label: "op",
-		pos:   position{x: 1.00, y: 2.50},
-	}
-	switch operator {
-	case ADD:
-		latexOperator.symbol = `$+$`
-	case SUB:
-		latexOperator.symbol = `$-$`
-
-		// make sure that operandB is strictly less or equal than
-		// operandA
-		if latexOperandA.value < latexOperandB.value {
-			latexOperandA.value, latexOperandB.value = latexOperandB.value, latexOperandA.value
-		}
-
-	case PROD:
-		latexOperator.symbol = `$\times$`
-	case DIV:
-		latexOperator.symbol = `$\div$`
-
-		// ensure the second operand is not 0
-		if latexOperandB.value == 0 {
-			latexOperandB.value = 1
-		}
-
-		// ensure the result is an integer value
-		if latexOperandA.value%latexOperandB.value != 0 {
-
-			// just divide by the minimum of both operands and
-			// randomly select the larger number to be below 10
-			latexOperandB.value = helpers.Min(latexOperandA.value, latexOperandB.value)
-			latexOperandA.value = int(float64(latexOperandB.value) * math.Floor((math.Log(float64(10)))/(math.Log(float64(latexOperandB.value)))))
-		}
-	default:
-		log.Fatalf("Unknown operator '%v'", operator)
-	}
-
-	// create the result
-	latexResult := latexResult{
-		label:         "label3",
-		pos:           position{x: 2.75, y: 1.00},
-		minimumWidth:  1.5,
-		minimumHeight: 1.25,
-	}
-
-	// and use all of these to create the operation
-	latexOperation := singleOperation{
-		operandA: latexOperandA,
-		operandB: latexOperandB,
-		operator: latexOperator,
-		result:   latexResult,
-	}
-
-	return latexOperation.Execute()
-}
-
-// Get the LaTeX code for a simple operation where the first operand
-// has to be less than 20 and the second one has to be less than 10,
-// and the sum of both operands strictly less or equal than 20
-func (masterFile MasterFile) GetSimpleOperation21Bounded20(operator int) (latexCode string) {
-
-	// seed the random generator
-	rand.Seed(time.Now().UTC().UnixNano())
-
-	// create the two operands
-	latexOperandB := latexOperand{
-		label: "label2",
-		id:    "num2",
-		pos:   position{x: 2.50, y: 2.50},
-		value: 1 + rand.Intn(9),
-	}
-	latexOperandA := latexOperand{
-		label: "label1",
-		id:    "num1",
-		pos:   position{x: 2.50, y: 3.50},
-		value: 10 + rand.Intn(10-latexOperandB.value),
-	}
-
-	// create the operator and, in passing, verify specific conditions for
-	// the operands to make sense with the requested operator
-	latexOperator := latexOperator{
-		label: "op",
-		pos:   position{x: 1.00, y: 2.50},
-	}
-	switch operator {
-	case ADD:
-		latexOperator.symbol = `$+$`
-	case SUB:
-		latexOperator.symbol = `$-$`
-
-		// make sure that operandB is strictly less or equal than
-		// operandA
-		if latexOperandA.value < latexOperandB.value {
-			latexOperandA.value, latexOperandB.value = latexOperandB.value, latexOperandA.value
-		}
-
-	case PROD:
-		latexOperator.symbol = `$\times$`
-	case DIV:
-		latexOperator.symbol = `$\div$`
-
-		// ensure the second operand is not 0
-		if latexOperandB.value == 0 {
-			latexOperandB.value = 1
-		}
-
-		// ensure the result is an integer value
-		if latexOperandA.value%latexOperandB.value != 0 {
-
-			// just divide by the minimum of both operands and
-			// randomly select the larger number to be below 10
-			latexOperandB.value = helpers.Min(latexOperandA.value, latexOperandB.value)
-			latexOperandA.value = int(float64(latexOperandB.value) * math.Floor((math.Log(float64(10)))/(math.Log(float64(latexOperandB.value)))))
-		}
-	default:
-		log.Fatalf("Unknown operator '%v'", operator)
-	}
-
-	// create the result
-	latexResult := latexResult{
-		label:         "label3",
-		pos:           position{x: 2.75, y: 1.00},
-		minimumWidth:  1.5,
-		minimumHeight: 1.25,
-	}
-
-	// and use all of these to create the operation
-	latexOperation := singleOperation{
-		operandA: latexOperandA,
-		operandB: latexOperandB,
-		operator: latexOperator,
-		result:   latexResult,
-	}
-
-	return latexOperation.Execute()
-}
-
-// Get the LaTeX code for a simple operation where the first operand
-// has to be less than 100 and the second one has to be less than 10
-func (masterFile MasterFile) GetSimpleOperation21(operator int) (latexCode string) {
-
-	// seed the random generator
-	rand.Seed(time.Now().UTC().UnixNano())
-
-	// create the two operands
-	latexOperandA := latexOperand{
-		label: "label1",
-		id:    "num1",
-		pos:   position{x: 2.50, y: 3.50},
-		value: 1 + rand.Intn(99),
-	}
-	latexOperandB := latexOperand{
-		label: "label2",
-		id:    "num2",
-		pos:   position{x: 2.50, y: 2.50},
-		value: 1 + rand.Intn(9),
-	}
-
-	// create the operator and, in passing, verify specific conditions for
-	// the operands to make sense with the requested operator
-	latexOperator := latexOperator{
-		label: "op",
-		pos:   position{x: 1.00, y: 2.50},
-	}
-	switch operator {
-	case ADD:
-		latexOperator.symbol = `$+$`
-	case SUB:
-		latexOperator.symbol = `$-$`
-
-		// make sure that operandB is strictly less or equal than
-		// operandA
-		if latexOperandA.value < latexOperandB.value {
-			latexOperandA.value, latexOperandB.value = latexOperandB.value, latexOperandA.value
-		}
-
-	case PROD:
-		latexOperator.symbol = `$\times$`
-	case DIV:
-		latexOperator.symbol = `$\div$`
-
-		// ensure the second operand is not 0
-		if latexOperandB.value == 0 {
-			latexOperandB.value = 1
-		}
-
-		// ensure the result is an integer value
-		if latexOperandA.value%latexOperandB.value != 0 {
-
-			// just divide by the minimum of both operands and
-			// randomly select the larger number to be below 10
-			latexOperandB.value = helpers.Min(latexOperandA.value, latexOperandB.value)
-			latexOperandA.value = int(float64(latexOperandB.value) * math.Floor((math.Log(float64(10)))/(math.Log(float64(latexOperandB.value)))))
-		}
-	default:
-		log.Fatalf("Unknown operator '%v'", operator)
-	}
-
-	// create the result
-	latexResult := latexResult{
-		label:         "label3",
-		pos:           position{x: 2.75, y: 1.00},
-		minimumWidth:  1.5,
-		minimumHeight: 1.25,
-	}
-
-	// and use all of these to create the operation
-	latexOperation := singleOperation{
-		operandA: latexOperandA,
-		operandB: latexOperandB,
-		operator: latexOperator,
-		result:   latexResult,
-	}
-
-	return latexOperation.Execute()
-}
-
-// Get the LaTeX code for a simple operation where both operands must
-// be lower than 100
-func (masterFile MasterFile) GetSimpleOperation22(operator int) (latexCode string) {
-
-	// seed the random generator
-	rand.Seed(time.Now().UTC().UnixNano())
-
-	// create the two operands
-	latexOperandA := latexOperand{
-		label: "label1",
-		id:    "num1",
-		pos:   position{x: 2.50, y: 3.50},
-		value: 1 + rand.Intn(99),
-	}
-	latexOperandB := latexOperand{
-		label: "label2",
-		id:    "num2",
-		pos:   position{x: 2.50, y: 2.50},
-		value: 1 + rand.Intn(99),
-	}
-
-	// create the operator and, in passing, verify specific conditions for
-	// the operands to make sense with the requested operator
-	latexOperator := latexOperator{
-		label: "op",
-		pos:   position{x: 1.00, y: 2.50},
-	}
-	switch operator {
-	case ADD:
-		latexOperator.symbol = `$+$`
-	case SUB:
-		latexOperator.symbol = `$-$`
-
-		// make sure that operandB is strictly less or equal than
-		// operandA
-		if latexOperandA.value < latexOperandB.value {
-			latexOperandA.value, latexOperandB.value = latexOperandB.value, latexOperandA.value
-		}
-
-	case PROD:
-		latexOperator.symbol = `$\times$`
-	case DIV:
-		latexOperator.symbol = `$\div$`
-
-		// ensure the second operand is not 0
-		if latexOperandB.value == 0 {
-			latexOperandB.value = 1
-		}
-
-		// ensure the result is an integer value
-		if latexOperandA.value%latexOperandB.value != 0 {
-
-			// just divide by the minimum of both operands and
-			// randomly select the larger number to be below 10
-			latexOperandB.value = helpers.Min(latexOperandA.value, latexOperandB.value)
-			latexOperandA.value = int(float64(latexOperandB.value) * math.Floor((math.Log(float64(100)))/(math.Log(float64(latexOperandB.value)))))
-		}
-	default:
-		log.Fatalf("Unknown operator '%v'", operator)
-	}
-
-	// create the result
-	latexResult := latexResult{
-		label:         "label3",
-		pos:           position{x: 2.75, y: 1.00},
-		minimumWidth:  1.5,
-		minimumHeight: 1.25,
-	}
-
-	// and use all of these to create the operation
-	latexOperation := singleOperation{
-		operandA: latexOperandA,
-		operandB: latexOperandB,
-		operator: latexOperator,
-		result:   latexResult,
-	}
-
-	return latexOperation.Execute()
 }
 
 // Sequences
