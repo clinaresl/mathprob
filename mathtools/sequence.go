@@ -47,7 +47,7 @@ const (
 
 // the TikZ code for generating arbitrary sequences is shown next. Note that it
 // makes use of LaTeX/TikZ components
-const latexSequenceCode = `\begin{minipage}{0.25\linewidth}
+const latexSequenceCode = `\begin{minipage}{\linewidth}
     \begin{center}
         \begin{tikzpicture}
 
@@ -250,8 +250,14 @@ func (seq sequence) generateJSONProblem() (problemJSON, error) {
 	number1 := seq.geq + rand.Int()%(2+seq.leq-seq.nbitems-seq.geq)
 
 	// in case this sequence is of type SEQNONE, then randomly choose a position
-	// in between to show a number
-	pos := 1 + rand.Int()%(seq.nbitems-2)
+	// in between to show a number, unless there are only two items in which
+	// case randomly chose any
+	var pos int
+	if seq.nbitems <= 2 {
+		pos = rand.Int() % (seq.nbitems)
+	} else {
+		pos = 1 + rand.Int()%(seq.nbitems-2)
+	}
 
 	// and now fill in the sequence along with the solution
 	args := make([]string, seq.nbitems)
