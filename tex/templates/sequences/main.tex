@@ -147,6 +147,12 @@ celdas por rellenar donde la pista no está ni al principio ni al final.
         % the reference point that is located at the center of the answer box
         % should be x-shifted by once the width of zero plus half the width of
         % the answer box, hence 2.5 is multiplied by the width of zero
+        \coordinate (anc1) at ($(label1) + (1.0*\zerowidth, 0.0)$);
+        \fill [black] (anc1) circle (2pt);
+
+        \coordinate (anc3) at ($(anc1) + (3*\zerowidth, 0.0)$);
+        \fill [black] (anc3) circle (2pt);
+
         \coordinate (answer1) at ($(label1) + (2.5*\zerowidth, 0.0)$);
         \fill [red] (answer1) circle (1pt);
 
@@ -514,6 +520,12 @@ celdas por rellenar donde la pista no está ni al principio ni al final.
         % zero. In addition, half the number of digits of the number located at
         % (label1) is added also. In this case, the number consists of two
         % digits and hence 1 is added also, resulting in 3.5
+        \coordinate (anc1) at ($(label1) + (1.5*\zerowidth, 0.0)$);
+        \fill [black] (anc1) circle (2pt);
+
+        \coordinate (anc3) at ($(anc1) + (4*\zerowidth, 0.0)$);
+        \fill [black] (anc3) circle (2pt);
+
         \coordinate (answer1) at ($(label1) + (3.5*\zerowidth, 0.0)$);
         \fill [red] (answer1) circle (1pt);
 
@@ -881,6 +893,12 @@ celdas por rellenar donde la pista no está ni al principio ni al final.
         % zero. In addition, half the number of digits of the number located at
         % (label1) is added also. In this case, the number consists of three and
         % hence 1.5 is added also, resulting in 5.0
+        \coordinate (anc1) at ($(label1) + (2.5*\zerowidth, 0.0)$);
+        \fill [black] (anc1) circle (2pt);
+
+        \coordinate (anc3) at ($(anc1) + (5*\zerowidth, 0.0)$);
+        \fill [black] (anc3) circle (2pt);
+
         \coordinate (answer1) at ($(label1) + (5.0*\zerowidth, 0.0)$);
         \fill [red] (answer1) circle (1pt);
 

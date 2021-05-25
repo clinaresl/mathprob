@@ -25,15 +25,19 @@ import (
 // constants
 // ----------------------------------------------------------------------------
 
-// TikZ code to generate text: text is written with a node so that options and a
-// label can be specified in addition to the text to write. Note that the tex
-// can contain any prefix for the size as well
+// TikZ code to generate text: text can be written with a node so that options
+// and a label can be specified in addition to the text to write. Note that the
+// tex can contain any prefix for the size as well
 const tikzText = `\node [{{.GetOptions}}] ({{.GetLabel}}) { {{.GetText}} };`
+
+// In addition, text can be written specifically located at one label using a
+// draw operation
+const tikZLabeledText = `\draw ({{.GetLabel}}) node [{{.GetOptions}}] { {{.GetText}} };`
 
 // types
 // ----------------------------------------------------------------------------
 
-// Text is written with a node command so that options and a label can be
+// Text can be written with a node command so that options and a label can be
 // attached to the text to write. Note that the text to write can be preceded of
 // other LaTeX commands such as the size of the text ---or other effects, such
 // as bold, italic, etc.
@@ -41,6 +45,12 @@ type Text struct {
 	options string
 	label   string
 	text    string
+}
+
+// But text can be also written at one specific location denoted with a label,
+// using whichever options and text
+type LabeledText struct {
+	Text
 }
 
 // functions
@@ -52,6 +62,17 @@ func NewText(options, label, text string) Text {
 		options: options,
 		label:   label,
 		text:    text,
+	}
+}
+
+// Create a new instance of a text given the three fields
+func NewLabeledText(options, label, text string) LabeledText {
+	return LabeledText{
+		Text{
+			options: options,
+			label:   label,
+			text:    text,
+		},
 	}
 }
 
@@ -97,6 +118,8 @@ func VerifyTextDict(dict map[string]interface{}) (Text, error) {
 // methods
 // ----------------------------------------------------------------------------
 
+// -- Text
+
 // Return the coordinate of this text box
 func (t Text) GetOptions() string {
 	return t.options
@@ -117,6 +140,28 @@ func (t Text) String() string {
 
 	// create a template with the TikZ code for showing a text box
 	tpl, err := template.New("text").Parse(tikzText)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// and now make the appropriate substitution. Note that the execution of the
+	// template is written to a string
+	var tplOutput bytes.Buffer
+	if err := tpl.Execute(&tplOutput, t); err != nil {
+		log.Fatal(err)
+	}
+
+	// and return the resulting string
+	return tplOutput.String()
+}
+
+// -- LabeledText
+
+// return a TikZ representation of a text box
+func (t LabeledText) String() string {
+
+	// create a template with the TikZ code for showing a text box
+	tpl, err := template.New("text").Parse(tikZLabeledText)
 	if err != nil {
 		log.Fatal(err)
 	}

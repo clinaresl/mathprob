@@ -48,17 +48,59 @@ const (
 // the TikZ code for generating arbitrary sequences is shown next. Note that it
 // makes use of LaTeX/TikZ components
 const latexSequenceCode = `\begin{minipage}{0.25\linewidth}
-	\begin{center}
-		\begin{tikzpicture}
+    \begin{center}
+        \begin{tikzpicture}
 
-			% draw the sequence
-			{{.GetTikZPicture}}
+            % draw the sequence
+            {{.GetTikZPicture}}
 
-			% draw an invisible bounding box to properly align all sequences
-
-		\end{tikzpicture}
-	\end{center}
+        \end{tikzpicture}
+    \end{center}
 \end{minipage}
+`
+
+const tikZSequenceCode = `% --- Coordinates ----------------------------------------------------
+
+        % the lower-left corner is located at (0,0)
+{{.GetBottomLabel}}
+
+        % text boxes (either empty or with a hint) have a separation between
+        % them equal to epsilon (which here equals 0.5 the width of a digit). To
+        % avoid consecutive sequences to collide, twice epsilon is left from the
+        % lower-left corner of the bounding box to start the sequence. Since
+        % each text box has a width equal to the number of digits to show plus 2
+        % (i.e., the additional space of the width of a digit to each side) the
+        % first textbox is centered at 2epsilon + (2+nbdigits)/2. Since
+        % epsilon=0.5, the previous expression yields: 1.0 + (2+nbdigits)/2
+{{.GetFirstLabel}}
+
+        % The distance between the centers of two consecutive textboxes equals
+        % the width of any text box plus epsilon (the little space intentionally
+        % left between text boxes), resulting in (2+nbdigits+epsilon). Thus, if
+        % there are seq.nbitems in the whole sequence, then the distance from
+        % the center of the first text box to the last one is equal to
+        % (2+nbdigits+epsilon) * (seq.nbitems - 1)
+{{.GetLastLabel}}
+
+        % Finally, the upper-right corner is computed from the location of the
+        % center of the last text box plus half the width of any text box. Since
+        % the width of any text box is (2+nbdigits), the additional space from
+        % the center of the last box equals (2+nbdigits)/2
+{{.GetRightLabel}}
+
+        % --- Bounding Box ----------------------------------------------------
+
+        % the bounding box is drawn between the lower-left and upper-right
+        % coordinates
+{{.GetBoundingBox}}
+
+        % ---------------------------------------------------------------------
+
+        % --- Sequence --------------------------------------------------------
+
+        % show all elements of the sequence
+{{.GetSequenceItems}}
+        % ---------------------------------------------------------------------
 `
 
 // types
@@ -74,8 +116,117 @@ type sequence struct {
 	geq, leq int
 }
 
+// A sequence is drawn using TikZ reusable components only. It cconsists of the
+// bounding box along with its two coordinates (lower-left and upper-right), and
+// additional coordinates for placing each text box which might be empty (it has
+// to be filled in by the student) or not ---because it is a hint.
+type sequenceTikZ struct {
+
+	// The lower-left coordinate is inserted first to position other coordinates
+	// wrt it
+	bottom components.Coordinate
+
+	// The first item and last items of the sequence are placed using specific
+	// coordinates using only the information from the lower-left coordinate
+	first, last components.Coordinate
+
+	// the bounding box is drawn using two coordinates for the lower-left and
+	// upper-right. Note that it is implemented as a plain rectangle (instead of
+	// a coordinated rectangle), because coordinates are computed separately
+	right components.Coordinate
+	bBox  components.Rectangle
+
+	// the items of the sequence are stored as text components which might be
+	// empty or not, each one located at a different coordinate which is
+	// computed from the first cell
+	coords []components.Coordinate
+	cells  []components.LabeledText
+}
+
 // methods
 // ----------------------------------------------------------------------------
+
+// --sequenceTikZ
+
+// Generates the TikZ code necessary for positioning the lower-left corner of
+// the bounding box
+func (tikz sequenceTikZ) GetBottomLabel() string {
+
+	// Coordinates draw themselves
+	return fmt.Sprintf("%v", tikz.bottom)
+}
+
+// Generates the TikZ code necessary for positioning the coordinate at the
+// center of the first item of the sequence
+func (tikz sequenceTikZ) GetFirstLabel() string {
+
+	// Coordinates draw themselves
+	return fmt.Sprintf("%v", tikz.first)
+}
+
+// Generates the TikZ code necessary for positioning the coordinate at the
+// center of the last item of the sequence
+func (tikz sequenceTikZ) GetLastLabel() string {
+
+	// Coordinates draw themselves
+	return fmt.Sprintf("%v", tikz.last)
+}
+
+// Generates the TikZ code necessary for positioning the lower-left corner of
+// the bounding box
+func (tikz sequenceTikZ) GetRightLabel() string {
+
+	// Coordinates draw themselves
+	return fmt.Sprintf("%v", tikz.right)
+}
+
+// Generates the TikZ code necessary for positioning the bounding box
+func (tikz sequenceTikZ) GetBoundingBox() string {
+
+	// Bounding box draw themselves
+	return fmt.Sprintf("%v", tikz.bBox)
+}
+
+// Generates the TikZ code necessary for positioning all items of the sequence,
+// either empty cells or hints
+func (tikz sequenceTikZ) GetSequenceItems() string {
+
+	// Use a btyes buffer to append the strings of each cell
+	var output bytes.Buffer
+
+	// First, add all coordinates
+	for _, coord := range tikz.coords {
+		fmt.Fprintf(&output, "%v\n", coord)
+	}
+
+	// Draw all text boxes in the cells stored in this pict
+	for _, cell := range tikz.cells {
+		fmt.Fprintf(&output, "%v\n", cell)
+	}
+
+	return output.String()
+}
+
+// Return the LaTeX/TikZ commands that show up the picture stored in the
+// receiver
+func (seq sequenceTikZ) execute() string {
+
+	// create a template with the TikZ code for showing this picture
+	tpl, err := template.New("sequenceTikZ").Parse(tikZSequenceCode)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// and now make the appropriate substitutions. Note that the execution of
+	// the template is written to a string
+	var tplOutput bytes.Buffer
+	if err := tpl.Execute(&tplOutput, seq); err != nil {
+		log.Fatal(err)
+	}
+
+	// and return the resulting string
+	return tplOutput.String()
+}
 
 // -- sequence
 
@@ -83,6 +234,8 @@ type sequence struct {
 // JSON format. The receiver is assumed to have been fully verified so that it
 // should be consistent
 func (seq sequence) generateJSONProblem() (problemJSON, error) {
+
+	rand.Seed(time.Now().UTC().UnixNano())
 
 	// determine the first number of the sequence ---even if it is not
 	// displayed. If the interval [geq, leq] is too narrow to host nbitems,
@@ -94,7 +247,6 @@ func (seq sequence) generateJSONProblem() (problemJSON, error) {
 
 	// The following expression takes into account not only the interval [geq,
 	// leq] but also the number of items to display in the sequence
-	rand.Seed(time.Now().UTC().UnixNano())
 	number1 := seq.geq + rand.Int()%(2+seq.leq-seq.nbitems-seq.geq)
 
 	// in case this sequence is of type SEQNONE, then randomly choose a position
@@ -147,128 +299,130 @@ func (seq sequence) generateJSONProblem() (problemJSON, error) {
 		Solution: solution}, nil
 }
 
-// use the values stored in a sequence to determine the order of the reusable
-// components to display the items. The output slice contains items of two
-// types, either text (to show numbers) or box (to show answer boxes)
-func (sequence sequence) getComponents() []components.ComponentId {
+// return a valid LaTeX/TikZ representation of this sequence using TikZ
+// components
+func (seq sequence) GetTikZPicture() string {
 
-	// in case this sequence is of type SEQNONE, then randomly choose a position
-	// in between to show a number
-	pos := 1 + rand.Int()%(sequence.nbitems-2)
+	// -- operands randomly determine the values of the operands. For this, the
+	// service that generates problems is the one that can marshal them into
+	// JSON format. The numbers of the sequence are given in Args, where a
+	// question mark is a number that has to be guessed by the student
+	instance, err := seq.generateJSONProblem()
+	if err != nil {
+		log.Fatalf(" Fatal error while generating a valid sequence: %v", err)
+	}
 
-	// create the output slice
-	order := make([]components.ComponentId, sequence.nbitems)
-
-	for idx := 0; idx < sequence.nbitems; idx++ {
-
-		// if it is either the first or last item and this specific element has been
-		// requested
-		if (idx == 0 && (sequence.seqtype == SEQFIRST || sequence.seqtype == SEQBOTH)) ||
-			(idx == sequence.nbitems-1 && (sequence.seqtype == SEQLAST || sequence.seqtype == SEQBOTH)) {
-
-			// then add a text for displaying a number
-			order[idx] = components.TEXT
+	// in spite of the values geq and leq, it is good to compute the maximum
+	// number of digits in each box, so that they look the same (and hence, no
+	// additional clues are given to the student ;) )
+	nbdigits := 0.0
+	for _, item := range instance.Solution {
+		if value, err := helpers.Atoi(item); err != nil {
+			panic(fmt.Sprintf("Fatal error in the generation of a sequence: %v", err))
 		} else {
-
-			// otherwise, add a text also if this location is the one randomly
-			// chosen in a SEQNONE sequence
-			if sequence.seqtype == SEQNONE && idx == pos {
-				order[idx] = components.TEXT
-			} else {
-
-				// in any other case, just add an answer box
-				order[idx] = components.BOX
+			if nbd := helpers.NbDigits(value); float64(nbd) > nbdigits {
+				nbdigits = float64(nbd)
 			}
 		}
 	}
 
-	// and return the order computed so far
-	return order
-}
+	// -- Coordinates
 
-// return a valid LaTeX/TikZ representation of this sequence using TikZ
-// components
-func (sequence sequence) GetTikZPicture() string {
+	// bottom is the lower-left corner of the bounding box and this coordinate
+	// is used to reference others which are computed wrt it
+	bottom := components.NewCoordinate(components.Point{
+		X: 0.0,
+		Y: 0.0,
+	}, "bottom")
 
-	// determine the first number of the sequence ---even if it is not displayed.
-	// If the interval [geq, leq] is too narrow to host nbitems, immediately log a
-	// fatal error
-	if 1+sequence.leq-sequence.geq < sequence.nbitems {
-		log.Fatalf("It is not possible to fit %v different numbers taken from the range [%v, %v]",
-			sequence.nbitems, sequence.geq, sequence.leq)
-	}
+	// first is the center of the location of the first box
+	first := components.NewCoordinate(
+		components.Formula(fmt.Sprintf(`$(bottom) + (%v\zerowidth, 0.5\zeroheight+1.5\baselineskip)$`,
+			1.0+(2+nbdigits)/2.0)),
+		"first",
+	)
 
-	// and also the number of necessary digits per item. This is computed as the
-	// maximum number of digits that might be required ---in spite of the number
-	// of digits actually needed. Because it is potentially possible to create
-	// sequences with negative numbers then we consider both extrems
-	nbdigits := helpers.Max(float64(helpers.NbDigits(sequence.geq)),
-		float64(helpers.NbDigits(sequence.leq)))
+	// the last element is placed leaving as much space as required to place
+	// intermediate text boxes
+	last := components.NewCoordinate(
+		components.Formula(fmt.Sprintf(`$(first) + (%v*\zerowidth, 0.0)$`,
+			(2.5+nbdigits)*float64((seq.nbitems-1)))),
+		"last",
+	)
+	right := components.NewCoordinate(
+		components.Formula(fmt.Sprintf(`$(last) + (%v\zerowidth, 0.5\zeroheight + 0.5\baselineskip)$`,
+			(2+nbdigits)/2.0)),
+		"right",
+	)
 
-	// the first item to be drawn should be raised by half the height of zero
-	// plus 1.5 the baselineskip, while all the other elements should be
-	// horizontally aligned
-	yshiftheight := 0.5
-	yshiftskip := 1.5
+	// -- Bounding box
 
-	// first, locate a coordinate to mark the origin. This is done using the
-	// reusable coordinate
-	t := `{{.GetCoordinate (dict "label" "label0" "x" 0.0 "y" 0.0)}}`
-	t += "\n"
+	// The bounding box is delimited by bottom and right, as usual
+	bBox := components.NewRectangle("bottom", "right")
+	bBox.SetOptions("white")
 
-	// The following expression takes into account not only the interval [geq,
-	// leq] but also the number of items to display in the sequence
-	rand.Seed(time.Now().UTC().UnixNano())
-	number1 := sequence.geq + rand.Int()%(2+sequence.leq-sequence.nbitems-sequence.geq)
+	// -- items
 
-	// determine the order of reusable components to draw the sequence. Note
-	// that text items are represented with boxes much the same anyway as their
-	// usage help to properly locate the items in the whole picture
-	for idx, component := range sequence.getComponents() {
+	// the items to draw are given in the Args field of this specific instance.
+	// If a question mark is given, then it should be replaced with an empty
+	// text box; otherwise, the specified number is shown
+	var coords []components.Coordinate
+	var cells []components.LabeledText
+	for idx, item := range instance.Args {
 
-		// if this is not the first element of the sequence, restart the y-shift
-		if idx > 0 {
-			yshiftheight = 0.0
-			yshiftskip = 0.0
+		// Create two ancilliary variables to store the coordinate and aspect of
+		// the next cell
+		var box components.LabeledText
+
+		// in spite of the contents, the next cell is located at
+		coord := components.NewCoordinate(
+			components.Formula(fmt.Sprintf(`$(first) + (%v\zerowidth, 0)$`,
+				float64(idx)*(2.5+nbdigits))),
+			fmt.Sprintf("cell%v", idx),
+		)
+
+		// if this is a question mark
+		if item == "?" {
+
+			// then add an empty text box
+			box = components.NewLabeledText(
+				fmt.Sprintf(`rounded corners, rectangle, minimum width=%v*\zerowidth, minimum height = \zeroheight + \baselineskip, draw`,
+					2.0+nbdigits,
+				),
+				fmt.Sprintf("cell%v", idx),
+				"",
+			)
+		} else {
+
+			// otherwise, add the number itself
+			box = components.NewLabeledText(
+				"",
+				fmt.Sprintf("cell%v", idx),
+				`\huge `+item)
 		}
 
-		// now, depending on the type of reusable component
-		switch component {
-		case components.TEXT:
-
-			// the number to show in this location is computed as the sum of the
-			// first number and the index of this position in the sequence, but
-			// other sequences can be created! Note that text is positioned
-			// within an invisible box so that it is much easier to be
-			// positioned within the whole picture
-			t += fmt.Sprintf("{{.GetBox (dict \"label\" \"label%d\" \"formula\" `(label%d) + (%.2f\\zerowidth, %.2f\\zeroheight+%.2f\\baselineskip)` \"minwidth\" `%.2f\\zerowidth` \"minheight\" `\\zeroheight + \\baselineskip` \"draw\" 0 \"text\" `\\huge %d`)}}",
-				1+idx, idx, 3+nbdigits, yshiftheight, yshiftskip, 2+nbdigits, idx+number1)
-
-		case components.BOX:
-			t += fmt.Sprintf("{{.GetBox (dict \"label\" \"label%d\" \"formula\" `(label%d) + (%.2f\\zerowidth, %.2f\\zeroheight+%.2f\\baselineskip)` \"minwidth\" `%.2f\\zerowidth` \"minheight\" `\\zeroheight + \\baselineskip` \"draw\" 1 \"text\" \"\")}}",
-				1+idx, idx, 3+nbdigits, yshiftheight, yshiftskip, 2+nbdigits)
-
-		default:
-			log.Fatal("Unexpected type of a reusable component in a sequence")
-		}
-
-		// and move to the next line!
-		t += "\n"
+		// and add the new box and its coordinates
+		coords = append(coords, coord)
+		cells = append(cells, box)
 	}
 
-	// now, execute this template with a masterFile
-	var err error
-	var result bytes.Buffer
-	var masterFile MasterFile
-	if result, err = masterFile.masterToBufferFromTemplate(t); err != nil {
-		log.Fatalf("Error when executing the template for creating a sequence: %v", err)
+	// And put all this elements together to show up the picture of a sequence
+	seqPicture := sequenceTikZ{
+		bottom: bottom,
+		first:  first,
+		last:   last,
+		right:  right,
+		bBox:   bBox,
+		coords: coords,
+		cells:  cells,
 	}
 
-	return result.String()
+	// and return the TikZ code necessary for drawing the problem
+	return seqPicture.execute()
 }
 
 // Return TikZ code that represents a sequence
-func (sequence sequence) execute() string {
+func (seq sequence) execute() string {
 
 	// create a template with the TikZ code for showing this sequence
 	tpl, err := template.New("sequence").Parse(latexSequenceCode)
@@ -279,7 +433,7 @@ func (sequence sequence) execute() string {
 	// and now make the appropriate substitutions. Note that the execution of the
 	// template is written to a string
 	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, sequence); err != nil {
+	if err := tpl.Execute(&tplOutput, seq); err != nil {
 		log.Fatal(err)
 	}
 

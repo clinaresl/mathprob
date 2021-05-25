@@ -31,7 +31,7 @@ import (
 // specified options from the lower-left to the upper-right references. Note
 // that rectangles use references, either the names of coordinates (i.e.,
 // labels) or formulas explicitly given
-const tikzRectangle = `\draw [{{.GetOptions}}] {{.GetReference0}} rectangle {{.GetReference1}};`
+const tikzRectangle = `\draw [{{.GetOptions}}] ({{.GetReference0}}) rectangle ({{.GetReference1}});`
 
 // TikZ code to generate a rectangle with coordinates: it consists of an
 // ordinary rectangle created using labels but preceded of the coordinates used
@@ -170,13 +170,13 @@ func (rect BaseRectangle) GetOptions() string {
 // Return the reference of the lower-left corner of the rectangle
 func (rect Rectangle) GetReference0() string {
 
-	return fmt.Sprintf("%v", rect.ref0)
+	return rect.ref0
 }
 
 // Return the reference of the upper-right corner of the rectangle
 func (rect Rectangle) GetReference1() string {
 
-	return fmt.Sprintf("%v", rect.ref1)
+	return rect.ref1
 }
 
 // Finally, rectangles are stringers and these are the means provided for

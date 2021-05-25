@@ -66,10 +66,10 @@
     cada uno de los siguientes? No es más difícil que cuando jugamos a
     esto paseando por la calle:
 
-    {{.Sequence (dict "type" 0 "nbitems" 5 "geq" 0 "leq" 9)}}
-    {{.Sequence (dict "type" 1 "nbitems" 5 "geq" 0 "leq" 9)}}
-    {{.Sequence (dict "type" 2 "nbitems" 5 "geq" 0 "leq" 9)}}
-    {{.Sequence (dict "type" 3 "nbitems" 5 "geq" 0 "leq" 9)}}
+    {{.Sequence (dict "type" 0 "nbitems" 5 "geq" 100 "leq" 999)}}
+    {{.Sequence (dict "type" 1 "nbitems" 5 "geq" 100 "leq" 999)}}
+    {{.Sequence (dict "type" 2 "nbitems" 5 "geq" 1000 "leq" 9999)}}
+    {{.Sequence (dict "type" 3 "nbitems" 5 "geq" 1000 "leq" 9999)}}
 
 \end{parts}
 

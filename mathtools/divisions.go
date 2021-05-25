@@ -37,8 +37,6 @@ import (
 
 // the TikZ code for generating divisions with any parameters is shown
 // below
-// the TikZ code for generating divisions with any parameters is shown
-// below
 const latexDivisionCode = `\begin{minipage}{0.25\linewidth}
   \begin{center}
     \begin{tikzpicture}
@@ -52,39 +50,47 @@ const latexDivisionCode = `\begin{minipage}{0.25\linewidth}
 `
 
 const tikZDivisionCode = `% --- Coordinates -------------------------------------------------------
-{{.GetDivFirstLabel}}
-{{.GetDivNextLabels}}
+{{.GetFirstLabel}}
+{{.GetNextLabels}}
         % -----------------------------------------------------------------------
 
         % --- Ancilliary reference points
-{{.GetDivLine}}
+{{.GetLine}}
         % -----------------------------------------------------------------------
 
         % --- Bounding Box ------------------------------------------------------
-{{.GetDivBoundingBox}}
+{{.GetBoundingBox}}
         % -----------------------------------------------------------------------
         % show the box enclosing the divisor
-{{.GetDivSplitBox}}
+{{.GetSplitBox}}
         % show the box for writing the quotient
-{{.GetDivAnswer}}
+{{.GetAnswer}}
         % -----------------------------------------------------------------------
         
         % --- Text ------------------------------------------------------------
 
         % Dividend
-{{.GetDivDividend}}
+{{.GetDividend}}
         % Divisor
-{{.GetDivDivisor}}
+{{.GetDivisor}}
         % -----------------------------------------------------------------------
 `
 
 // types
 // ----------------------------------------------------------------------------
 
-// A division is characterized by its coordinates, a bounding box
-// surrounding all the available area for solving the exercise, the
-// box enclosing the divisor, and also the operands
-type divisionProblem struct {
+// The formal definition of a division problem is given below. It is defined
+// with the number of digits of the dividend, divisor and quotient
+type division struct {
+	nbdvdigits int
+	nbdrdigits int
+	nbqdigits  int
+}
+
+// A division is characterized by its coordinates, a bounding box surrounding
+// all the available area for solving the exercise, the box enclosing the
+// divisor, and also the operands
+type divisionTikZ struct {
 
 	// the first label is computed explicitly whereas the next two labels are
 	// computed with respect to the previous ones using formulas. All of them
@@ -114,16 +120,93 @@ type divisionProblem struct {
 	dividend, divisor components.Text
 }
 
-// The formal definition of a division problem is given below. It is defined
-// with the number of digits of the dividend, divisor and quotient
-type division struct {
-	nbdvdigits int
-	nbdrdigits int
-	nbqdigits  int
-}
-
 // methods
 // ----------------------------------------------------------------------------
+
+// -- divisionTikZ
+
+// Generates the TikZ code necessary for positioning the first coordinate
+func (tikz divisionTikZ) GetFirstLabel() string {
+
+	// The label locating the dividend is stored in label1 as a
+	// components.Coordinate. It then just suffices to print it
+	return fmt.Sprintf("%v", tikz.label1)
+}
+
+// Generates the TikZ code necessary for positioning other coordinates after the
+// first one
+func (tikz divisionTikZ) GetNextLabels() string {
+
+	// The labels used for locating the left margin of the bounding box
+	// surrounding the divisor and also its lower margin are stored as
+	// components.Coordinate in label2 and label3. It then just suffices to show
+	// their location
+	return fmt.Sprintf("%v\n%v", tikz.label2, tikz.label3)
+}
+
+// Generates the TikZ code necessary for positioning the first line of results
+func (tikz divisionTikZ) GetLine() string {
+
+	// Coordinates draw themselves
+	return fmt.Sprintf("%v", tikz.line1)
+}
+
+// Generates the TikZ code necessary for positioning the bounding box
+// for solving the whole exercise
+func (tikz divisionTikZ) GetBoundingBox() string {
+
+	// Bounding box draw themselves
+	return fmt.Sprintf("%v", tikz.bBox)
+}
+
+// Generates the TikZ code necessary for drawing the split box
+func (tikz divisionTikZ) GetSplitBox() string {
+
+	// Lines draw themselves
+	return fmt.Sprintf("%v", tikz.sBox)
+}
+
+// Generates the TikZ code necessary for drawing the answer box
+func (tikz divisionTikZ) GetAnswer() string {
+
+	// text boxes draw themselves
+	return fmt.Sprintf("%v", tikz.answer)
+}
+
+// Generates the TikZ code necessary for drawing the dividend
+func (tikz divisionTikZ) GetDividend() string {
+
+	// text boxes draw themselves
+	return fmt.Sprintf("%v", tikz.dividend)
+}
+
+// Generates the TikZ code necessary for drawing the divisor
+func (tikz divisionTikZ) GetDivisor() string {
+
+	// text boxes draw draw themselves
+	return fmt.Sprintf("%v", tikz.divisor)
+}
+
+// Return the LaTeX/TikZ commands that show up the picture stored in the
+// receiver
+func (tikz divisionTikZ) execute() string {
+
+	// create a template with the TikZ code for showing this picture
+	tpl, err := template.New("divisionTikZ").Parse(tikZDivisionCode)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// and now make the appropriate substitutions. Note that the execution of
+	// the template is written to a string
+	var tplOutput bytes.Buffer
+	if err := tpl.Execute(&tplOutput, tikz); err != nil {
+		log.Fatal(err)
+	}
+
+	// and return the resulting string
+	return tplOutput.String()
+}
 
 // -- division
 
@@ -236,12 +319,15 @@ func (div division) GetTikZPicture() string {
 		"", "",
 	)
 
-	// --operands
+	// -- operands
 
 	// randomly determine the values of the operands. For this, the service that
 	// generates problems is the one that can marshal them into JSON format. The
 	// dividend is returned in the first position and the divisor in the second
-	instance, _ := div.generateJSONProblem()
+	instance, err := div.generateJSONProblem()
+	if err != nil {
+		log.Fatalf(" Fatal error while generating a valid division: %v", err)
+	}
 
 	dividend := components.NewText(
 		`right=0.0 cm of label1`,
@@ -254,8 +340,8 @@ func (div division) GetTikZPicture() string {
 		`\huge `+instance.Solution[1],
 	)
 
-	// And put all this elements together to bring up the defintion of a division
-	divProblem := divisionProblem{
+	// And put all this elements together to show up the picture of a division
+	divPicture := divisionTikZ{
 		label1:   label1,
 		label2:   label2,
 		label3:   label3,
@@ -267,8 +353,8 @@ func (div division) GetTikZPicture() string {
 		divisor:  divisor,
 	}
 
-	// and return the TikZ code necessary for drawing this operation
-	return divProblem.execute()
+	// and return the TikZ code necessary for drawing the problem
+	return divPicture.execute()
 }
 
 // Execute the given division instance and returns legal TikZ code to represent
@@ -278,93 +364,6 @@ func (div division) execute() string {
 	// create a template with the TikZ code for showing this
 	// division problem
 	tpl, err := template.New("division").Parse(latexDivisionCode)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// and now make the appropriate substitutions. Note that the
-	// execution of the template is written to a string
-	var tplOutput bytes.Buffer
-	if err := tpl.Execute(&tplOutput, div); err != nil {
-		log.Fatal(err)
-	}
-
-	// and return the resulting string
-	return tplOutput.String()
-}
-
-// -- divisionProblem
-// ----------------------------------------------------------------------------
-
-// Generates the TikZ code necessary for positioning the first coordinate
-func (division divisionProblem) GetDivFirstLabel() string {
-
-	// The label locating the dividend is stored in label1 as a
-	// components.Coordinate. It then just suffices to print it
-	return fmt.Sprintf("%v", division.label1)
-}
-
-// Generates the TikZ code necessary for positioning other coordinates after the
-// first one
-func (division divisionProblem) GetDivNextLabels() string {
-
-	// The labels used for locating the left margin of the bounding box
-	// surrounding the divisor and also its lower margin are stored as
-	// components.Coordinate in label2 and label3. It then just suffices to show
-	// their location
-	return fmt.Sprintf("%v\n%v", division.label2, division.label3)
-}
-
-// Generates the TikZ code necessary for positioning the first line of results
-func (division divisionProblem) GetDivLine() string {
-
-	// Coordinates draw themselves
-	return fmt.Sprintf("%v", division.line1)
-}
-
-// Generates the TikZ code necessary for positioning the bounding box
-// for solving the whole exercise
-func (division divisionProblem) GetDivBoundingBox() string {
-
-	// Bounding box draw themselves
-	return fmt.Sprintf("%v", division.bBox)
-}
-
-// Generates the TikZ code necessary for drawing the split box
-func (division divisionProblem) GetDivSplitBox() string {
-
-	// Lines draw themselves
-	return fmt.Sprintf("%v", division.sBox)
-}
-
-// Generates the TikZ code necessary for drawing the answer box
-func (division divisionProblem) GetDivAnswer() string {
-
-	// text boxes draw themselves
-	return fmt.Sprintf("%v", division.answer)
-}
-
-// Generates the TikZ code necessary for drawing the dividend
-func (division divisionProblem) GetDivDividend() string {
-
-	// text boxes draw themselves
-	return fmt.Sprintf("%v", division.dividend)
-}
-
-// Generates the TikZ code necessary for drawing the divisor
-func (division divisionProblem) GetDivDivisor() string {
-
-	// text boxes draw draw themselves
-	return fmt.Sprintf("%v", division.divisor)
-}
-
-// Execute the given division problem and returns legal TikZ code to represent
-// it
-func (div divisionProblem) execute() string {
-
-	// create a template with the TikZ code for showing this
-	// division problem
-	tpl, err := template.New("division").Parse(tikZDivisionCode)
 	if err != nil {
 		log.Fatal(err)
 	}
