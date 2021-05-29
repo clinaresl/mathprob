@@ -62,7 +62,7 @@ const latexSequenceCode = `\begin{minipage}{\linewidth}
 const tikZSequenceCode = `% --- Coordinates ----------------------------------------------------
 
         % the lower-left corner is located at (0,0)
-{{.GetBottomLabel}}
+{{.Bottom}}
 
         % text boxes (either empty or with a hint) have a separation between
         % them equal to epsilon (which here equals 0.5 the width of a digit). To
@@ -72,7 +72,7 @@ const tikZSequenceCode = `% --- Coordinates ------------------------------------
         % (i.e., the additional space of the width of a digit to each side) the
         % first textbox is centered at 2epsilon + (2+nbdigits)/2. Since
         % epsilon=0.5, the previous expression yields: 1.0 + (2+nbdigits)/2
-{{.GetFirstLabel}}
+{{.First}}
 
         % The distance between the centers of two consecutive textboxes equals
         % the width of any text box plus epsilon (the little space intentionally
@@ -80,19 +80,19 @@ const tikZSequenceCode = `% --- Coordinates ------------------------------------
         % there are seq.nbitems in the whole sequence, then the distance from
         % the center of the first text box to the last one is equal to
         % (2+nbdigits+epsilon) * (seq.nbitems - 1)
-{{.GetLastLabel}}
+{{.Last}}
 
         % Finally, the upper-right corner is computed from the location of the
         % center of the last text box plus half the width of any text box. Since
         % the width of any text box is (2+nbdigits), the additional space from
         % the center of the last box equals (2+nbdigits)/2
-{{.GetRightLabel}}
+{{.Right}}
 
         % --- Bounding Box ----------------------------------------------------
 
         % the bounding box is drawn between the lower-left and upper-right
         % coordinates
-{{.GetBoundingBox}}
+{{.BBox}}
 
         % ---------------------------------------------------------------------
 
@@ -124,17 +124,17 @@ type sequenceTikZ struct {
 
 	// The lower-left coordinate is inserted first to position other coordinates
 	// wrt it
-	bottom components.Coordinate
+	Bottom components.Coordinate
 
 	// The first item and last items of the sequence are placed using specific
 	// coordinates using only the information from the lower-left coordinate
-	first, last components.Coordinate
+	First, Last components.Coordinate
 
 	// the bounding box is drawn using two coordinates for the lower-left and
 	// upper-right. Note that it is implemented as a plain rectangle (instead of
 	// a coordinated rectangle), because coordinates are computed separately
-	right components.Coordinate
-	bBox  components.Rectangle
+	Right components.Coordinate
+	BBox  components.Rectangle
 
 	// the items of the sequence are stored as text components which might be
 	// empty or not, each one located at a different coordinate which is
@@ -147,45 +147,6 @@ type sequenceTikZ struct {
 // ----------------------------------------------------------------------------
 
 // --sequenceTikZ
-
-// Generates the TikZ code necessary for positioning the lower-left corner of
-// the bounding box
-func (tikz sequenceTikZ) GetBottomLabel() string {
-
-	// Coordinates draw themselves
-	return fmt.Sprintf("%v", tikz.bottom)
-}
-
-// Generates the TikZ code necessary for positioning the coordinate at the
-// center of the first item of the sequence
-func (tikz sequenceTikZ) GetFirstLabel() string {
-
-	// Coordinates draw themselves
-	return fmt.Sprintf("%v", tikz.first)
-}
-
-// Generates the TikZ code necessary for positioning the coordinate at the
-// center of the last item of the sequence
-func (tikz sequenceTikZ) GetLastLabel() string {
-
-	// Coordinates draw themselves
-	return fmt.Sprintf("%v", tikz.last)
-}
-
-// Generates the TikZ code necessary for positioning the lower-left corner of
-// the bounding box
-func (tikz sequenceTikZ) GetRightLabel() string {
-
-	// Coordinates draw themselves
-	return fmt.Sprintf("%v", tikz.right)
-}
-
-// Generates the TikZ code necessary for positioning the bounding box
-func (tikz sequenceTikZ) GetBoundingBox() string {
-
-	// Bounding box draw themselves
-	return fmt.Sprintf("%v", tikz.bBox)
-}
 
 // Generates the TikZ code necessary for positioning all items of the sequence,
 // either empty cells or hints
@@ -418,11 +379,11 @@ func (seq sequence) GetTikZPicture() string {
 
 	// And put all this elements together to show up the picture of a sequence
 	seqPicture := sequenceTikZ{
-		bottom: bottom,
-		first:  first,
-		last:   last,
-		right:  right,
-		bBox:   bBox,
+		Bottom: bottom,
+		First:  first,
+		Last:   last,
+		Right:  right,
+		BBox:   bBox,
 		coords: coords,
 		cells:  cells,
 	}

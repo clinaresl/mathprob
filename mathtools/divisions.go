@@ -50,29 +50,30 @@ const latexDivisionCode = `\begin{minipage}{0.25\linewidth}
 `
 
 const tikZDivisionCode = `% --- Coordinates -------------------------------------------------------
-{{.GetFirstLabel}}
-{{.GetNextLabels}}
+{{.Label1}}
+{{.Label2}}
+{{.Label3}}
         % -----------------------------------------------------------------------
 
         % --- Ancilliary reference points
-{{.GetLine}}
+{{.Line1}}
         % -----------------------------------------------------------------------
 
         % --- Bounding Box ------------------------------------------------------
-{{.GetBoundingBox}}
+{{.BBox}}
         % -----------------------------------------------------------------------
         % show the box enclosing the divisor
-{{.GetSplitBox}}
+{{.SBox}}
         % show the box for writing the quotient
-{{.GetAnswer}}
+{{.Answer}}
         % -----------------------------------------------------------------------
         
         % --- Text ------------------------------------------------------------
 
         % Dividend
-{{.GetDividend}}
+{{.Dividend}}
         % Divisor
-{{.GetDivisor}}
+{{.Divisor}}
         % -----------------------------------------------------------------------
 `
 
@@ -95,97 +96,35 @@ type divisionTikZ struct {
 	// the first label is computed explicitly whereas the next two labels are
 	// computed with respect to the previous ones using formulas. All of them
 	// are implemented using the reusable components of TikZ coordinates
-	label1         components.Coordinate
-	label2, label3 components.Coordinate
+	Label1         components.Coordinate
+	Label2, Label3 components.Coordinate
 
 	// likewise the coordinate for determining the location of the first line is
 	// computed with respect to another coordinate and hence a formula is used.
 	// There might be an arbitrary number of points but other points are
 	// computed only wrt the location of the first line
-	line1 components.Coordinate
+	Line1 components.Coordinate
 
 	// the bounding box surrounding all the necessary area for solving the
 	// exercise is defined next and it is computed with two formulas that
 	// specify the lower left and upper right corners
-	bBox components.CoordinatedRectangle
+	BBox components.CoordinatedRectangle
 
 	// the box surrounding the dividend consists of a path drawn between three
 	// coordinates whose location is determined using formulas
-	sBox components.Line
+	SBox components.Line
 
 	// the answer should be written within a box explicitly shown
-	answer components.Text
+	Answer components.Text
 
 	// finally, both operands, are created next and implemented as Texts
-	dividend, divisor components.Text
+	Dividend, Divisor components.Text
 }
 
 // methods
 // ----------------------------------------------------------------------------
 
 // -- divisionTikZ
-
-// Generates the TikZ code necessary for positioning the first coordinate
-func (tikz divisionTikZ) GetFirstLabel() string {
-
-	// The label locating the dividend is stored in label1 as a
-	// components.Coordinate. It then just suffices to print it
-	return fmt.Sprintf("%v", tikz.label1)
-}
-
-// Generates the TikZ code necessary for positioning other coordinates after the
-// first one
-func (tikz divisionTikZ) GetNextLabels() string {
-
-	// The labels used for locating the left margin of the bounding box
-	// surrounding the divisor and also its lower margin are stored as
-	// components.Coordinate in label2 and label3. It then just suffices to show
-	// their location
-	return fmt.Sprintf("%v\n%v", tikz.label2, tikz.label3)
-}
-
-// Generates the TikZ code necessary for positioning the first line of results
-func (tikz divisionTikZ) GetLine() string {
-
-	// Coordinates draw themselves
-	return fmt.Sprintf("%v", tikz.line1)
-}
-
-// Generates the TikZ code necessary for positioning the bounding box
-// for solving the whole exercise
-func (tikz divisionTikZ) GetBoundingBox() string {
-
-	// Bounding box draw themselves
-	return fmt.Sprintf("%v", tikz.bBox)
-}
-
-// Generates the TikZ code necessary for drawing the split box
-func (tikz divisionTikZ) GetSplitBox() string {
-
-	// Lines draw themselves
-	return fmt.Sprintf("%v", tikz.sBox)
-}
-
-// Generates the TikZ code necessary for drawing the answer box
-func (tikz divisionTikZ) GetAnswer() string {
-
-	// text boxes draw themselves
-	return fmt.Sprintf("%v", tikz.answer)
-}
-
-// Generates the TikZ code necessary for drawing the dividend
-func (tikz divisionTikZ) GetDividend() string {
-
-	// text boxes draw themselves
-	return fmt.Sprintf("%v", tikz.dividend)
-}
-
-// Generates the TikZ code necessary for drawing the divisor
-func (tikz divisionTikZ) GetDivisor() string {
-
-	// text boxes draw draw themselves
-	return fmt.Sprintf("%v", tikz.divisor)
-}
 
 // Return the LaTeX/TikZ commands that show up the picture stored in the
 // receiver
@@ -346,15 +285,15 @@ func (div division) GetTikZPicture() string {
 
 	// And put all this elements together to show up the picture of a division
 	divPicture := divisionTikZ{
-		label1:   label1,
-		label2:   label2,
-		label3:   label3,
-		line1:    line1,
-		bBox:     bBox,
-		sBox:     sBox,
-		answer:   answer,
-		dividend: dividend,
-		divisor:  divisor,
+		Label1:   label1,
+		Label2:   label2,
+		Label3:   label3,
+		Line1:    line1,
+		BBox:     bBox,
+		SBox:     sBox,
+		Answer:   answer,
+		Dividend: dividend,
+		Divisor:  divisor,
 	}
 
 	// and return the TikZ code necessary for drawing the problem
