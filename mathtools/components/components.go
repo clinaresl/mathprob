@@ -12,18 +12,6 @@
 */
 
 // This package provides a number of reusable components that can be used for
-// creating exercises automatically.
+// creating exercises automatically. It also provides means for creating groups
+// of reusable components that can be used at once
 package components
-
-// the different components are distinguished by an integer index
-type ComponentId int
-
-// which is used to number all the different reusable components implemented in
-// this package
-const (
-	POSITION ComponentId = iota
-	FORMULA
-	COORDINATE
-	TEXT
-	BOX
-)

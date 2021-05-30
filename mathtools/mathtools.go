@@ -335,8 +335,6 @@ func (masterFile MasterFile) BasicOperation(dict map[string]interface{}) string 
 		log.Fatalf("The dictionary given for creating a basic operation is incorrect: %v", err)
 	}
 
-	log.Println(basicOperation)
-
 	// and return the LaTeX/TikZ code for representing this sequence
 	return basicOperation.execute()
 }

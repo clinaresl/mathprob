@@ -64,10 +64,13 @@
     \part[3] Bueno, bah, venga, tampoco será para tanto ... Bueno, al principio,
     ya sufrirás después
 
-    {{.BasicOperation (dict "type" 0 "operator" "+" "nboperands" 2 "nbdigitsop" 2 "nbdigitsrslt" 3)}}
-    {{.BasicOperation (dict "type" 0 "operator" "-" "nboperands" 2 "nbdigitsop" 2 "nbdigitsrslt" 3)}}
-    {{.BasicOperation (dict "type" 1 "operator" "*" "nboperands" 2 "nbdigitsop" 2 "nbdigitsrslt" 3)}}
-    {{.BasicOperation (dict "type" 1 "operator" "/" "nboperands" 2 "nbdigitsop" 2 "nbdigitsrslt" 3)}}
+    {{range .Slice 4}}{{.BasicOperation (dict "type" 0 "operator" "+" "nboperands" 2 "nbdigitsop" 1 "nbdigitsrslt" 1)}}{{end}}
+    {{range .Slice 4}}{{.BasicOperation (dict "type" 1 "operator" "+" "nboperands" 4 "nbdigitsop" 2 "nbdigitsrslt" 3)}}{{end}}
+    {{range .Slice 4}}{{.BasicOperation (dict "type" 1 "operator" "-" "nboperands" 4 "nbdigitsop" 2 "nbdigitsrslt" 2)}}{{end}}
+    {{range .Slice 4}}{{.BasicOperation (dict "type" 0 "operator" "*" "nboperands" 3 "nbdigitsop" 1 "nbdigitsrslt" 2)}}{{end}}
+    {{range .Slice 4}}{{.BasicOperation (dict "type" 1 "operator" "*" "nboperands" 3 "nbdigitsop" 1 "nbdigitsrslt" 2)}}{{end}}
+    {{range .Slice 4}}{{.BasicOperation (dict "type" 0 "operator" "/" "nboperands" 2 "nbdigitsop" 2 "nbdigitsrslt" 1)}}{{end}}
+    {{range .Slice 4}}{{.BasicOperation (dict "type" 1 "operator" "/" "nboperands" 2 "nbdigitsop" 2 "nbdigitsrslt" 1)}}{{end}}
 
 \end{parts}
 

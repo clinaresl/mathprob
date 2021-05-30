@@ -165,9 +165,13 @@ El esquema general se muestra a continuación:
       % a box
       \coordinate (op1) at ($(answer) + (0.0, 3.0\baselineskip)$);
       \fill [red] (op1) circle (1pt);
+      \draw (op1) node {\huge 4};
+      \draw(op1) node [lightgray, rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{}};
 
       \coordinate (op2) at ($(answer) + (0.0, 1.0\zeroheight + 4.0\baselineskip)$);
       \fill [red] (op2) circle (1pt);
+      \draw (op2) node {\huge 3};
+      \draw(op2) node [lightgray, rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{}};
 
       % --- Operator --------------------------------------------------------
 
@@ -193,16 +197,9 @@ El esquema general se muestra a continuación:
 
       % ---------------------------------------------------------------------
 
-      % --- Basic operation--------------------------------------------------
+      % --- Answer box ------------------------------------------------------
 
-      % result
       \draw(answer) node [rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{\huge 7}};
-
-      % operands
-      \draw (op2) node {\huge 3};
-      \draw(op2) node [lightgray, rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{}};
-      \draw (op1) node {\huge 4};
-      \draw(op1) node [lightgray, rounded corners, rectangle, minimum width=3.0*\zerowidth, minimum height = \zeroheight + \baselineskip, draw] {\textcolor{lightgray}{}};
 
       % ---------------------------------------------------------------------
 
@@ -249,10 +246,10 @@ utilidad:
     Etiqueta & Descripción & Referencia & $\delta x$ & $\delta y$ \\ \toprule
     \texttt{bottom} & Esquina inferior izquierda & -- & 0 & 0 \\ \midrule
     \texttt{answer} & Posición de la respuesta & \texttt{bottom}&  $1.5+\frac{2+\textrm{nbdigits}}{2}\backslash width$ & $0.5\backslash height+1.0\backslash lineskip$ \\  \midrule
-    \texttt{op1} & Posición del primer operador, el que está justo encima de la línea de resultados & \texttt{answer} & 0 & $3.0\backslash lineskip$ \\  \midrule
-    \texttt{op}$i$ & Posición del $i$-ésimo operador & \texttt{answer} & 0 & $3.0\backslash lineskip + (i-1) (\backslash height + \backslash lineskip)$ \\  \midrule
+    \texttt{op1} & Posición del primer operando, el que está justo encima de la línea de resultados & \texttt{answer} & 0 & $3.0\backslash lineskip$ \\  \midrule
+    \texttt{op}$i$ & Posición del $i$-ésimo operando & \texttt{answer} & 0 & $3.0\backslash lineskip + (i-1) (\backslash height + \backslash lineskip)$ \\  \midrule
     \texttt{operator} & Posición del operador: $+, -, \times, \div$ & \texttt{op1} & $-\left(0.75+\frac{2+\textrm{nbdigits}}{2}\right)\backslash width$ & 0 \\  \midrule
-    \texttt{split1} & Extremo izquierdo de la línea de resultaods & \texttt{answer} & $-\left(0.75+\frac{2+\textrm{nbdigits}}{2}\right)\backslash width$ & $1.5\backslash lineskip$ \\  \midrule
+    \texttt{split1} & Extremo izquierdo de la línea de resultados & \texttt{answer} & $-\left(0.75+\frac{2+\textrm{nbdigits}}{2}\right)\backslash width$ & $1.5\backslash lineskip$ \\  \midrule
     \texttt{split2} & Extremo derecho de la línea de resultados & \texttt{answer} & $\left(\frac{2+\textrm{nbdigits}}{2}\right)\backslash width$ & $1.5\backslash lineskip$ \\ \midrule
     \texttt{right} & Extremo superior derecho & \texttt{split2} & $0.75\backslash width$ & $(1 + 2\times \mathrm{nbops})\backslash lineskip$ \\ \bottomrule
   \end{tabular}

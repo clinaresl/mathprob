@@ -274,10 +274,11 @@ func (seq sequence) generateJSONProblem() (problemJSON, error) {
 // components
 func (seq sequence) GetTikZPicture() string {
 
-	// -- operands randomly determine the values of the operands. For this, the
-	// service that generates problems is the one that can marshal them into
-	// JSON format. The numbers of the sequence are given in Args, where a
-	// question mark is a number that has to be guessed by the student
+	// -- operands: randomly determine the values of the operands. For this, the
+	//              service that generates problems is the one that can marshal
+	//              them into JSON format. The numbers of the sequence are given
+	//              in Args, where a question mark is a number that has to be
+	//              guessed by the student
 	instance, err := seq.generateJSONProblem()
 	if err != nil {
 		log.Fatalf(" Fatal error while generating a valid sequence: %v", err)
