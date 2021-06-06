@@ -36,13 +36,13 @@ const (
 	BOOPERAND
 )
 
-// the TikZ code for generating arbitrary sequences is shown next. Note that it
+// the TikZ code for generating arbitrary basic operations is shown next. Note that it
 // makes use of LaTeX/TikZ components
 const latexBasicOperationCode = `\begin{minipage}{0.25\linewidth}
     \begin{center}
         \begin{tikzpicture}
 
-            % draw the sequence
+            % draw the basic operation
             {{.GetTikZPicture}}
 
         \end{tikzpicture}
@@ -99,9 +99,6 @@ const tikZBasicOperationCode = `% --- Coordinates ------------------------------
 
       % ---------------------------------------------------------------------
 `
-
-// types
-// ----------------------------------------------------------------------------
 
 // types
 // ----------------------------------------------------------------------------
@@ -336,7 +333,7 @@ func (bo basicOperation) generateJSONProblem() (problemJSON, error) {
 	}, nil
 }
 
-// return a valid LaTeX/TikZ representation of this sequence using TikZ
+// return a valid LaTeX/TikZ representation of this basic operation using TikZ
 // components
 func (bo basicOperation) GetTikZPicture() string {
 
@@ -486,7 +483,7 @@ func (bo basicOperation) GetTikZPicture() string {
 			`\huge `+instance.Args[len(instance.Args)-1])
 	}
 
-	// And put all this elements together to show up the picture of a sequence
+	// And put all this elements together to show up the picture of a basic operation
 	boPicture := basicOperationTikZ{
 		Bottom:        bottom,
 		Answer:        answer,
@@ -505,7 +502,7 @@ func (bo basicOperation) GetTikZPicture() string {
 	return boPicture.execute()
 }
 
-// Return TikZ code that represents a sequence
+// Return TikZ code that represents a basic operation
 func (bo basicOperation) execute() string {
 
 	// create a template with the TikZ code for showing this basic operation

@@ -57,7 +57,7 @@ func NewMasterFile(filename, name, class string) MasterFile {
 	return MasterFile{Infile: filename, Name: name, Class: class}
 }
 
-// return a valid specification of a basic operation with no error ir all the
+// return a valid specification of a basic operation with no error if all the
 // keys given in dict are correct for defining a basic sequence. If not, an
 // error is returned. If an error is returned, the contents of the basic
 // operation are undefined
@@ -130,6 +130,155 @@ func verifyBasicOperationDict(dict map[string]interface{}) (basicOperation, erro
 	}, nil
 }
 
+// verify that the keys given in dict are correct for defining
+// divisions. A dictionary is correct if and only if all the mandatory
+// arguments have been given. If not, an error is raised and execution
+// is aborted. Unnecessary keys are reported
+func verifyDivisionDict(dict map[string]interface{}) (division, error) {
+
+	// the mandatory keys are given next
+	mandatory := []string{"nbdvdigits", "nbdrdigits", "nbqdigits"}
+
+	// now, verify that all mandatory parameters are present in the dict
+	for _, key := range mandatory {
+
+		// if a mandatory parameter has not been given, then
+		// raise an error and exit
+		if _, ok := dict[key]; !ok {
+			log.Fatalf(" Fatal Error: Mandatory key '%v' for defining a division not found", key)
+		}
+	}
+
+	// make also sure that parameters are given with the right type
+	var err error
+	var nbdvdigits, nbdrdigits, nbqdigits int
+	if nbdvdigits, err = helpers.Atoi(dict["nbdvdigits"]); err != nil {
+		return division{}, errors.New("the number of digits of the dividend should be given as a integer")
+	}
+	if nbdrdigits, err = helpers.Atoi(dict["nbdrdigits"]); err != nil {
+		return division{}, errors.New("the number of digits of the divisor should be given as an integer")
+	}
+	if nbqdigits, err = helpers.Atoi(dict["nbqdigits"]); err != nil {
+		return division{}, errors.New("the number of digits of the quotient should be given as an integer")
+	}
+
+	// next, verify if there are some unnecessary parameters
+	for key := range dict {
+
+		// if this key was not requested then report a message
+		if !helpers.Find(key, mandatory) {
+			log.Printf(" Warning: The key '%v' is not necessary for creating a division and it will be ignored", key)
+		}
+	}
+
+	// now, return the proper definition of a division problem
+	return division{
+		nbdvdigits: nbdvdigits,
+		nbdrdigits: nbdrdigits,
+		nbqdigits:  nbqdigits,
+	}, nil
+}
+
+// return a valid specification of a multiplication table with no error if all
+// the keys given in dict are correct for defining a multiplication table. If
+// not, an error is returned. If an error is returned, the contents of the
+// multiplication able are undefined
+//
+// A dictionary is correct if and only if it correctly provides a type of
+// multiplication table with the keyword "type", and a number of digits for
+// randomly choosing the factor. Other optional parameters are the lower and
+// upper bound (which by default take the values 1 and 10 respectively), and
+// whether rows are shown in the regular order or inverted with the keyword
+// "inv" whose value can be either "true" or "false", and also whether the rows
+// are sorted or not with the keyword "sorted" whose only allowed values are
+// either "true" or "false".
+func verifyMultiplicationTableDict(dict map[string]interface{}) (multiplicationTable, error) {
+
+	// the mandatory keys are given next
+	mandatory := []string{"type", "nbdigits"}
+
+	// all acknowledged options (including those that are optiona) are listed
+	// next
+	all := []string{"type", "nbdigits", "geq", "leq", "inv", "sorted"}
+
+	// now, verify that all mandatory parameters are present in the dict
+	for _, key := range mandatory {
+
+		// if a mandatory parameter has not been given, then raise an error and
+		// exit
+		if _, ok := dict[key]; !ok {
+			return multiplicationTable{}, fmt.Errorf("Mandatory key '%v' for defining a multiplication table not found", key)
+		}
+	}
+
+	// make also sure that all mandatory parameters are given with the right type
+	var ok bool
+	var err error
+	var mttype, nbdigits int
+	if mttype, err = helpers.Atoi(dict["type"]); err != nil {
+		return multiplicationTable{}, errors.New("the type of a multiplication table should be given as an integer")
+	}
+	if nbdigits, err = helpers.Atoi(dict["nbdigits"]); err != nil {
+		return multiplicationTable{}, errors.New("the number of digits of the factor in a multiplication table should be given as an integer")
+	}
+
+	// next, check whether some optional parameters were given or not. If not,
+	// make sure they take their default values
+	geq, leq := 1, 10
+	inv, sorted := false, true
+
+	if _, ok = dict["geq"]; ok {
+		if geq, err = helpers.Atoi(dict["geq"]); err != nil {
+			return multiplicationTable{}, errors.New("the lower bound of a multiplication table should be given as an integer")
+		}
+	}
+	if _, ok = dict["leq"]; ok {
+		if leq, err = helpers.Atoi(dict["leq"]); err != nil {
+			return multiplicationTable{}, errors.New("the upper bound of a multiplication table should be given as an integer")
+		}
+	}
+	// if inv, ok = dict["inv"].(bool); !ok {
+	// 	return multiplicationTable{}, errors.New("The flag inv of a multiplication table should be given as a stirng")
+	// } else {
+	// 	domain := []string{"false", "true"}
+	// 	if !helpers.Find(inv, domain) {
+	// 		return multiplicationTable{}, errors.New("The value of inv of a multiplication table has to be one and only one among: 'false', 'true'")
+	// 	}
+	// }
+	// if sorted, ok = dict["sorted"].(bool); !ok {
+	// 	return multiplicationTable{}, errors.New("The flag sorted of a multiplication table should be given as a stirng")
+	// } else {
+	// 	domain := []string{"false", "true"}
+	// 	if !helpers.Find(inv, domain) {
+	// 		return multiplicationTable{}, errors.New("The value of sorted of a multiplication table has to be one and only one among: 'false', 'true'")
+	// 	}
+	// }
+
+	// finally, ensure the type is correct
+	if mttype < MTRESULT || mttype > MTOPERAND {
+		return multiplicationTable{}, fmt.Errorf("the type of a multiplication table given '%v' is incorrect", mttype)
+	}
+
+	// next, verify if there are some unnecessary parameters
+	for key := range dict {
+
+		// if this key was not requested then report a message
+		if !helpers.Find(key, all) {
+			log.Printf(" Warning: The key '%v' is not necessary for creating a multiplication table and it will be ignored", key)
+		}
+	}
+
+	// otherwise, the dictionary is correct
+	return multiplicationTable{
+		mttype:   mttype,
+		nbdigits: nbdigits,
+		geq:      geq,
+		leq:      leq,
+		inv:      inv,
+		sorted:   sorted,
+	}, nil
+}
+
 // return a valid specification of a sequence with no error if all the keys
 // given in dict are correct for defining a sequence. If not, an error is
 // returned. If an error is returned, the contents of the sequence are
@@ -189,55 +338,6 @@ func verifySequenceDict(dict map[string]interface{}) (sequence, error) {
 		nbitems: nbitems,
 		geq:     geq,
 		leq:     leq,
-	}, nil
-}
-
-// verify that the keys given in dict are correct for defining
-// divisions. A dictionary is correct if and only if all the mandatory
-// arguments have been given. If not, an error is raised and execution
-// is aborted. Unnecessary keys are reported
-func verifyDivisionDict(dict map[string]interface{}) (division, error) {
-
-	// the mandatory keys are given next
-	mandatory := []string{"nbdvdigits", "nbdrdigits", "nbqdigits"}
-
-	// now, verify that all mandatory parameters are present in the dict
-	for _, key := range mandatory {
-
-		// if a mandatory parameter has not been given, then
-		// raise an error and exit
-		if _, ok := dict[key]; !ok {
-			log.Fatalf(" Fatal Error: Mandatory key '%v' for defining a division not found", key)
-		}
-	}
-
-	// make also sure that parameters are given with the right type
-	var err error
-	var nbdvdigits, nbdrdigits, nbqdigits int
-	if nbdvdigits, err = helpers.Atoi(dict["nbdvdigits"]); err != nil {
-		return division{}, errors.New("the number of digits of the dividend should be given as a integer")
-	}
-	if nbdrdigits, err = helpers.Atoi(dict["nbdrdigits"]); err != nil {
-		return division{}, errors.New("the number of digits of the divisor should be given as an integer")
-	}
-	if nbqdigits, err = helpers.Atoi(dict["nbqdigits"]); err != nil {
-		return division{}, errors.New("the number of digits of the quotient should be given as an integer")
-	}
-
-	// next, verify if there are some unnecessary parameters
-	for key := range dict {
-
-		// if this key was not requested then report a message
-		if !helpers.Find(key, mandatory) {
-			log.Printf(" Warning: The key '%v' is not necessary for creating a division and it will be ignored", key)
-		}
-	}
-
-	// now, return the proper definition of a division problem
-	return division{
-		nbdvdigits: nbdvdigits,
-		nbdrdigits: nbdrdigits,
-		nbqdigits:  nbqdigits,
 	}, nil
 }
 
@@ -339,6 +439,51 @@ func (masterFile MasterFile) BasicOperation(dict map[string]interface{}) string 
 	return basicOperation.execute()
 }
 
+// Divisions
+// ----------------------------------------------------------------------------
+
+// Return the LaTeX code in TikZ format that generates a division with the
+// keywords given in the dictionary:
+//
+// nbdvdigits: number of digits of the dividend
+// nbdrdigits: number of digits of the divisor
+// nbqdigits: number of digits of the quotient
+func (masterFile MasterFile) Division(dict map[string]interface{}) string {
+
+	// Verify the given keys in the dictionary are correct. Note
+	// that the types are not verified, only the presence of the
+	// keys. In case of an error, just generate a fatal error
+	div, err := verifyDivisionDict(dict)
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+
+	return div.execute()
+}
+
+// Multiplication Tables
+// ----------------------------------------------------------------------------
+
+// Return the LaTeX code in TikZ format that generates a multiplication table
+// with the keywords given in the dictionary:
+//
+// type: type of the multiplication table
+// nbdigits: number of digits of the factor
+// geq, leq: lower and upper bound of the numbers used
+// inv: whether numbers are shown in the regular order or inverted
+// sorted: whether rows are shown in sorted order or not
+func (masterFile MasterFile) MultiplicationTable(dict map[string]interface{}) string {
+
+	// Verify the given keys in the dictionary are correct. In case of an error,
+	// just generate a fatal error
+	mt, err := verifyMultiplicationTableDict(dict)
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+
+	return mt.execute()
+}
+
 // Sequences
 // ----------------------------------------------------------------------------
 
@@ -360,28 +505,6 @@ func (masterFile MasterFile) Sequence(dict map[string]interface{}) string {
 
 	// and return the LaTeX/TikZ code for representing this sequence
 	return sequence.execute()
-}
-
-// Divisions
-// ----------------------------------------------------------------------------
-
-// Return the LaTeX code in TikZ format that generates a division with the
-// keywords given in the dictionary:
-//
-// nbdvdigits: number of digits of the dividend
-// nbdrdigits: number of digits of the divisor
-// nbqdigits: number of digits of the quotient
-func (masterFile MasterFile) Division(dict map[string]interface{}) string {
-
-	// Verify the given keys in the dictionary are correct. Note
-	// that the types are not verified, only the presence of the
-	// keys. In case of an error, just generate a fatal error
-	div, err := verifyDivisionDict(dict)
-	if err != nil {
-		log.Fatalf("%v", err)
-	}
-
-	return div.execute()
 }
 
 // templates

@@ -153,10 +153,10 @@ func GenerateJSON(problems []MasterProblem) (data []byte, err error) {
 					}
 				}
 
-			case "SEQUENCE":
+			case "DIVISION":
 
 				// First, verify that all items in the dictionary of args are correct
-				if instance, err := verifySequenceDict(problem.args); err != nil {
+				if instance, err := verifyDivisionDict(problem.args); err != nil {
 					return data, err
 				} else {
 
@@ -174,10 +174,31 @@ func GenerateJSON(problems []MasterProblem) (data []byte, err error) {
 					}
 				}
 
-			case "DIVISION":
+			case "MULTIPLICATIONTABLE":
 
 				// First, verify that all items in the dictionary of args are correct
-				if instance, err := verifyDivisionDict(problem.args); err != nil {
+				if instance, err := verifyMultiplicationTableDict(problem.args); err != nil {
+					return data, err
+				} else {
+
+					// if so, generate a JSON stream with the representation of this
+					// specific problem
+					if iprob, err := instance.generateJSONProblem(); err != nil {
+						return data, err
+					} else {
+
+						// if everything went on correctly, then correctly
+						// number this problem and add this problem to the slice
+						// of problems to marshal
+						iprob.Id = i
+						jsonprobs = append(jsonprobs, iprob)
+					}
+				}
+
+			case "SEQUENCE":
+
+				// First, verify that all items in the dictionary of args are correct
+				if instance, err := verifySequenceDict(problem.args); err != nil {
 					return data, err
 				} else {
 

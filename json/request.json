@@ -58,5 +58,13 @@
             "nbdigitsrslt": 1
         },
         "nbprobs": 5
+    },
+    {
+        "type": "MultiplicationTable",
+        "args": {
+            "type": 1,
+            "nbdigits": 2
+        },
+        "nbprobs": 5
     }
 ]
