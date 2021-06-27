@@ -15,11 +15,30 @@ import (
 	"math"
 	"math/rand"
 	"strconv"
+	"strings"
 )
 
+// transform the input into a bool by making sure the input is either an int or
+// a string. In case an integer is given, 0 is false and any other value is 1;
+// if a string is given, "" and "false" (with any mixture of upper/lower case
+// letter) is false and any other string is true. In case it is not possible,
+// the value returned is undefined and an error is signaled
+func Atob(n interface{}) (bool, error) {
+
+	switch value := n.(type) {
+	case int:
+		return value != 0, nil
+	case string:
+		return value != "" && strings.ToLower(value) != "false", nil
+	}
+
+	// if the type has not been recognized, then return an error
+	return false, fmt.Errorf("It was not possible to cast '%v' into a bool")
+}
+
 // transform the input into an integer by making sure that the input is either
-// an int, a float or a string. In case it is not possible, the value return is
-// undefined and an error is signaled
+// an int, a float or a string. In case it is not possible, the value returned
+// is undefined and an error is signaled
 func Atoi(n interface{}) (int, error) {
 
 	switch value := n.(type) {
@@ -99,6 +118,44 @@ func RandN(n int) int {
 	lower := int(math.Pow(float64(10), float64(n)-1))
 	upper := int(math.Pow(float64(10), float64(n)))
 	return lower + rand.Int()%(upper-lower)
+}
+
+// In case any of the arguments given in args does not appear in the specified
+// dictionary then return an error explicitly mentioning the missing key.
+// Otherwise, return no error
+func VerifyArgs(dict map[string]interface{}, args []string) error {
+
+	// for all entries in the slice
+	for _, key := range args {
+
+		// if this key is not found, then immediately return false
+		if _, ok := dict[key]; !ok {
+			return fmt.Errorf("Missing key '%v'", key)
+		}
+	}
+
+	// at this point everything went fine!
+	return nil
+}
+
+// Return whether any of the keys in the specified dict does not appear in the
+// slice of args. If so, it explicitly mentions the missing key; otherwise,
+// return false and the value of the second return value is undefined
+func VerifyKeys(dict map[string]interface{}, args []string) (bool, string) {
+
+	// for all keys in the dictionary
+	for key := range dict {
+
+		// if this key does not exist in the slice of arguments
+		if !Find(key, args) {
+
+			// then return false and the offending key
+			return false, key
+		}
+	}
+
+	// at this point return true with any string
+	return true, ""
 }
 
 // Local Variables:

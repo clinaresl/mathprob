@@ -57,6 +57,19 @@ func NewMasterFile(filename, name, class string) MasterFile {
 	return MasterFile{Infile: filename, Name: name, Class: class}
 }
 
+// veryMandatoryArgs is kind of a helper but specific for processing mandatory
+// arguments of those commands given in text templates. It verifies that all
+// mandatory arguments given in args appear in the specified dictionary. If not,
+// an error is returned which includes a message with the type of operation
+// involved. Otherwise, no error is returned
+func verifyMandatoryArgs(dict map[string]interface{}, args []string, operation string) error {
+
+	if err := helpers.VerifyArgs(dict, args); err != nil {
+		return fmt.Errorf("Error when processing the dictionary of a/an %v: %v", operation, err)
+	}
+	return nil
+}
+
 // return a valid specification of a basic operation with no error if all the
 // keys given in dict are correct for defining a basic sequence. If not, an
 // error is returned. If an error is returned, the contents of the basic
@@ -71,13 +84,8 @@ func verifyBasicOperationDict(dict map[string]interface{}) (basicOperation, erro
 	mandatory := []string{"type", "operator", "nboperands", "nbdigitsop", "nbdigitsrslt"}
 
 	// now, verify that all mandatory parameters are present in the dict
-	for _, key := range mandatory {
-
-		// if a mandatory parameter has not been given, then
-		// raise an error and exit
-		if _, ok := dict[key]; !ok {
-			return basicOperation{}, fmt.Errorf("Mandatory key '%v' for defining a basic operation not found", key)
-		}
+	if err := verifyMandatoryArgs(dict, mandatory, "basic operation"); err != nil {
+		return basicOperation{}, err
 	}
 
 	// make also sure that parameters are given with the right type
@@ -112,12 +120,8 @@ func verifyBasicOperationDict(dict map[string]interface{}) (basicOperation, erro
 	}
 
 	// next, verify if there are some unnecessary parameters
-	for key := range dict {
-
-		// if this key was not requested then report a message
-		if !helpers.Find(key, mandatory) {
-			log.Printf(" Warning: The key '%v' is not necessary for creating a basic operation and it will be ignored", key)
-		}
+	if ok, key := helpers.VerifyKeys(dict, mandatory); !ok {
+		log.Printf("Warning: The key '%v' is not necessary for creating a basic operation and it will be ignored", key)
 	}
 
 	// otherwise, the dictionary is correct
@@ -140,13 +144,8 @@ func verifyDivisionDict(dict map[string]interface{}) (division, error) {
 	mandatory := []string{"nbdvdigits", "nbdrdigits", "nbqdigits"}
 
 	// now, verify that all mandatory parameters are present in the dict
-	for _, key := range mandatory {
-
-		// if a mandatory parameter has not been given, then
-		// raise an error and exit
-		if _, ok := dict[key]; !ok {
-			log.Fatalf(" Fatal Error: Mandatory key '%v' for defining a division not found", key)
-		}
+	if err := verifyMandatoryArgs(dict, mandatory, "division"); err != nil {
+		return division{}, err
 	}
 
 	// make also sure that parameters are given with the right type
@@ -163,12 +162,8 @@ func verifyDivisionDict(dict map[string]interface{}) (division, error) {
 	}
 
 	// next, verify if there are some unnecessary parameters
-	for key := range dict {
-
-		// if this key was not requested then report a message
-		if !helpers.Find(key, mandatory) {
-			log.Printf(" Warning: The key '%v' is not necessary for creating a division and it will be ignored", key)
-		}
+	if ok, key := helpers.VerifyKeys(dict, mandatory); !ok {
+		log.Printf("Warning: The key '%v' is not necessary for creating a division and it will be ignored", key)
 	}
 
 	// now, return the proper definition of a division problem
@@ -202,13 +197,8 @@ func verifyMultiplicationTableDict(dict map[string]interface{}) (multiplicationT
 	all := []string{"type", "nbdigits", "geq", "leq", "inv", "sorted"}
 
 	// now, verify that all mandatory parameters are present in the dict
-	for _, key := range mandatory {
-
-		// if a mandatory parameter has not been given, then raise an error and
-		// exit
-		if _, ok := dict[key]; !ok {
-			return multiplicationTable{}, fmt.Errorf("Mandatory key '%v' for defining a multiplication table not found", key)
-		}
+	if err := verifyMandatoryArgs(dict, mandatory, "multiplication table"); err != nil {
+		return multiplicationTable{}, err
 	}
 
 	// make also sure that all mandatory parameters are given with the right type
@@ -227,6 +217,7 @@ func verifyMultiplicationTableDict(dict map[string]interface{}) (multiplicationT
 	geq, leq := 1, 10
 	inv, sorted := false, true
 
+	// geq and leq are integer optional parameters
 	if _, ok = dict["geq"]; ok {
 		if geq, err = helpers.Atoi(dict["geq"]); err != nil {
 			return multiplicationTable{}, errors.New("the lower bound of a multiplication table should be given as an integer")
@@ -237,22 +228,18 @@ func verifyMultiplicationTableDict(dict map[string]interface{}) (multiplicationT
 			return multiplicationTable{}, errors.New("the upper bound of a multiplication table should be given as an integer")
 		}
 	}
-	// if inv, ok = dict["inv"].(bool); !ok {
-	// 	return multiplicationTable{}, errors.New("The flag inv of a multiplication table should be given as a stirng")
-	// } else {
-	// 	domain := []string{"false", "true"}
-	// 	if !helpers.Find(inv, domain) {
-	// 		return multiplicationTable{}, errors.New("The value of inv of a multiplication table has to be one and only one among: 'false', 'true'")
-	// 	}
-	// }
-	// if sorted, ok = dict["sorted"].(bool); !ok {
-	// 	return multiplicationTable{}, errors.New("The flag sorted of a multiplication table should be given as a stirng")
-	// } else {
-	// 	domain := []string{"false", "true"}
-	// 	if !helpers.Find(inv, domain) {
-	// 		return multiplicationTable{}, errors.New("The value of sorted of a multiplication table has to be one and only one among: 'false', 'true'")
-	// 	}
-	// }
+
+	// inv and sorted are boolean optional parameters
+	if _, ok = dict["inv"]; ok {
+		if inv, err = helpers.Atob(dict["inv"]); err != nil {
+			return multiplicationTable{}, errors.New("the 'inv' flag should be given as a bool")
+		}
+	}
+	if _, ok = dict["sorted"]; ok {
+		if sorted, err = helpers.Atob(dict["sorted"]); err != nil {
+			return multiplicationTable{}, errors.New("the 'sorted' flag should be given as a bool")
+		}
+	}
 
 	// finally, ensure the type is correct
 	if mttype < MTRESULT || mttype > MTOPERAND {
@@ -260,12 +247,8 @@ func verifyMultiplicationTableDict(dict map[string]interface{}) (multiplicationT
 	}
 
 	// next, verify if there are some unnecessary parameters
-	for key := range dict {
-
-		// if this key was not requested then report a message
-		if !helpers.Find(key, all) {
-			log.Printf(" Warning: The key '%v' is not necessary for creating a multiplication table and it will be ignored", key)
-		}
+	if ok, key := helpers.VerifyKeys(dict, all); !ok {
+		log.Printf("Warning: The key '%v' is not necessary for creating a multiplication table and it will be ignored", key)
 	}
 
 	// otherwise, the dictionary is correct
@@ -293,13 +276,8 @@ func verifySequenceDict(dict map[string]interface{}) (sequence, error) {
 	mandatory := []string{"type", "nbitems", "geq", "leq"}
 
 	// now, verify that all mandatory parameters are present in the dict
-	for _, key := range mandatory {
-
-		// if a mandatory parameter has not been given, then
-		// raise an error and exit
-		if _, ok := dict[key]; !ok {
-			return sequence{}, fmt.Errorf("Mandatory key '%v' for defining a sequence not found", key)
-		}
+	if err := verifyMandatoryArgs(dict, mandatory, "sequence"); err != nil {
+		return sequence{}, err
 	}
 
 	// make also sure that parameters are given with the right type
@@ -324,12 +302,8 @@ func verifySequenceDict(dict map[string]interface{}) (sequence, error) {
 	}
 
 	// next, verify if there are some unnecessary parameters
-	for key := range dict {
-
-		// if this key was not requested then report a message
-		if !helpers.Find(key, mandatory) {
-			log.Printf(" Warning: The key '%v' is not necessary for creating a sequence and it will be ignored", key)
-		}
+	if ok, key := helpers.VerifyKeys(dict, mandatory); !ok {
+		log.Printf("Warning: The key '%v' is not necessary for creating a sequence and it will be ignored", key)
 	}
 
 	// otherwise, the dictionary is correct
