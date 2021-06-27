@@ -62,8 +62,10 @@
     {
         "type": "MultiplicationTable",
         "args": {
-            "type": 1,
-            "nbdigits": 2
+            "type": 0,
+            "nbdigits": 2,
+            "sorted": "false",
+            "inv": "true"
         },
         "nbprobs": 5
     }
