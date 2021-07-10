@@ -26,10 +26,10 @@ import (
 // constants
 // ----------------------------------------------------------------------------
 
-// There are two different types of basic operations: "result" or "operand". In
-// the first case, all operands are visible and the student has to provide the
-// value of the result; in the latter, the result can be seen but one operand is
-// missing whose value has to be guessed by the student
+// There are two different types of multiplication tables: "result" or
+// "operand". In the first case, all operands are visible and the student has to
+// provide the value of the result; in the latter, the result can be seen but
+// one operand is missing whose value has to be guessed by the student
 const (
 	MTRESULT int = iota
 	MTOPERAND
@@ -73,9 +73,6 @@ const tikZMultiplicationTableCode = `% --- Bottom ------------------------------
 
       % --- Lines of the multiplication table -------------------------------
       {{.GetLines}}
-
-      % --- Bounding Box ----------------------------------------------------
-      {{.BBox}}
 `
 
 // types
@@ -129,11 +126,6 @@ type multiplicationTableTikZ struct {
 	// the lines of the multiplication table are stored in the next attribute.
 	// Each one is drawn separately
 	lines []multiplicationTableLineTikZ
-
-	// the bounding box surrounding all the necessary area for solving the
-	// exercise is defined next and it is computed with two formulas that
-	// specify the lower left and upper right corners
-	BBox components.CoordinatedRectangle
 }
 
 // methods
@@ -472,23 +464,11 @@ func (mt multiplicationTable) GetTikZPicture() string {
 		})
 	}
 
-	// -- bounding box
-	//
-	// The bounding box is drawn between the bottom and the right labels
-	right := components.NewCoordinate(
-		components.Formula(fmt.Sprintf(`$(answer%v) + (%v*\zerowidth, 0.5\zeroheight+1.0\baselineskip)$`,
-			1+mt.leq-mt.geq,
-			(2.0+float64(nbdigits[2]))/2.0)),
-		"right")
-	bBox := components.NewCoordinatedRectangle(bottom, right)
-	bBox.SetOptions("white")
-
 	// And put all these elements together to show up the picture of a
 	// multiplication table
 	mtPicture := multiplicationTableTikZ{
 		Bottom: bottom,
 		lines:  lines,
-		BBox:   bBox,
 	}
 
 	// and return the TikZ code necessary for drawing the problem
@@ -498,8 +478,8 @@ func (mt multiplicationTable) GetTikZPicture() string {
 // Return TikZ code that represents a sequence
 func (mt multiplicationTable) execute() string {
 
-	// create a template with the TikZ code for showing this basic operation
-	tpl, err := template.New("basicOperation").Parse(latexMultiplicationTableCode)
+	// create a template with the TikZ code for showing this multiplication table
+	tpl, err := template.New("multiplicationTable").Parse(latexMultiplicationTableCode)
 	if err != nil {
 		log.Fatal(err)
 	}

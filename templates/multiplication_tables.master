@@ -61,11 +61,36 @@
 
   \begin{parts}
 
-    \part[3] Bueno, bah, venga, tampoco será para tanto ... Bueno, al principio,
-    ya sufrirás después
+    \part[1] Ahí va una tabla de multiplicar normal y corriente
 
-    {{.MultiplicationTable (dict "type" 0 "nbdigits" "1")}}
-    {{.MultiplicationTable (dict "type" 1 "nbdigits" "2")}}
+    {{.MultiplicationTable (dict "type" 0 "nbdigits" "1" "geq" 10 "leq" 15)}}
+
+    \part[1] En la siguiente tabla hay que adivinar los factores que producen el
+    resultado indicado
+
+    {{.MultiplicationTable (dict "type" 1 "nbdigits" "1" "geq" 10 "leq" 15)}}
+
+    \part[1] La siguiente tabla es como la primera, pero los factores se
+    intercambian aleatoriamente
+
+    {{.MultiplicationTable (dict "type" 0 "nbdigits" "1" "geq" 10 "leq" 15 "inv" "true")}}
+
+    \part[1] Y también es posible intercambiar los factores cuando hay que
+    adivinar cuáles son para producir el resultado indicado
+
+    {{.MultiplicationTable (dict "type" 1 "nbdigits" "1" "geq" 10 "leq" 15 "inv" "true")}}
+
+    \part[1] Un auténtico Máster del Universo sería capaz de hacer tablas de
+    multiplicar normales y corrientes pero en cualquier orden, ¡y hey! debes
+    hacerla en el orden de las filas, no busques primero el 1, luego el 2, etc.
+
+    {{.MultiplicationTable (dict "type" 0 "nbdigits" "1" "sorted" "false")}}
+
+    \part[1] Y por supuesto, también pueden desordenarse las tablas de
+    multiplicar donde hay que adivinar el factor que falta para producir el
+    resultado deseado
+
+    {{.MultiplicationTable (dict "type" 1 "nbdigits" "1" "sorted" "false")}}
 
 \end{parts}
 
