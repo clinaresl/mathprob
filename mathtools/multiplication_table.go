@@ -247,8 +247,8 @@ func (mt multiplicationTable) generateJSONProblem() (problemJSON, error) {
 	if !mt.sorted {
 
 		// For this, shuffle a slice of ints with the indexes of each row
-		identity := make([]int, 10)
-		for i := 0; i < 10; i++ {
+		identity := make([]int, 1+mt.leq-mt.geq)
+		for i := 0; i <= mt.leq-mt.geq; i++ {
 			identity[i] = i
 		}
 
@@ -263,7 +263,7 @@ func (mt multiplicationTable) generateJSONProblem() (problemJSON, error) {
 		// copy is necessary
 		isolution := make([]string, len(solution))
 		copy(isolution, solution)
-		for i := 0; i < 10; i++ {
+		for i := 0; i <= mt.leq-mt.geq; i++ {
 			solution[1+i*3], solution[2+i*3], solution[3+i*3] =
 				isolution[1+identity[i]*3], isolution[2+identity[i]*3], isolution[3+identity[i]*3]
 		}

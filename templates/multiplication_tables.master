@@ -63,34 +63,48 @@
 
     \part[1] Ahí va una tabla de multiplicar normal y corriente
 
-    {{.MultiplicationTable (dict "type" 0 "nbdigits" "1" "geq" 10 "leq" 15)}}
+    {{.MultiplicationTable (dict "type" 0 "nbdigits" "1" "geq" 12 "leq" 16)}}
 
     \part[1] En la siguiente tabla hay que adivinar los factores que producen el
     resultado indicado
 
-    {{.MultiplicationTable (dict "type" 1 "nbdigits" "1" "geq" 10 "leq" 15)}}
+    {{.MultiplicationTable (dict "type" 1 "nbdigits" "1" "geq" 12 "leq" 16)}}
 
     \part[1] La siguiente tabla es como la primera, pero los factores se
     intercambian aleatoriamente
 
-    {{.MultiplicationTable (dict "type" 0 "nbdigits" "1" "geq" 10 "leq" 15 "inv" "true")}}
+    {{.MultiplicationTable (dict "type" 0 "nbdigits" "1" "geq" 12 "leq" 16 "inv" "true")}}
 
     \part[1] Y también es posible intercambiar los factores cuando hay que
     adivinar cuáles son para producir el resultado indicado
 
-    {{.MultiplicationTable (dict "type" 1 "nbdigits" "1" "geq" 10 "leq" 15 "inv" "true")}}
+    {{.MultiplicationTable (dict "type" 1 "nbdigits" "1" "geq" 12 "leq" 16 "inv" "true")}}
 
     \part[1] Un auténtico Máster del Universo sería capaz de hacer tablas de
     multiplicar normales y corrientes pero en cualquier orden, ¡y hey! debes
     hacerla en el orden de las filas, no busques primero el 1, luego el 2, etc.
 
-    {{.MultiplicationTable (dict "type" 0 "nbdigits" "1" "sorted" "false")}}
+    {{.MultiplicationTable (dict "type" 0 "nbdigits" "1" "geq" 12 "leq" 16 "sorted" "false")}}
 
     \part[1] Y por supuesto, también pueden desordenarse las tablas de
     multiplicar donde hay que adivinar el factor que falta para producir el
     resultado deseado
 
-    {{.MultiplicationTable (dict "type" 1 "nbdigits" "1" "sorted" "false")}}
+    {{.MultiplicationTable (dict "type" 1 "nbdigits" "1" "geq" 12 "leq" 16 "sorted" "false")}}
+
+    \part[1] Y los dos efectos (invertir el orden de los factores y desordenar
+    las filas) puede aplicarse cuando se genera una tabla de multiplicar
+    ordinaria
+
+    {{.MultiplicationTable (dict "type" 0 "nbdigits" "1" "geq" 12 "leq" 16 "inv" "true" "sorted" "false")}}
+
+    \part[1] Y también cuando hay que adivinar los factores que producen el
+    resultado deseado. En la siguiente tabla, se ha intercambiado el orden de
+    los factores aleatoriamente, y se han desordenado las filas, pero el
+    resultado se muestra siempre, asi que la tarea consiste en adivinar el
+    factor que falta.
+
+    {{.MultiplicationTable (dict "type" 1 "nbdigits" "1" "geq" 12 "leq" 16 "inv" "true" "sorted" "false")}}
 
 \end{parts}
 
