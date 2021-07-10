@@ -135,7 +135,7 @@ posición posible:
   \begin{center}
     \begin{tikzpicture}
 
-      % --- Coordinates -----------------------------------------------------
+      % ----------------------------------------------------------------------------------
 
       \coordinate (bottom) at (0,0);
       \fill [blue] (bottom) circle (1pt);
@@ -395,7 +395,8 @@ penúltima, y así sucesivamente ) junto con una descripción de su utilidad:
   \begin{tabular}{c|p{2.0cm}|c|c|c}
     Etiqueta & Descripción & Referencia & $\delta x$ & $\delta y$ \\ \toprule
     \texttt{bottom} & Esquina inferior izquierda & -- & 0 & 0 \\ \midrule
-    \texttt{op}$i$\texttt{1} & Posición del primer operando & \texttt{bottom}&  $\left(\frac{2+\textrm{nbdigits}_{1}}{2}\right)\backslash\mathit{width}$ & $0.5\backslash\mathit{height}+1.0\backslash lineskip$ \\  \midrule
+    \texttt{op}$i$\texttt{1} & Posición del primer operando & \texttt{bottom}&  $\left(\frac{2+\textrm{nbdigits}_{1}}{2}\right)\backslash\mathit{width}$ &
+                                       $(i-\frac{1}{2})\backslash\mathit{height} + \frac{1}{2}(3i - 1)\backslash lineskip$ \\  \midrule
     \texttt{operator}$i$ & Posición del operador & \texttt{op}$i$\texttt{1} & $\left(1+\frac{2+\textrm{nbdigits}_{1}}{2}\right)\backslash\mathit{width}$ & 0 \\  \midrule
     \texttt{op}$i$\texttt{2} & Posición del segundo operando & \texttt{operator}$i$ & $\left(1+\frac{2+\textrm{nbdigits}_{3}}{2}\right)\backslash\mathit{width}$ & 0 \\  \midrule
     \texttt{equal}$i$ & Posición del igual & \texttt{op}$i$\texttt{2} & $\left(1+\frac{2+\textrm{nbdigits}_{3}}{2}\right)\backslash\mathit{width}$ & 0 \\  \midrule

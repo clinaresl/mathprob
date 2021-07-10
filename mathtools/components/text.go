@@ -30,9 +30,14 @@ import (
 // tex can contain any prefix for the size as well
 const tikzText = `\node [{{.GetOptions}}] ({{.GetLabel}}) { {{.GetText}} };`
 
-// In addition, text can be written specifically located at one label using a
-// draw operation
+// In addition, text can be written specifically located at one label which is
+// computed separtely using a draw operation
 const tikZLabeledText = `\draw ({{.GetLabel}}) node [{{.GetOptions}}] { {{.GetText}} };`
+
+// Also, text can be positioned specifically at one label computed within the
+// text operation using a draw operation
+const tikZCoordinatedText = `{{.Coordinate}}
+\draw ({{.GetLabel}}) node [{{.GetOptions}}] { {{.GetText}} };`
 
 // types
 // ----------------------------------------------------------------------------
@@ -47,9 +52,16 @@ type Text struct {
 	text    string
 }
 
-// But text can be also written at one specific location denoted with a label,
-// using whichever options and text
+// But text can be also written at one specific location (computed separately)
+// denoted with a label, using whichever options and text
 type LabeledText struct {
+	Text
+}
+
+// Moreover, text can be located at one specific coordinate which is given to
+// the text
+type CoordinatedText struct {
+	Coordinate
 	Text
 }
 
@@ -65,12 +77,28 @@ func NewText(options, label, text string) Text {
 	}
 }
 
-// Create a new instance of a text given the three fields
+// Create a new instance of text at one specific label computed separately given
+// the three fields
 func NewLabeledText(options, label, text string) LabeledText {
 	return LabeledText{
 		Text{
 			options: options,
 			label:   label,
+			text:    text,
+		},
+	}
+}
+
+// Create a new instance of text at one specific label computed within the text
+// operation given the three fields. Note that the label has not be given as
+// coordinates are labeled necessarily, and the text is written at the label
+// computed using the same coordinate
+func NewCoordinatedText(coord Coordinate, options, text string) CoordinatedText {
+	return CoordinatedText{
+		Coordinate: coord,
+		Text: Text{
+			options: options,
+			label:   coord.GetLabel(),
 			text:    text,
 		},
 	}
@@ -162,6 +190,35 @@ func (t LabeledText) String() string {
 
 	// create a template with the TikZ code for showing a text box
 	tpl, err := template.New("text").Parse(tikZLabeledText)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// and now make the appropriate substitution. Note that the execution of the
+	// template is written to a string
+	var tplOutput bytes.Buffer
+	if err := tpl.Execute(&tplOutput, t); err != nil {
+		log.Fatal(err)
+	}
+
+	// and return the resulting string
+	return tplOutput.String()
+}
+
+// -- CoordinatedText
+
+// Coordinated text consists of both a coordinate and text and both have labels,
+// so there is a conflict which is easily solved by returning any of the labels
+// ---as both have to be the same
+func (t CoordinatedText) GetLabel() string {
+	return t.Coordinate.label
+}
+
+// return a TikZ representation of a text box
+func (t CoordinatedText) String() string {
+
+	// create a template with the TikZ code for showing a text box
+	tpl, err := template.New("text").Parse(tikZCoordinatedText)
 	if err != nil {
 		log.Fatal(err)
 	}

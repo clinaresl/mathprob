@@ -174,6 +174,8 @@ func (tikz basicOperationTikZ) GetOperands() string {
 		fmt.Fprintf(&output, "%v\n", op)
 	}
 
+	// and return the concatenation of the LaTeX/TikZ code used for drawing all
+	// operands
 	return output.String()
 }
 
@@ -483,7 +485,8 @@ func (bo basicOperation) GetTikZPicture() string {
 			`\huge `+instance.Args[len(instance.Args)-1])
 	}
 
-	// And put all this elements together to show up the picture of a basic operation
+	// And put all these elements together to show up the picture of a basic
+	// operation
 	boPicture := basicOperationTikZ{
 		Bottom:        bottom,
 		Answer:        answer,
