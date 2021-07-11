@@ -174,6 +174,27 @@ func GenerateJSON(problems []MasterProblem) (data []byte, err error) {
 					}
 				}
 
+			case "MYSTERYOPERATION":
+
+				// First, verify that all items in the dictionary of args are correct
+				if instance, err := verifyMysteryOperationDict(problem.args); err != nil {
+					return data, err
+				} else {
+
+					// if so, generate a JSON stream with the representation of this
+					// specific problem
+					if iprob, err := instance.generateJSONProblem(); err != nil {
+						return data, err
+					} else {
+
+						// if everything went on correctly, then correctly
+						// number this problem and add this problem to the slice
+						// of problems to marshal
+						iprob.Id = i
+						jsonprobs = append(jsonprobs, iprob)
+					}
+				}
+
 			case "MULTIPLICATIONTABLE":
 
 				// First, verify that all items in the dictionary of args are correct

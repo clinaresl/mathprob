@@ -174,6 +174,83 @@ func verifyDivisionDict(dict map[string]interface{}) (division, error) {
 	}, nil
 }
 
+// return a valid specification of a mystery operation with no error if all the
+// keys given in dict are correct for defining a Mystery Operation. If not, an
+// error is returned. If an error is returned, the contents of the Mystery
+// Operation are undefined.
+//
+// A dictionary is correct if and only if correctly provides an operation (+, -,
+// /, *) and a number of digits for each operand and a number of masked digits
+// for each of them as well. The operator is provided through the key "operator"
+// and the number of digits and masked digits of each operand are given with the
+// keys "nbdigitsi" and "nbmaskedi" respectively, where i takes the values 1 and
+// 2 only. The number of digits of the result and the number of masked digits
+// are given with "nbdigitsanswer" and "nbmaskedanswer" respectively
+func verifyMysteryOperationDict(dict map[string]interface{}) (mysteryOperation, error) {
+
+	// the mandatory keys are given next
+	mandatory := []string{
+		"nbdigits1", "nbmasked1",
+		"nbdigits2", "nbmasked2",
+		"nbdigitsanswer", "nbmaskedanswer",
+		"operator"}
+
+	// now, verify that all mandatory parameters are present in the dict
+	if err := verifyMandatoryArgs(dict, mandatory, "mystery operation"); err != nil {
+		return mysteryOperation{}, err
+	}
+
+	// make also sure that parameters are given with the right type
+	var ok bool
+	var err error
+	var operator string
+	var nbdigits1, nbdigits2 int
+	var nbmasked1, nbmasked2 int
+	var nbdigitsanswer, nbmaskedanswer int
+	if operator, ok = dict["operator"].(string); !ok {
+		return mysteryOperation{}, errors.New("The operator of a mystery operation should be given as a stirng")
+	} else {
+		operators := []string{"+", "-", "*", "/"}
+		if !helpers.Find(operator, operators) {
+			return mysteryOperation{}, errors.New("The operator of a mystery operation has to be one and only one among the following: '+', '-', '*' or '/'")
+		}
+	}
+	if nbdigits1, err = helpers.Atoi(dict["nbdigits1"]); err != nil {
+		return mysteryOperation{}, errors.New("the number of digits of the first operand should be given as a integer")
+	}
+	if nbdigits2, err = helpers.Atoi(dict["nbdigits2"]); err != nil {
+		return mysteryOperation{}, errors.New("the number of digits of the second operand should be given as a integer")
+	}
+	if nbmasked1, err = helpers.Atoi(dict["nbmasked1"]); err != nil {
+		return mysteryOperation{}, errors.New("the number of masked digits of the first operand should be given as a integer")
+	}
+	if nbmasked2, err = helpers.Atoi(dict["nbmasked2"]); err != nil {
+		return mysteryOperation{}, errors.New("the number of masked digits of the second operand should be given as a integer")
+	}
+	if nbdigitsanswer, err = helpers.Atoi(dict["nbdigitsanswer"]); err != nil {
+		return mysteryOperation{}, errors.New("the number of digits of the answer should be given as a integer")
+	}
+	if nbmaskedanswer, err = helpers.Atoi(dict["nbmaskedanswer"]); err != nil {
+		return mysteryOperation{}, errors.New("the number of masked digits of the answer should be given as a integer")
+	}
+
+	// next, verify if there are some unnecessary parameters
+	if ok, key := helpers.VerifyKeys(dict, mandatory); !ok {
+		log.Printf("Warning: The key '%v' is not necessary for creating a mystery operation and it will be ignored", key)
+	}
+
+	// now, return the proper definition of a mystery operation problem
+	return mysteryOperation{
+		nbdigits1:      nbdigits1,
+		nbdigits2:      nbdigits2,
+		nbmasked1:      nbmasked1,
+		nbmasked2:      nbmasked2,
+		nbdigitsanswer: nbdigitsanswer,
+		nbmaskedanswer: nbmaskedanswer,
+		operator:       operator,
+	}, nil
+}
+
 // return a valid specification of a multiplication table with no error if all
 // the keys given in dict are correct for defining a multiplication table. If
 // not, an error is returned. If an error is returned, the contents of the

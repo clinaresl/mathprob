@@ -44,6 +44,12 @@ func Atoi(n interface{}) (int, error) {
 	switch value := n.(type) {
 	case int:
 		return value, nil
+	case byte:
+
+		// in case a byte is given it is readily assumed to be in the range
+		// ['0', '9'] and the number is stripped just by subtracting the
+		// distance from it to '0'
+		return int(value) - int(byte('0')), nil
 	case float32:
 		return int(value), nil
 	case float64:
@@ -63,6 +69,24 @@ func Atoi(n interface{}) (int, error) {
 // return true if and only if the given value has been found in the
 // specified slice
 func Find(item string, container []string) bool {
+
+	// for all items in the container
+	for _, value := range container {
+
+		// in case it has been found, then exit immediately
+		if value == item {
+			return true
+		}
+	}
+
+	// if it has not been found after traversing the container,
+	// then return false
+	return false
+}
+
+// return true if and only if the given value has been found in the
+// specified slice
+func FindInt(item int, container []int) bool {
 
 	// for all items in the container
 	for _, value := range container {

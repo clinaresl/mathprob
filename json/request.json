@@ -7,7 +7,7 @@
             "geq": 100,
             "leq": 999
         },
-        "nbprobs": 5
+        "nbprobs": 1
     },
     {
         "type": "Sequence",
@@ -17,7 +17,7 @@
             "geq": 0,
             "leq": 9
         },
-        "nbprobs": 3
+        "nbprobs": 1
     },
     {
         "type": "Sequence",
@@ -37,7 +37,7 @@
             "geq": -10,
             "leq": 10
         },
-        "nbprobs": 5
+        "nbprobs": 1
     },
     {
         "type": "Division",
@@ -46,7 +46,7 @@
             "nbdrdigits": 2,
             "nbqdigits": 1
         },
-        "nbprobs": 5
+        "nbprobs": 1
     },
     {
         "type": "BasicOperation",
@@ -57,7 +57,7 @@
             "nbdigitsop": 2,
             "nbdigitsrslt": 1
         },
-        "nbprobs": 5
+        "nbprobs": 1
     },
     {
         "type": "MultiplicationTable",
@@ -66,6 +66,19 @@
             "nbdigits": 2,
             "sorted": "false",
             "inv": "true"
+        },
+        "nbprobs": 1
+    },
+    {
+        "type": "MysteryOperation",
+        "args": {
+            "operator": "+",
+            "nbdigits1": 5,
+            "nbdigits2": 5,
+            "nbdigitsanswer": 6,
+            "nbmasked1": 2,
+            "nbmasked2": 1,
+            "nbmaskedanswer": 1
         },
         "nbprobs": 5
     }
